@@ -1,0 +1,77 @@
+<project name="Wall-J" default="zip" basedir=".">
+
+    <property name="dir.out" value="."/>
+    <property name="dir.lib" value="lib"/>
+    <property name="dir.src" value="src"/>
+    <property name="dir.javasrc" value="${dir.src}/java"/>
+    <property name="dir.docsrc" value="${dir.src}/docs"/>
+    <property name="dir.classes" value="classes"/>
+    <property name="dir.docs" value="docs"/>
+    <property name="dir.apidoc" value="${dir.docs}/doc"/>
+    <property name="dir.zipsubdir" value="Naili_Tran-Girard_WallJ.zip"/>
+
+    <property name="file.jar" value="${dir.out}/wallj.jar"/>
+    <property name="file.zip" value="${dir.out}/NailiTran-Girard_WallJ.zip"/>
+    <property name="file.ant" value="build.xml"/>
+    <property name="file.readme" value="readme.md"/>
+
+    <property name="class.entry" value="fr.umlv.java.wallj.Main"/>
+
+    <target name="compile">
+        <mkdir dir="${dir.classes}"/>
+        <javac srcdir="${dir.src}" destdir="${dir.classes}"/>
+    </target>
+
+    <target name="jar" depends="compile">
+        <jar jarfile="${file.jar}" basedir="${dir.classes}">
+            <manifest>
+                <attribute name="Main-Class" value="${class.entry}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="javadoc">
+        <mkdir dir="${dir.apidoc}"/>
+        <javadoc sourcepath="${dir.javasrc}" destdir="${dir.apidoc}"/>
+    </target>
+
+    <target name="docs">
+        <mkdir dir="${dir.docs}"/>
+        <apply executable="pandoc" dest="${dir.docs}">
+            <arg value="--template"/>
+            <arg value="${dir.docsrc}/report-template.tex"/>
+            <arg value="--number-sections"/>
+            <arg value="--listings"/>
+            <arg value="--output"/>
+            <targetfile/>
+            <srcfile/>
+            <fileset dir="${dir.docsrc}" includes="*.md"/>
+            <mapper type="glob" from="*.md" to="*.pdf"/>
+        </apply>
+    </target>
+
+    <target name="zip" depends="jar,docs">
+        <zip destfile="${file.zip}" encoding="UTF-8">
+            <zipfileset dir="." excludes="**/*" prefix="${dir.zipsubdir}/${dir.apidoc}"/>
+            <zipfileset dir="." excludes="**/*" prefix="${dir.zipsubdir}/${dir.classes}"/>
+
+            <zipfileset dir="${dir.lib}" includes="*.jar" prefix="${dir.zipsubdir}/${dir.lib}"/>
+            <zipfileset dir="${dir.javasrc}" includes="**/*.java" prefix="${dir.zipsubdir}/${dir.javasrc}"/>
+            <zipfileset dir="${dir.docs}" includes="*.pdf" prefix="${dir.zipsubdir}/${dir.docs}"/>
+
+            <zipfileset file="${file.ant}" prefix="${dir.zipsubdir}"/>
+            <zipfileset file="${file.jar}" prefix="${dir.zipsubdir}"/>
+            <zipfileset file="${file.readme}" prefix="${dir.zipsubdir}"/>
+        </zip>
+    </target>
+
+    <target name="clean">
+        <delete includeEmptyDirs="true" failonerror="false">
+            <fileset dir="${dir.classes}"/>
+            <fileset dir="${dir.docs}"/>
+            <fileset file="${file.jar}"/>
+            <fileset file="${file.zip}"/>
+        </delete>
+    </target>
+
+</project>

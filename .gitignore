@@ -1,0 +1,12 @@
+*
+!*/
+
+!.gitignore
+!.gitkeep
+
+!build.xml
+!lib/*.jar
+!*.java
+!*.txt
+!*.md
+!*.tex
