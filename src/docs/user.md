@@ -54,6 +54,8 @@ The player controls a robot, dropping bombs whose explosion can push garbage int
 Garbage bounce when colliding other elements such as walls, unexploded bombs or other garbage blocks,
 and disappear of the screen when reaching a garbage can.
 
+The explosion of each of the dropped bombs can be delayed using independent timers. 
+
 A stage is considered done once the world has been cleared of all its garbage.
 The player is then allowed to move on to the next stage.
 The game is finished once all stages are completed.
@@ -71,17 +73,21 @@ Bomb        Black disk   No               Yes
 Garbage     Brown disk   Yes              Yes
 Robot       Blue disk    /                /
 
+\newpage
+
 ## Controls
 
 Controls are defined as follows:
 
-Trigger                         Action
-------------------------------- -------------------------------------------------------
-Click on a traversable tile     Moves the robot to the pointed location
-`RETURN` on a free tile         Drops a bomb at the current location
-`RETURN` on a tile with a bomb  Increases the timer of the bomb at the current location
+Trigger                                 Action
+-------------------------------         -------------------------------------------------------
+Click on a traversable tile             Moves the robot to the pointed location
+`RETURN` on a free tile                 Drops a bomb at the current location
+`RETURN` on a tile with a bomb          Increases the timer of the bomb at the current location
+`SPACE` while controlling the robot     Puts Wall-j into a safe place before activating the bombs
+`SPACE` in a chaos scene                Restores the world the way it was before the explosions
 
-\newpage
+The explosion delay of a bomb can be increased up to 9 seconds. Pressing `RETURN` in such limit case removes the bomb.
 
 ## Custom levels
 
@@ -107,8 +113,6 @@ A world is defined as valid if its blocks fulfill the following criteria:
 Only valid worlds can be loaded into the game.
 
 The validity of a world may not guaranty the solvability of the puzzle.
-
-\newpage
 
 __Example of invalid world definition:__
 ```
