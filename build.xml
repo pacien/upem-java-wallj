@@ -19,14 +19,25 @@
 
     <target name="compile">
         <mkdir dir="${dir.classes}"/>
-        <javac srcdir="${dir.src}" destdir="${dir.classes}"/>
+        <javac srcdir="${dir.src}" destdir="${dir.classes}" includeantruntime="false">
+            <classpath>
+                <fileset dir="${dir.lib}" includes="*.jar"/>
+            </classpath>
+        </javac>
     </target>
 
     <target name="jar" depends="compile">
+        <manifestclasspath property="jar.classpath" jarfile="${file.jar}">
+            <classpath>
+                <fileset dir="${dir.lib}" includes="*.jar"/>
+            </classpath>
+        </manifestclasspath>
         <jar jarfile="${file.jar}" basedir="${dir.classes}">
             <manifest>
                 <attribute name="Main-Class" value="${class.entry}"/>
+                <attribute name="Class-Path" value="${jar.classpath}"/>
             </manifest>
+            <zipfileset prefix="${dir.lib}" dir="${dir.lib}" includes="*.jar"/>
         </jar>
     </target>
 

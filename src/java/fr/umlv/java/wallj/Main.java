@@ -1,5 +1,9 @@
 package fr.umlv.java.wallj;
 
+import fr.umlv.zen5.Application;
+
+import java.awt.*;
+
 public class Main {
 
     /**
@@ -9,6 +13,7 @@ public class Main {
      */
     public static void main(String[] args) {
         System.out.println("Hello World!");
+        Application.run(Color.BLACK, (ac)-> {});
     }
 
 }
