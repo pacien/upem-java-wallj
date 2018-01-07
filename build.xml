@@ -3,7 +3,7 @@
     <property name="dir.out" value="."/>
     <property name="dir.lib" value="lib"/>
     <property name="dir.src" value="src"/>
-    <property name="dir.javasrc" value="${dir.src}/java"/>
+    <property name="dir.javasrc" value="${dir.src}/main/java"/>
     <property name="dir.docsrc" value="${dir.src}/docs"/>
     <property name="dir.classes" value="classes"/>
     <property name="dir.docs" value="docs"/>
