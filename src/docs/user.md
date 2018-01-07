@@ -54,7 +54,8 @@ The player controls a robot, dropping bombs whose explosion can push garbage int
 Garbage bounce when colliding other elements such as walls, unexploded bombs or other garbage blocks,
 and disappear of the screen when reaching a garbage can.
 
-The explosion of each of the dropped bombs can be delayed using independent timers. 
+The explosion of each of the dropped bombs can be delayed using independent timers.
+The robot must drop exactly 3 bombs on each level.
 
 A stage is considered done once the world has been cleared of all its garbage.
 The player is then allowed to move on to the next stage.
@@ -85,9 +86,7 @@ Click on a traversable tile             Moves the robot to the pointed location
 `RETURN` on a free tile                 Drops a bomb at the current location
 `RETURN` on a tile with a bomb          Increases the timer of the bomb at the current location
 `SPACE` while controlling the robot     Puts Wall-j into a safe place before activating the bombs
-`SPACE` in a chaos scene                Restores the world the way it was before the explosions
-
-The explosion delay of a bomb can be increased up to 9 seconds. Pressing `RETURN` in such limit case removes the bomb.
+`SPACE` in a chaos scene                Restarts the current level or continues to the next one if possible
 
 ## Custom levels
 
