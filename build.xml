@@ -51,6 +51,8 @@
         <apply executable="pandoc" dest="${dir.docs}">
             <arg value="--template"/>
             <arg value="${dir.docsrc}/report-template.tex"/>
+            <arg value="--filter=pandoc-filter-plantuml.sh"/>
+            <arg value="--filter=pandoc-filter-tikz.py"/>
             <arg value="--number-sections"/>
             <arg value="--listings"/>
             <arg value="--output"/>
