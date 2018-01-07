@@ -1,0 +1,187 @@
+@startuml
+
+skinparam linetype ortho
+
+package utils {
+  class PathFinder {
+    static List<Vec2> findPath(Board, TileVec2, TileVec2)
+  }
+
+  class TileVec2 {
+    static final int TILE_DIM
+
+    Vec2
+    TileVec2(Vec2)
+    Vec2 toPixelPos()
+    static TileVec2 fromPixelPos(Vec2)
+  }
+}
+
+package viewer {
+  class Viewer {
+    Game
+    void main(String[])
+    void eventLoop(ApplicationContext)
+    void renderFrame(Graphics2D)
+  }
+}
+
+package context {
+  class Context {
+    final Stage
+    final List<Event>
+    final GraphicsContext
+  }
+
+  class GraphicsContext {
+    Graphics2D
+    ScreenInfo
+    paintCircle(Color, Vec2, int)
+    paintSquare(Color, Vec2, int)
+  }
+
+  class InputHandler
+
+  class ScreenManager {
+    private clearScreen()
+  }
+
+  class Game {
+    GameController
+    Stage
+    Game(List<Board>)
+  }
+}
+
+package event {
+  interface Event
+
+  class DropBombEvent implements Event {
+    DropBombEvent(TileVec2)
+  }
+
+  class MoveRobotEvent implements Event {
+    MoveRobotEvent(TileVec2)
+  }
+
+  class ConfirmEvent implements Event
+}
+
+package board {
+  class Board {
+    BlockType[][]
+  }
+
+  class BoardParser {
+    static Board parse(File)
+  }
+
+  class BoardValidator {
+    static bool validate(Board)
+  }
+
+  class BoardConverter {
+    static Board worldToBoard(List<Block>)
+    static List<Block> boardToWorld(Board)
+  }
+}
+
+package model {
+  enum BlockType {
+    Wall
+    Trash
+    Garbage
+    Robot
+    Bomb
+  }
+
+  class BlockFactory {
+    Block build(BlockType, Vec2)
+  }
+
+  abstract class Block {
+    List<Controller>
+
+    Block(Vec2)
+    Vec2 getPosition()
+    void setPosition(Vec2)
+    void update(Context)
+  }
+
+  abstract class StaticBlock extends Block
+  class WallBlock extends StaticBlock
+  class TrashBlock extends StaticBlock
+  class BombBlock extends StaticBlock
+
+  class GarbageBlock extends Block
+  class RobotBlock extends Block
+
+  class Stage {
+    StageController
+    List<Block>
+    Stage(Board)
+    List<Block> getBlocks()
+    void update(Context)
+    bool isCleared()
+  }
+}
+
+package controller {
+  interface Controller {
+    void update(Context)
+  }
+
+  abstract class BlockController implements Controller {
+    Block
+    Controller(Block)
+    Block getBlock()
+    void update(Context)
+  }
+
+  class BlockControllerFactory {
+    BlockController build(Block)
+  }
+
+  class GameController implements Controller
+  class StageController implements Controller
+
+  abstract class PhysicsController extends BlockController
+  abstract class DisplayController extends BlockController
+
+  class WallPhysicsController extends PhysicsController
+  class WallDisplayController extends DisplayController
+
+  class TrashPhysicsController extends PhysicsController
+  class TrashDisplayController extends DisplayController
+
+  class GarbagePhysicsController extends PhysicsController
+  class GarbageDisplayController extends DisplayController
+
+  class RobotPhysicsController extends PhysicsController {
+    List<TileVec2> path
+  }
+
+  class RobotDisplayController extends DisplayController
+
+  class BombPhysicsController extends PhysicsController
+  class BombDisplayController extends DisplayController
+}
+
+RobotPhysicsController --> PathFinder
+RobotPhysicsController --> BoardConverter
+
+Stage --> BoardConverter
+
+PhysicsController --() JBox2D
+Zen5 ()-- Viewer
+
+viewer --> context
+viewer --> model
+
+context --> event
+
+model --> controller
+
+board --> model
+
+@enduml
