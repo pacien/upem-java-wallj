@@ -28,28 +28,35 @@ package viewer {
 
 package context {
   class Context {
+    Context(Stage,List<Event>,GraphicsContext)
     final Stage
     final List<Event>
     final GraphicsContext
   }
 
   class GraphicsContext {
-    Graphics2D
-    ScreenInfo
+    final Graphics2D
+    final ScreenInfo
     paintCircle(Color, Vec2, int)
     paintSquare(Color, Vec2, int)
   }
 
-  class InputHandler
+  class InputHandler {
+    private ApplicationContext
+    InputHandler(ApplicationContext)
+    List<Event> getEvents()
+  }
 
   class ScreenManager {
-    private clearScreen()
+    private ApplicationContext
+    ScreenManager(ApplicationContext)
+    GraphicsContext clearScreen()
   }
 
   class Game {
-    GameController
+    final GameController
     Stage
-    Game(List<Board>)
+    Game(GameController,Stage,List<Board>)
   }
 }
 
