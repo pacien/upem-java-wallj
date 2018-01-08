@@ -34,7 +34,7 @@ package context {
   }
 
   class InputHandler {
-    private ApplicationContext
+    private final ApplicationContext
     InputHandler(ApplicationContext)
     List<Event> getEvents()
   }
@@ -47,6 +47,7 @@ package context {
 
   class Game {
     final GameController
+    int index
     final List<Board>
     Game(GameController,List<Board>)
   }
@@ -58,12 +59,18 @@ package event {
   interface InputEvent implements Event
   interface GameEvent implements Event
 
-  class DropBombEvent implements InputEvent {
-    DropBombEvent(TileVec2)
+  class DropBombEvent implements InputEvent
+
+  class AddBombEvent implements InputEvent {
+    final TileVec2
+    AddBombEvent(TileVec2)
+    TileVec2 getTile()
   }
 
   class MoveRobotEvent implements InputEvent {
+    final TileVec2
     MoveRobotEvent(TileVec2)
+    TileVec2 getTile()
   }
 
   class ConfirmEvent implements InputEvent
