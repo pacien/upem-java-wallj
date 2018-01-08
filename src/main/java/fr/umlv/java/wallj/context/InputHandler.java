@@ -1,5 +1,58 @@
 package fr.umlv.java.wallj.context;
 
-public class InputHandler {
+import fr.umlv.java.wallj.board.TileVec2;
+import fr.umlv.java.wallj.event.DropBombEvent;
+import fr.umlv.java.wallj.event.MoveRobotEvent;
+import fr.umlv.zen5.ApplicationContext;
+import fr.umlv.zen5.Event;
+import fr.umlv.zen5.KeyboardKey;
+import org.jbox2d.common.Vec2;
+
+import java.awt.geom.Point2D;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
+
+import static fr.umlv.java.wallj.board.TileVec2.of;
+
+public final class InputHandler {
   //TODO Class InputHandler
+  private final ApplicationContext applicationContext;
+
+  /**
+   * @param applicationContext
+   */
+  public InputHandler(ApplicationContext applicationContext) {
+    this.applicationContext = Objects.requireNonNull(applicationContext);
+  }
+
+  /**
+   * @return
+   */
+  List<fr.umlv.java.wallj.event.Event> getEvents() {
+    LinkedList<fr.umlv.java.wallj.event.Event> events = new LinkedList<>();
+    fr.umlv.zen5.Event event = applicationContext.pollEvent();
+    if (event != null) {
+      Event.Action action = event.getAction();
+      Point2D.Float location = event.getLocation();
+      if (location != null) { //Mouse Handling
+        if (action == Event.Action.POINTER_DOWN) {
+          Vec2 mouseLocation = new Vec2(location.x, location.y);
+          TileVec2 mouseTileLocation = TileVec2.of(mouseLocation);
+          events.add(new MoveRobotEvent(mouseTileLocation));
+        }
+      }
+      KeyboardKey keyboardKey = event.getKey();
+      if (keyboardKey != null) { //Keyboard Handling
+        if (action == Event.Action.KEY_PRESSED) {
+          switch (keyboardKey) {
+            case SPACE:
+              events.add(new DropBombEvent());
+              break;
+          }
+        }
+      }
+    }
+    return events;
+  }
 }
