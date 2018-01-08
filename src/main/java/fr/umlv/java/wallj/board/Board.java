@@ -44,8 +44,8 @@ public final class Board {
 
   private Board(BlockType[][] map) {
     int w = Matrix.getWidth(map), h = Matrix.getHeight(map);
-    this.map = new BlockType[w][h];
-    for (int row = 0; row < w; ++row) System.arraycopy(map[row], 0, this.map[row], 0, h);
+    this.map = new BlockType[h][w];
+    for (int row = 0; row < h; ++row) System.arraycopy(map[row], 0, this.map[row], 0, w);
   }
 
   /**

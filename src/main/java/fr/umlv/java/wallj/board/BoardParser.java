@@ -1,6 +1,59 @@
 package fr.umlv.java.wallj.board;
 
-public class BoardParser {
-  //TODO
-}
+import fr.umlv.java.wallj.model.BlockType;
+import fr.umlv.java.wallj.utils.Matrix;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.stream.Collectors;
+
+public final class BoardParser {
+
+  private static Board buildBoard(List<List<BlockType>> map) {
+    if (!Matrix.isShapeValid(map)) throw new IllegalArgumentException("Board must be rectangular.");
+
+    Board.Builder b = new Board.Builder(Matrix.getWidth(map), Matrix.getHeight(map));
+    for (ListIterator<List<BlockType>> line = map.listIterator(); line.hasNext(); )
+      for (ListIterator<BlockType> block = line.next().listIterator(); block.hasNext(); )
+        b.setBlockTypeAt(TileVec2.of(line.previousIndex(), block.nextIndex()), block.next());
+
+    return b.build();
+  }
+
+  private static BlockType parseChar(int c) {
+    switch (c) {
+      case ' ':
+        return BlockType.FREE;
+      case 'W':
+        return BlockType.wALL;
+      case 'T':
+        return BlockType.TRASH;
+      case 'G':
+        return BlockType.GARBAGE;
+      default:
+        return null;
+    }
+  }
+
+  private static List<BlockType> parseLine(String line) {
+    return line.chars()
+           .mapToObj(BoardParser::parseChar)
+           .collect(Collectors.toList());
+  }
+
+  public static Board parse(Path filePath) throws IOException {
+    return buildBoard(Files.lines(filePath)
+                      .filter(s -> !s.isEmpty())
+                      .map(String::trim)
+                      .map(BoardParser::parseLine)
+                      .collect(Collectors.toList()));
+  }
+
+  private BoardParser() {
+    // static class
+  }
+
+}
