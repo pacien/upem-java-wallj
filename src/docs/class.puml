@@ -14,7 +14,7 @@ package viewer {
     Stage
     void main(String[])
     void eventLoop(ApplicationContext)
-    void renderFrame(Graphics2D)
+    void renderFrame(Graphics2D,ApplicationContext)
   }
 }
 
@@ -29,8 +29,8 @@ package context {
   class GraphicsContext {
     final Graphics2D
     final ScreenInfo
-    paintCircle(Color, Vec2, int)
-    paintSquare(Color, Vec2, int)
+    paintCircle(Color, Vec2, float)
+    paintSquare(Color, Vec2, float, float)
   }
 
   class InputHandler {
