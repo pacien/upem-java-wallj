@@ -55,6 +55,7 @@ TODO:
 TODO:
 
 - tests are necessary
+- junit5, no ant plugin for this version, runs through the IDE
 
 ## Modules
 
