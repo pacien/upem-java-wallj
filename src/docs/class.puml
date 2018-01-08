@@ -6,6 +6,12 @@ package utils {
   class PathFinder {
     static List<Vec2> findPath(Board, TileVec2, TileVec2)
   }
+
+  class Matrix {
+    static int getWidth(...)
+    static int getHeight(...)
+    static boolean isShapeValid(...)
+  }
 }
 
 package viewer {
