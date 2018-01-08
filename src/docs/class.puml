@@ -57,7 +57,7 @@ package context {
   class Game {
     final GameController
     final List<Board>
-    Game(GameController,List<Board>,List<Board>)
+    Game(GameController,List<Board>)
   }
 }
 
