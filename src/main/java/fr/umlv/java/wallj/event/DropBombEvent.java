@@ -1,5 +1,5 @@
 package fr.umlv.java.wallj.event;
 
-public class DropBombEvent implements Event {
+public final class DropBombEvent implements Event {
   //TODO Class DropBombEvent
 }
