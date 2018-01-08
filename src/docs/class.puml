@@ -55,15 +55,23 @@ package context {
 package event {
   interface Event
 
-  class DropBombEvent implements Event {
+  interface InputEvent implements Event
+  interface GameEvent implements Event
+
+  class DropBombEvent implements InputEvent {
     DropBombEvent(TileVec2)
   }
 
-  class MoveRobotEvent implements Event {
+  class MoveRobotEvent implements InputEvent {
     MoveRobotEvent(TileVec2)
   }
 
-  class ConfirmEvent implements Event
+  class ConfirmEvent implements InputEvent
+
+  class ExplosionEvent implements GameEvent {
+    Block source
+    Body source
+  }
 }
 
 package board {
@@ -116,7 +124,7 @@ package model {
     Block(Vec2)
     Vec2 getPosition()
     void setPosition(Vec2)
-    void update(Context)
+    List<Event> update(Context)
   }
 
   abstract class StaticBlock extends Block
@@ -132,21 +140,20 @@ package model {
     List<Block>
     Stage(Board)
     List<Block> getBlocks()
-    void update(Context)
+    List<Event> update(Context)
     bool isCleared()
   }
 }
 
 package controller {
   interface Controller {
-    void update(Context)
+    List<Event> update(Context)
   }
 
   abstract class BlockController implements Controller {
     Block
     Controller(Block)
     Block getBlock()
-    void update(Context)
   }
 
   class BlockControllerFactory {
