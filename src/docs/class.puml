@@ -6,15 +6,6 @@ package utils {
   class PathFinder {
     static List<Vec2> findPath(Board, TileVec2, TileVec2)
   }
-
-  class TileVec2 {
-    static final int TILE_DIM
-
-    Vec2
-    TileVec2(Vec2)
-    Vec2 toPixelPos()
-    static TileVec2 fromPixelPos(Vec2)
-  }
 }
 
 package viewer {
@@ -76,7 +67,9 @@ package event {
 
 package board {
   class Board {
-    BlockType[][]
+    Board(width, height)
+    BlockType getBlockTypeAt(TileVec2)
+    BlockType setBlockTypeAt(TileVec2, BlockType)
   }
 
   class BoardParser {
@@ -91,15 +84,25 @@ package board {
     static Board worldToBoard(List<Block>)
     static List<Block> boardToWorld(Board)
   }
+
+  class TileVec2 {
+    static final int TILE_DIM
+    static TileVec2 fromVec2(Vec2)
+
+    Vec2
+    TileVec2(col, row)
+    Vec2 toPixelPos()
+  }
 }
 
 package model {
   enum BlockType {
-    Wall
-    Trash
-    Garbage
-    Robot
-    Bomb
+    FREE
+    WALL
+    TRASH
+    GARBAGE
+    ROBOT
+    BOMB
   }
 
   class BlockFactory {
