@@ -1,4 +1,5 @@
 package fr.umlv.java.wallj.event;
 
-public interface InputEvent {
+public interface InputEvent extends Event {
+
 }

@@ -4,7 +4,7 @@ import fr.umlv.java.wallj.board.TileVec2;
 
 import java.util.Objects;
 
-public class MoveRobotEvent implements Event {
+public class MoveRobotEvent implements InputEvent {
   //TODO Class MoveRobotEvent
   TileVec2 tileVec2;
 
