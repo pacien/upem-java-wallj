@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * A context used to store the current state of the application at one tick.
+ * A context used to store the current state of the application at one tick
  */
 public final class Context {
   //TODO Class Context

@@ -13,21 +13,23 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-import static fr.umlv.java.wallj.board.TileVec2.of;
 
+/**
+ * Treats the inputs from the keyboard and mouse provided by Zen 5 and creates Events meaningful for the game.
+ */
 public final class InputHandler {
   //TODO Class InputHandler
   private final ApplicationContext applicationContext;
 
   /**
-   * @param applicationContext
+   * @param applicationContext the Zen5 application context
    */
   public InputHandler(ApplicationContext applicationContext) {
     this.applicationContext = Objects.requireNonNull(applicationContext);
   }
 
   /**
-   * @return
+   * @return the list of events converted from Zen 5 events to game events
    */
   List<fr.umlv.java.wallj.event.Event> getEvents() {
     LinkedList<fr.umlv.java.wallj.event.Event> events = new LinkedList<>();

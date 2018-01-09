@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 /**
- * A game
+ * A game.
  */
 public final class Game {
   //TODO
