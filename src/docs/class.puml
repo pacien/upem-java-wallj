@@ -40,8 +40,9 @@ package context {
   }
 
   class ScreenManager {
-    private ApplicationContext
-    ScreenManager(ApplicationContext)
+    private final ApplicationContext
+    private final Graphics2D
+    ScreenManager(ApplicationContext,Graphics2D)
     GraphicsContext clearScreen()
   }
 
