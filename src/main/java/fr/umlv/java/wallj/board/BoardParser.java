@@ -10,6 +10,11 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.stream.Collectors;
 
+/**
+ * Board deserializer.
+ *
+ * @author Pacien TRAN-GIRARD
+ */
 public final class BoardParser {
 
   private static Board buildBoard(List<List<BlockType>> map) {
@@ -28,7 +33,7 @@ public final class BoardParser {
       case ' ':
         return BlockType.FREE;
       case 'W':
-        return BlockType.wALL;
+        return BlockType.WALL;
       case 'T':
         return BlockType.TRASH;
       case 'G':
@@ -44,6 +49,13 @@ public final class BoardParser {
            .collect(Collectors.toList());
   }
 
+  /**
+   * Parses a block from a file.
+   *
+   * @param filePath path to the map file
+   * @return the parsed Board
+   * @throws IOException any IO exception that happened while reading the file
+   */
   public static Board parse(Path filePath) throws IOException {
     return buildBoard(Files.lines(filePath)
                       .filter(s -> !s.isEmpty())

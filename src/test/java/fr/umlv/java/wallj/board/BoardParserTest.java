@@ -9,6 +9,9 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * @author Pacien TRAN-GIRARD
+ */
 final class BoardParserTest {
 
   private Path getResourcePath(String str) throws URISyntaxException {
@@ -24,7 +27,7 @@ final class BoardParserTest {
 
   @Test
   void testParse() throws IOException, URISyntaxException {
-    BlockType W = BlockType.wALL, F = BlockType.FREE, G = BlockType.GARBAGE, T = BlockType.TRASH;
+    BlockType W = BlockType.WALL, F = BlockType.FREE, G = BlockType.GARBAGE, T = BlockType.TRASH;
     BlockType[][] blocks = new BlockType[][]{
     {W, W, W, W, W, W},
     {W, F, G, F, T, W},

@@ -6,6 +6,8 @@ import java.util.Objects;
 
 /**
  * A typed immutable tile coordinate vector containing the coordinates of a Tile in a Board.
+ *
+ * @author Pacien TRAN-GIRARD
  */
 public final class TileVec2 {
 

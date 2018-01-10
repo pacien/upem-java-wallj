@@ -5,6 +5,8 @@ import fr.umlv.java.wallj.utils.Matrix;
 
 /**
  * An immutable BlockType matrix.
+ *
+ * @author Pacien TRAN-GIRARD
  */
 public final class Board {
 

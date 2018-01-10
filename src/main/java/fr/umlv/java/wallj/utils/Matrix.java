@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * Utility functions for two dimension arrays and lists.
+ *
+ * @author Pacien TRAN-GIRARD
  */
 public final class Matrix {
 
