@@ -13,10 +13,7 @@ public class BombBlock extends Block {
 
   private int timer = INITIAL_TIMER;
 
-  /**
-   * @param pos initial position
-   */
-  public BombBlock(Vec2 pos) {
+  BombBlock(Vec2 pos) {
     super(BlockType.BOMB, pos);
   }
 

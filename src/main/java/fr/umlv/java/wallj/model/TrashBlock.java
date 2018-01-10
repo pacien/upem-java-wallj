@@ -9,10 +9,7 @@ import org.jbox2d.common.Vec2;
  */
 public class TrashBlock extends Block {
 
-  /**
-   * @param pos initial position
-   */
-  public TrashBlock(Vec2 pos) {
+  TrashBlock(Vec2 pos) {
     super(BlockType.TRASH, pos);
   }
 

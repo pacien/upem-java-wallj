@@ -9,10 +9,7 @@ import org.jbox2d.common.Vec2;
  */
 public class WallBlock extends Block {
 
-  /**
-   * @param pos initial position
-   */
-  public WallBlock(Vec2 pos) {
+  WallBlock(Vec2 pos) {
     super(BlockType.WALL, pos);
   }
 

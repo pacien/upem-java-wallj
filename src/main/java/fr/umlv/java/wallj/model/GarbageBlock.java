@@ -9,10 +9,7 @@ import org.jbox2d.common.Vec2;
  */
 public class GarbageBlock extends Block {
 
-  /**
-   * @param pos initial position
-   */
-  public GarbageBlock(Vec2 pos) {
+  GarbageBlock(Vec2 pos) {
     super(BlockType.GARBAGE, pos);
   }
 

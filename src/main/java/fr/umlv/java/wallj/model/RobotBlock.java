@@ -9,10 +9,7 @@ import org.jbox2d.common.Vec2;
  */
 public class RobotBlock extends Block {
 
-  /**
-   * @param pos initial position
-   */
-  public RobotBlock(Vec2 pos) {
+  RobotBlock(Vec2 pos) {
     super(BlockType.ROBOT, pos);
   }
 
