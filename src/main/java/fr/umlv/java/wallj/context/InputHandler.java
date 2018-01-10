@@ -16,6 +16,8 @@ import java.util.Objects;
 
 /**
  * Treats the inputs from the keyboard and mouse provided by Zen 5 and creates Events meaningful for the game.
+ *
+ * @author Adam NAILI
  */
 public final class InputHandler {
   //TODO Class InputHandler

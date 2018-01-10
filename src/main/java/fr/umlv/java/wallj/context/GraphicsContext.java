@@ -10,6 +10,8 @@ import java.util.Objects;
 
 /**
  * A context of the current graphic status of the application.
+ *
+ * @author Adam NAILI
  */
 public final class GraphicsContext {
   //TODO Class GraphicsContext

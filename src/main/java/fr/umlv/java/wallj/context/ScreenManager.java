@@ -9,6 +9,8 @@ import java.util.Objects;
 
 /**
  * Cleans the GraphicsContext
+ *
+ * @author Adam NAILI
  */
 public final class ScreenManager {
   //TODO Class ScreenManager

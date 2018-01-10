@@ -10,6 +10,7 @@ import java.util.Objects;
 
 /**
  * A game.
+ * @author Adam NAILI
  */
 public final class Game {
   //TODO

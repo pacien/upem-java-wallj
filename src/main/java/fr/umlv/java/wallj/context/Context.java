@@ -8,6 +8,8 @@ import java.util.Objects;
 
 /**
  * A context used to store the current state of the application at one tick
+ *
+ * @author Adam NAILI
  */
 public final class Context {
   //TODO Class Context
