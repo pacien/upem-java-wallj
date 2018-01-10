@@ -126,26 +126,33 @@ package model {
     GARBAGE
     ROBOT
     BOMB
+
+    boolean isBounding()
+    boolean mustBeReachable()
+    boolean isTraversable()
+    boolean isMovableByExplosion()
   }
 
   class BlockFactory {
-    Block build(BlockType, Vec2)
+    Block build(BlockType, TileVec2)
   }
 
   abstract class Block {
+    BlockType
     List<Controller>
+    Vec2
 
-    Block(Vec2)
-    Vec2 getPosition()
-    void setPosition(Vec2)
+    Block(BlockType, List<Controller>, Vec2)
+    void setPos(Vec2)
+    BlockType getBlockType()
+    Vec2 getPos()
+    TileVec2 getTile()
     List<Event> update(Context)
   }
 
-  abstract class StaticBlock extends Block
-  class WallBlock extends StaticBlock
-  class TrashBlock extends StaticBlock
-  class BombBlock extends StaticBlock
-
+  class WallBlock extends Block
+  class TrashBlock extends Block
+  class BombBlock extends Block
   class GarbageBlock extends Block
   class RobotBlock extends Block
 
@@ -167,7 +174,6 @@ package controller {
   abstract class BlockController implements Controller {
     Block
     Controller(Block)
-    Block getBlock()
   }
 
   class BlockControllerFactory {

@@ -1,7 +1,10 @@
 package fr.umlv.java.wallj.controller;
 
 import fr.umlv.java.wallj.context.Context;
+import fr.umlv.java.wallj.event.Event;
+
+import java.util.List;
 
 public interface Controller {
-  void update(Context context);
+  List<Event> update(Context context);
 }
