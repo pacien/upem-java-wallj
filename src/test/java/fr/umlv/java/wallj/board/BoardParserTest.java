@@ -35,7 +35,7 @@ final class BoardParserTest {
 
     Board board = BoardParser.parse(getResourcePath("/maps/smallValid.txt"));
 
-    Assertions.assertEquals(board.getDim(), TileVec2.of(blocks.length, blocks[0].length));
+    Assertions.assertEquals(board.getDim(), TileVec2.of(blocks[0].length, blocks.length));
     for (int row = 0; row < blocks.length; ++row)
       for (int col = 0; col < blocks[0].length; ++col)
         Assertions.assertEquals(board.getBlockTypeAt(TileVec2.of(row, col)), blocks[row][col]);

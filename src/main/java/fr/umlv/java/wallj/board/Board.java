@@ -21,7 +21,7 @@ public final class Board {
      * @param height height in tiles
      */
     public Builder(int width, int height) {
-      this.map = new BlockType[width][height];
+      map = new BlockType[height][width];
     }
 
     /**
@@ -30,7 +30,7 @@ public final class Board {
      * @return the Builder
      */
     public Builder setBlockTypeAt(TileVec2 pos, BlockType type) {
-      map[pos.getCol()][pos.getRow()] = type;
+      map[pos.getRow()][pos.getCol()] = type;
       return this;
     }
 
@@ -55,7 +55,7 @@ public final class Board {
    * @return the element at the given position
    */
   public BlockType getBlockTypeAt(TileVec2 pos) {
-    return map[pos.getCol()][pos.getRow()];
+    return map[pos.getRow()][pos.getCol()];
   }
 
   /**
