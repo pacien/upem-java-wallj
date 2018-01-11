@@ -38,7 +38,7 @@ final class BoardParserTest {
     Assertions.assertEquals(board.getDim(), TileVec2.of(blocks[0].length, blocks.length));
     for (int row = 0; row < blocks.length; ++row)
       for (int col = 0; col < blocks[0].length; ++col)
-        Assertions.assertEquals(board.getBlockTypeAt(TileVec2.of(row, col)), blocks[row][col]);
+        Assertions.assertEquals(board.getBlockTypeAt(TileVec2.of(col, row)), blocks[row][col]);
   }
 
 }

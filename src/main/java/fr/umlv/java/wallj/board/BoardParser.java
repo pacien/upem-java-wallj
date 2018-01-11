@@ -23,7 +23,7 @@ public final class BoardParser {
     Board.Builder b = new Board.Builder(Matrix.getWidth(map), Matrix.getHeight(map));
     for (ListIterator<List<BlockType>> line = map.listIterator(); line.hasNext(); )
       for (ListIterator<BlockType> block = line.next().listIterator(); block.hasNext(); )
-        b.setBlockTypeAt(TileVec2.of(line.previousIndex(), block.nextIndex()), block.next());
+        b.setBlockTypeAt(TileVec2.of(block.nextIndex(), line.previousIndex()), block.next());
 
     return b.build();
   }
