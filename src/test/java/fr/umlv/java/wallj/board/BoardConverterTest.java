@@ -29,7 +29,6 @@ final class BoardConverterTest {
     builder.setBlockTypeAt(t2,BlockType.GARBAGE);
     builder.setBlockTypeAt(t3,BlockType.ROBOT);
     builder.setBlockTypeAt(t4,BlockType.TRASH);
-
     Board certifiedBoard = builder.build();
 
     blocks.add(BlockFactory.build(BlockType.WALL,t0));
@@ -37,12 +36,38 @@ final class BoardConverterTest {
     blocks.add(BlockFactory.build(BlockType.GARBAGE,t2));
     blocks.add(BlockFactory.build(BlockType.ROBOT,t3));
     blocks.add(BlockFactory.build(BlockType.TRASH,t4));
-
     Board board = BoardConverter.worldToBoard(blocks);
 
     Assertions.assertEquals(certifiedBoard,board);
-
   }
+
+  @Test
+  void testBoardToWorld(){
+    Board.Builder builder = new Board.Builder(5,1);
+    TileVec2 t0 = TileVec2.of(0,0);
+    TileVec2 t1 = TileVec2.of(1,0);
+    TileVec2 t2 = TileVec2.of(2,0);
+    TileVec2 t3 = TileVec2.of(3,0);
+    TileVec2 t4 = TileVec2.of(4,0);
+
+    builder.setBlockTypeAt(t0,BlockType.WALL);
+    builder.setBlockTypeAt(t1,BlockType.BOMB);
+    builder.setBlockTypeAt(t2,BlockType.GARBAGE);
+    builder.setBlockTypeAt(t3,BlockType.ROBOT);
+    builder.setBlockTypeAt(t4,BlockType.TRASH);
+    Board board = builder.build();
+
+    List<Block> certifiedBlocks = new LinkedList<>();
+
+    certifiedBlocks.add(BlockFactory.build(BlockType.WALL,t0));
+    certifiedBlocks.add(BlockFactory.build(BlockType.BOMB,t1));
+    certifiedBlocks.add(BlockFactory.build(BlockType.GARBAGE,t2));
+    certifiedBlocks.add(BlockFactory.build(BlockType.ROBOT,t3));
+    certifiedBlocks.add(BlockFactory.build(BlockType.TRASH,t4));
+
+    List<Block> blocks = BoardConverter.boardToWorld(board);
+  }
+
 
 }
 
