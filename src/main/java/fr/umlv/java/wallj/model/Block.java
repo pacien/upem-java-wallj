@@ -72,4 +72,19 @@ public abstract class Block {
            .collect(Collectors.toList());
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Block)) return false;
+    Block block = (Block) o;
+    return type == block.type &&
+           Objects.equals(controllers, block.controllers) &&
+           Objects.equals(pos, block.pos);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(type, controllers, pos);
+  }
+
 }

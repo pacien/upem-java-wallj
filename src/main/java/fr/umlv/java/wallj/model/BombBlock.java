@@ -2,6 +2,8 @@ package fr.umlv.java.wallj.model;
 
 import org.jbox2d.common.Vec2;
 
+import java.util.Objects;
+
 /**
  * A bomb block.
  *
@@ -23,6 +25,21 @@ public class BombBlock extends Block {
 
   public int getTimer() {
     return timer;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof BombBlock)) return false;
+    if (!super.equals(o)) return false;
+    BombBlock bombBlock = (BombBlock) o;
+    return timer == bombBlock.timer &&
+           super.equals(o);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), timer);
   }
 
 }
