@@ -14,12 +14,12 @@ public final class TileVec2 {
   private static final int TILE_DIM = 20;
 
   /**
-   * @param row the row
    * @param col the column
+   * @param row the row
    * @return a corresponding tile vector
    */
-  public static TileVec2 of(int row, int col) {
-    return new TileVec2(row, col);
+  public static TileVec2 of(int col, int row) {
+    return new TileVec2(col, row);
   }
 
   /**
@@ -30,18 +30,11 @@ public final class TileVec2 {
     return new TileVec2((int) (v.x / TILE_DIM), (int) (v.y / TILE_DIM));
   }
 
-  private final int row, col;
+  private final int col, row;
 
-  private TileVec2(int row, int col) {
-    this.row = row;
+  private TileVec2(int col, int row) {
     this.col = col;
-  }
-
-  /**
-   * @return the row
-   */
-  public int getRow() {
-    return row;
+    this.row = row;
   }
 
   /**
@@ -52,10 +45,17 @@ public final class TileVec2 {
   }
 
   /**
+   * @return the row
+   */
+  public int getRow() {
+    return row;
+  }
+
+  /**
    * @return the corresponding JBox2D coordinates of the top-left corner of the tile
    */
   public Vec2 toVec2() {
-    return new Vec2(row * TILE_DIM, col * TILE_DIM);
+    return new Vec2(col * TILE_DIM, row * TILE_DIM);
   }
 
   @Override
@@ -63,20 +63,20 @@ public final class TileVec2 {
     if (this == o) return true;
     if (!(o instanceof TileVec2)) return false;
     TileVec2 tileVec2 = (TileVec2) o;
-    return row == tileVec2.row &&
-           col == tileVec2.col;
+    return col == tileVec2.col &&
+           row == tileVec2.row;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(row, col);
+    return Objects.hash(col, row);
   }
 
   @Override
   public String toString() {
     return "TileVec2{" +
-           "row=" + row +
-           ", col=" + col +
+           "col=" + col +
+           ", row=" + row +
            '}';
   }
 
