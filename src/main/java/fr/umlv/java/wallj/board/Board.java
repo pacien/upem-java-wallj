@@ -3,6 +3,8 @@ package fr.umlv.java.wallj.board;
 import fr.umlv.java.wallj.model.BlockType;
 import fr.umlv.java.wallj.utils.Matrix;
 
+import java.util.Arrays;
+
 /**
  * An immutable BlockType matrix.
  *
@@ -63,6 +65,19 @@ public final class Board {
    */
   public TileVec2 getDim() {
     return TileVec2.of(Matrix.getWidth(map), Matrix.getHeight(map));
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Board)) return false;
+    Board board = (Board) o;
+    return Arrays.deepEquals(map, board.map);
+  }
+
+  @Override
+  public int hashCode() {
+    return Arrays.hashCode(map);
   }
 
 }
