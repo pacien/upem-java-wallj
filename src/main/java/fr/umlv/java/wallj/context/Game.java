@@ -1,49 +1,37 @@
 package fr.umlv.java.wallj.context;
 
 import fr.umlv.java.wallj.board.Board;
+import fr.umlv.java.wallj.controller.Controller;
 import fr.umlv.java.wallj.controller.GameController;
+import fr.umlv.java.wallj.event.Event;
+import fr.umlv.java.wallj.model.Stage;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * A game.
+ *
  * @author Adam NAILI
  */
 public final class Game {
-  //TODO
-  private final GameController gameController;
+  private Stage currentStage;
+  private final List<Controller> controllers;
   private int indexBoard;
   private final List<Board> boards;
 
   /**
-   * @param gameController the controller of the game
-   * @param boards         the list of boards charged for the game
+   * @param boards the list of boards charged for the game
    */
-  public Game(GameController gameController, List<Board> boards) {
-    this.gameController = Objects.requireNonNull(gameController);
+  public Game(List<Board> boards) {
+    this.controllers = new LinkedList<>();
+    this.controllers.add(new GameController());
     Objects.requireNonNull(boards);
     if (boards.isEmpty()) {
       throw new IllegalArgumentException("The list of boards is empty, not able to create a correct game from this.");
     }
     this.boards = Collections.unmodifiableList(boards);
     this.indexBoard = 0;
-  }
-
-  /**
-   * @return the game controller
-   */
-  public GameController getGameController() {
-    return gameController;
-  }
-
-  /**
-   * @return the current board of the game.
-   */
-  public Board getCurrentBoard() {
-    return boards.get(indexBoard);
+    this.currentStage = new Stage(this.boards.get(0));
   }
 
   /**
@@ -56,11 +44,41 @@ public final class Game {
   /**
    * @return the next board
    */
-  public Board nextBoard() {
-    if (indexBoard >= boards.size()) {
-      throw new NoSuchElementException("No more board for the game.");
+  private Board nextBoard() {
+    if (!hasNextBoard()) {
+      throw new IllegalStateException("No more board for the game.");
     }
     indexBoard++;
     return boards.get(indexBoard);
+  }
+
+  /**
+   * @return the current stage
+   */
+  public Stage getCurrentStage() {
+    return currentStage;
+  }
+
+  public void nextStage() {
+    if (hasNextBoard()) {
+      currentStage = new Stage(nextBoard());
+    }
+  }
+
+  public void retryStage() {
+    currentStage = new Stage(currentStage.getCurrentBoard());
+  }
+
+  /**
+   * @param context the current context
+   * @return a list of new events
+   */
+  public List<Event> update(Context context) {
+    LinkedList<Event> events = new LinkedList<>();
+    for (Controller controller : controllers) {
+      events.addAll(controller.update(context));
+    }
+    events.addAll(currentStage.update(context));
+    return events;
   }
 }
