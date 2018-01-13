@@ -13,17 +13,17 @@ import java.util.Objects;
  */
 public final class Context {
   //TODO Class Context
-  private final Stage stage;
+  private final Game game;
   private final List<Event> events;
   private final GraphicsContext graphicsContext;
 
   /**
-   * @param stage           the current stage
+   * @param game           the current game
    * @param events          the list of events of the tick
    * @param graphicsContext the current graphics context
    */
-  public Context(Stage stage, List<Event> events, GraphicsContext graphicsContext) {
-    this.stage = Objects.requireNonNull(stage);
+  public Context(Game game, List<Event> events, GraphicsContext graphicsContext) {
+    this.game = Objects.requireNonNull(game);
     this.events = Objects.requireNonNull(events);
     this.graphicsContext = Objects.requireNonNull(graphicsContext);
   }
@@ -31,8 +31,8 @@ public final class Context {
   /**
    * @return the stage
    */
-  public Stage getStage() {
-    return stage;
+  public Game getGame() {
+    return game;
   }
 
   /**
