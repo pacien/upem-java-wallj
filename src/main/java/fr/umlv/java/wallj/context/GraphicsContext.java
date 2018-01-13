@@ -14,7 +14,6 @@ import java.util.Objects;
  * @author Adam NAILI
  */
 public final class GraphicsContext {
-  //TODO Class GraphicsContext
   private final Graphics2D graphics2D;
   private final ScreenInfo screenInfo;
 

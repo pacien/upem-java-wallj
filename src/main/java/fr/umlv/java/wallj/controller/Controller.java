@@ -5,6 +5,9 @@ import fr.umlv.java.wallj.event.Event;
 
 import java.util.List;
 
+/**
+ * @author
+ */
 public interface Controller {
   List<Event> update(Context context);
 }
