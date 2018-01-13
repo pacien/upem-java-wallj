@@ -3,10 +3,6 @@
 skinparam linetype ortho
 
 package utils {
-  class PathFinder {
-    static List<Vec2> findPath(Board, TileVec2, TileVec2)
-  }
-
   class Matrix {
     static int getWidth(...)
     static int getHeight(...)
@@ -115,6 +111,10 @@ package board {
     Vec2
     TileVec2(col, row)
     Vec2 toPixelPos()
+  }
+
+  class PathFinder {
+    static List<TileVec2> findPath(Board, TileVec2, TileVec2)
   }
 }
 

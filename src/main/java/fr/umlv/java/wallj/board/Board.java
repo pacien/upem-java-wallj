@@ -3,7 +3,11 @@ package fr.umlv.java.wallj.board;
 import fr.umlv.java.wallj.model.BlockType;
 import fr.umlv.java.wallj.utils.Matrix;
 
+import java.util.AbstractMap;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * An immutable BlockType matrix.
@@ -65,6 +69,16 @@ public final class Board {
    */
   public TileVec2 getDim() {
     return TileVec2.of(Matrix.getWidth(map), Matrix.getHeight(map));
+  }
+
+  /**
+   * @return a stream of block types and their associated tile position vectors
+   */
+  public Stream<Map.Entry<TileVec2, BlockType>> stream() {
+    TileVec2 dim = getDim();
+    return IntStream.range(0, dim.getRow() * dim.getCol())
+           .mapToObj(i -> TileVec2.of(i % dim.getCol(), i / dim.getCol()))
+           .map(v -> new AbstractMap.SimpleImmutableEntry<>(v, getBlockTypeAt(v)));
   }
 
   @Override
