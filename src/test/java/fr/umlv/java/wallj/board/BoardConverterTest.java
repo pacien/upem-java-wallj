@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Adam NAILI
@@ -66,8 +68,9 @@ final class BoardConverterTest {
     certifiedBlocks.add(BlockFactory.build(BlockType.TRASH,t4));
 
     List<Block> blocks = BoardConverter.boardToWorld(board);
+    List<BlockType> blockTypes = blocks.stream().map(Block::getType).collect(Collectors.toList());
+    List<BlockType> blockTypesCertified= certifiedBlocks.stream().map(Block::getType).collect(Collectors.toList());
+    Assertions.assertEquals(blockTypesCertified,blockTypes);
   }
-
-
 }
 
