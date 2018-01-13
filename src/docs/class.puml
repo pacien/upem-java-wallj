@@ -16,8 +16,7 @@ package utils {
 
 package viewer {
   class Viewer {
-    Game
-    Stage
+    final Game
     void main(String[])
     void eventLoop(ApplicationContext)
     void renderFrame(Graphics2D,ApplicationContext)
@@ -26,10 +25,13 @@ package viewer {
 
 package context {
   class Context {
-    Context(Stage,List<Event>,GraphicsContext)
-    final Stage
+    Context(Game,List<Event>,GraphicsContext)
+    final Game
     final List<Event>
     final GraphicsContext
+    Game getGame()
+    List<Event> getEvents()
+    GraphicsContext getGraphicsContext()
   }
 
   class GraphicsContext {
@@ -53,10 +55,15 @@ package context {
   }
 
   class Game {
-    final GameController
-    int index
+    Stage
+    final List<Controller>
+    int indexBoard
     final List<Board>
-    Game(GameController,List<Board>)
+    Game(List<Board>)
+    Stage getStage()
+    void nextStage();
+    void retryStage();
+    List<Event> update(Context context);
   }
 }
 
@@ -157,8 +164,8 @@ package model {
   class RobotBlock extends Block
 
   class Stage {
-    StageController
     List<Block>
+    Board
     Stage(Board)
     List<Block> getBlocks()
     List<Event> update(Context)
@@ -181,7 +188,6 @@ package controller {
   }
 
   class GameController implements Controller
-  class StageController implements Controller
 
   abstract class PhysicsController extends BlockController
   abstract class DisplayController extends BlockController
