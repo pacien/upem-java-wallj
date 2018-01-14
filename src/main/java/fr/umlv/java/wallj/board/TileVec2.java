@@ -11,7 +11,7 @@ import java.util.Objects;
  */
 public final class TileVec2 {
 
-  private static final int TILE_DIM = 20;
+  public static final int TILE_DIM = 20;
 
   /**
    * @param col the column
