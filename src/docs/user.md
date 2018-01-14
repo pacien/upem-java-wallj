@@ -106,12 +106,14 @@ A world is defined as valid if its blocks fulfill the following criteria:
 
 * The bounding box of the defined world must be made of bounding blocks.
 * The interior space formed by bounding blocks must be unique and simple.
-* Reachable blocks are either be adjacent or belong to the interior space.
+* Reachable blocks are either adjacent or belong to the interior space.
 * The world must contain at least one trash can and one garbage block.
 
 Only valid worlds can be loaded into the game.
 
 The validity of a world may not guaranty the solvability of the puzzle.
+
+\newpage
 
 __Example of invalid world definition:__
 ```
