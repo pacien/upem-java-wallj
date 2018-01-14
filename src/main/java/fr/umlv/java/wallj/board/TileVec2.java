@@ -58,6 +58,10 @@ public final class TileVec2 {
     return new Vec2(col * TILE_DIM, row * TILE_DIM);
   }
 
+  public TileVec2 add(TileVec2 v) {
+    return TileVec2.of(col + v.col, row + v.row);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
