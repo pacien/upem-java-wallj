@@ -2,6 +2,9 @@
 
 skinparam linetype ortho
 
+class Main{
+    static void main(String[])
+}
 package utils {
   class Matrix {
     static int getWidth(...)
@@ -14,7 +17,6 @@ package viewer {
   class Viewer {
     final Game
     Viewer(List<Board>)
-    void main(String[])
     void eventLoop(ApplicationContext)
     void renderFrame(Graphics2D,ApplicationContext,List<Event>)
   }
@@ -234,6 +236,8 @@ Stage --> BoardConverter
 
 PhysicsController --() JBox2D
 Zen5 ()-- Viewer
+Zen5 ()-- Main
+Main --> viewer
 
 viewer --> context
 viewer --> block
