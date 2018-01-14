@@ -1,6 +1,6 @@
 package fr.umlv.java.wallj.controller;
 
-import fr.umlv.java.wallj.model.*;
+import fr.umlv.java.wallj.block.*;
 
 import java.util.Arrays;
 import java.util.Collections;

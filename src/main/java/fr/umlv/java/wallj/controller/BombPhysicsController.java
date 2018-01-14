@@ -2,7 +2,7 @@ package fr.umlv.java.wallj.controller;
 
 import fr.umlv.java.wallj.context.Context;
 import fr.umlv.java.wallj.event.Event;
-import fr.umlv.java.wallj.model.BombBlock;
+import fr.umlv.java.wallj.block.BombBlock;
 
 import java.util.List;
 import java.util.Objects;

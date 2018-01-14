@@ -1,7 +1,6 @@
 package fr.umlv.java.wallj.context;
 
 import fr.umlv.java.wallj.event.Event;
-import fr.umlv.java.wallj.model.Stage;
 
 import java.util.List;
 import java.util.Objects;

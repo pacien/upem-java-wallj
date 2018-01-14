@@ -141,7 +141,7 @@ package board {
   }
 }
 
-package model {
+package block {
   enum BlockType {
     FREE
     WALL

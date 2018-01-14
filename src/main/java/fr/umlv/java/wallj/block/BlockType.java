@@ -1,4 +1,4 @@
-package fr.umlv.java.wallj.model;
+package fr.umlv.java.wallj.block;
 
 /**
  * Enumeration of the types of blocks handled in the game.

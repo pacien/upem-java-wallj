@@ -4,7 +4,7 @@ import fr.umlv.java.wallj.board.TileVec2;
 import fr.umlv.java.wallj.context.Context;
 import fr.umlv.java.wallj.context.GraphicsContext;
 import fr.umlv.java.wallj.event.Event;
-import fr.umlv.java.wallj.model.WallBlock;
+import fr.umlv.java.wallj.block.WallBlock;
 
 import java.awt.*;
 import java.util.Collections;

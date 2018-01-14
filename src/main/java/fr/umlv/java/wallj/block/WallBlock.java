@@ -1,4 +1,4 @@
-package fr.umlv.java.wallj.model;
+package fr.umlv.java.wallj.block;
 
 import org.jbox2d.common.Vec2;
 

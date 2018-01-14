@@ -1,6 +1,6 @@
 package fr.umlv.java.wallj.board;
 
-import fr.umlv.java.wallj.model.BlockType;
+import fr.umlv.java.wallj.block.BlockType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

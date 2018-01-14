@@ -1,6 +1,6 @@
 package fr.umlv.java.wallj.board;
 
-import fr.umlv.java.wallj.model.*;
+import fr.umlv.java.wallj.block.*;
 
 import java.util.ArrayList;
 import java.util.List;

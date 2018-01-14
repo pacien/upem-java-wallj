@@ -1,15 +1,12 @@
 package fr.umlv.java.wallj.board;
 
-import fr.umlv.java.wallj.model.*;
-import org.jbox2d.common.Vec2;
+import fr.umlv.java.wallj.block.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Adam NAILI

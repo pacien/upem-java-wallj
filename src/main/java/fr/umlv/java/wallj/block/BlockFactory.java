@@ -1,4 +1,4 @@
-package fr.umlv.java.wallj.model;
+package fr.umlv.java.wallj.block;
 
 import fr.umlv.java.wallj.board.TileVec2;
 import fr.umlv.java.wallj.controller.BlockControllerFactory;

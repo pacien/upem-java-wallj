@@ -1,6 +1,6 @@
 package fr.umlv.java.wallj.board;
 
-import fr.umlv.java.wallj.model.BlockType;
+import fr.umlv.java.wallj.block.BlockType;
 
 import java.util.*;
 import java.util.function.Predicate;
