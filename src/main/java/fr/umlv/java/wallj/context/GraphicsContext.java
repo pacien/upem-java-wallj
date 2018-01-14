@@ -1,5 +1,6 @@
 package fr.umlv.java.wallj.context;
 
+import fr.umlv.java.wallj.board.TileVec2;
 import fr.umlv.zen5.ScreenInfo;
 import org.jbox2d.common.Vec2;
 
@@ -47,7 +48,7 @@ public final class GraphicsContext {
    */
   public void paintCircle(Color color, Vec2 position, float size) {
     graphics2D.setColor(color);
-    graphics2D.fill(new Ellipse2D.Float(position.x, position.y, size, size));
+    graphics2D.fillOval(Math.round(position.x + (TileVec2.TILE_DIM - size) / 2) - 1, Math.round(position.y + (TileVec2.TILE_DIM - size) / 2) - 1, Math.round(size), Math.round(size));
   }
 
   /**
@@ -58,6 +59,11 @@ public final class GraphicsContext {
    */
   public void paintRectangle(Color color, Vec2 position, float width, float height) {
     graphics2D.setColor(color);
-    graphics2D.fill(new Rectangle2D.Float(position.x, position.y, width, height));
+    graphics2D.fillRect(Math.round(position.x), Math.round(position.y), Math.round(width), Math.round(height));
+  }
+
+  public void paintString(Color color, Vec2 position, String string){
+    graphics2D.setColor(color);
+    graphics2D.drawString(string,position.x, position.y);
   }
 }
