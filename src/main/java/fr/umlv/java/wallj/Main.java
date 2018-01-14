@@ -41,11 +41,11 @@ public class Main {
       Viewer viewer = new Viewer(boards);
       Application.run(Color.BLACK, viewer::eventLoop);
     } catch (URISyntaxException e) {
-      System.err.println("Error in path syntax.");
+      System.err.println(e.getMessage());
       System.exit(1);
     } catch (IOException e) {
-      System.err.println("Something occurred while reading the files.");
-      System.exit(1);
+      System.err.println(e.getMessage());
+      System.exit(2);
     }
   }
 }
