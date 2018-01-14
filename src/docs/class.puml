@@ -17,9 +17,10 @@ package utils {
 package viewer {
   class Viewer {
     final Game
+    Viewer(List<Board>)
     void main(String[])
     void eventLoop(ApplicationContext)
-    void renderFrame(Graphics2D,ApplicationContext)
+    void renderFrame(Graphics2D,ApplicationContext,List<Event>)
   }
 }
 
@@ -59,11 +60,14 @@ package context {
     final List<Controller>
     int indexBoard
     final List<Board>
+    bool over
     Game(List<Board>)
     Stage getStage()
-    void nextStage();
-    void retryStage();
-    List<Event> update(Context context);
+    bool isOver()
+    void setOver()
+    void nextStage()
+    void retryStage()
+    List<Event> update(Context context)
   }
 }
 
@@ -88,6 +92,8 @@ package event {
   }
 
   class ConfirmEvent implements InputEvent
+  class GameOverEvent implements Event
+
 
   class ExplosionEvent implements GameEvent {
     Block source
@@ -186,7 +192,6 @@ package controller {
   class BlockControllerFactory {
     BlockController build(Block)
   }
-
   class GameController implements Controller
 
   abstract class PhysicsController extends BlockController
