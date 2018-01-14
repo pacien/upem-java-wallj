@@ -31,6 +31,12 @@ public class Stage {
    */
   public List<Event> update(Context context) {
     //TODO
+    return null;
+  }
+
+  public boolean isCleared() {
+    // TODO
+    return false;
   }
 
 }

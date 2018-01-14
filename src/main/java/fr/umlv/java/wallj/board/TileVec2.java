@@ -2,7 +2,10 @@ package fr.umlv.java.wallj.board;
 
 import org.jbox2d.common.Vec2;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * A typed immutable tile coordinate vector containing the coordinates of a Tile in a Board.
@@ -12,6 +15,11 @@ import java.util.Objects;
 public final class TileVec2 {
 
   public static final int TILE_DIM = 20;
+  private static final List<TileVec2> NEIGHBOR_OFFSETS = Arrays.asList(
+  of(0, -1),
+  of(-1, 0),
+  of(0, 1),
+  of(1, 0));
 
   /**
    * @param col the column
@@ -60,6 +68,13 @@ public final class TileVec2 {
 
   public TileVec2 add(TileVec2 v) {
     return TileVec2.of(col + v.col, row + v.row);
+  }
+
+  /**
+   * @return a list of the surrounding direct neighbours of this tile
+   */
+  public List<TileVec2> neighbors() {
+    return NEIGHBOR_OFFSETS.stream().map(this::add).collect(Collectors.toList());
   }
 
   @Override

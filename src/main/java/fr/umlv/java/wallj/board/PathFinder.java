@@ -12,11 +12,6 @@ import java.util.stream.Collectors;
 public class PathFinder {
 
   private static final int LEAP_COST = 1;
-  private static final List<TileVec2> NEIGHBOR_OFFSETS = Arrays.asList(
-  TileVec2.of(0, -1),
-  TileVec2.of(-1, 0),
-  TileVec2.of(0, 1),
-  TileVec2.of(1, 0));
 
   private static class Node<T> {
     final T val;
@@ -99,8 +94,8 @@ public class PathFinder {
                                         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     for (Node<TileVec2> node : map.values())
-      NEIGHBOR_OFFSETS.stream()
-      .map(offsetVector -> map.get(node.val.add(offsetVector)))
+      node.val.neighbors().stream()
+      .map(map::get)
       .filter(Objects::nonNull)
       .forEach(neighbor -> node.neighbors.put(neighbor, LEAP_COST));
 
