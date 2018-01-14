@@ -236,12 +236,12 @@ PhysicsController --() JBox2D
 Zen5 ()-- Viewer
 
 viewer --> context
-viewer --> model
+viewer --> block
 
 context --> event
 
-model --> controller
+block --> controller
 
-board --> model
+board --> block
 
 @enduml
