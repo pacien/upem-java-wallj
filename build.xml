@@ -8,7 +8,7 @@
     <property name="dir.classes" value="classes"/>
     <property name="dir.docs" value="docs"/>
     <property name="dir.apidoc" value="${dir.docs}/doc"/>
-    <property name="dir.zipsubdir" value="Naili_Tran-Girard_WallJ.zip"/>
+    <property name="dir.zipsubdir" value="Naili_Tran-Girard_WallJ"/>
 
     <property name="file.jar" value="${dir.out}/wallj.jar"/>
     <property name="file.zip" value="${dir.out}/NailiTran-Girard_WallJ.zip"/>
