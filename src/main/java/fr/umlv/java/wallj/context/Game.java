@@ -18,6 +18,7 @@ public final class Game {
   private final List<Controller> controllers;
   private int indexBoard;
   private final List<Board> boards;
+  private boolean over;
 
   /**
    * @param boards the list of boards charged for the game
@@ -32,6 +33,7 @@ public final class Game {
     this.boards = Collections.unmodifiableList(boards);
     this.indexBoard = 0;
     this.currentStage = new Stage(this.boards.get(0));
+    this.over = false;
   }
 
   /**
@@ -59,6 +61,13 @@ public final class Game {
     return currentStage;
   }
 
+  public boolean isOver() {
+    return over;
+  }
+  public void setOver(){
+    over = true;
+  }
+
   public void nextStage() {
     if (hasNextBoard()) {
       currentStage = new Stage(nextBoard());
@@ -81,4 +90,6 @@ public final class Game {
     events.addAll(currentStage.update(context));
     return events;
   }
+
+
 }

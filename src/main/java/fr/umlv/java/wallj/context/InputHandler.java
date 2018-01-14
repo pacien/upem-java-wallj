@@ -33,7 +33,7 @@ public final class InputHandler {
   /**
    * @return the list of events converted from Zen 5 events to game events
    */
-  List<fr.umlv.java.wallj.event.Event> getEvents() {
+  public List<fr.umlv.java.wallj.event.Event> getEvents() {
     LinkedList<fr.umlv.java.wallj.event.Event> events = new LinkedList<>();
     fr.umlv.zen5.Event event = applicationContext.pollEvent();
     if (event != null) {
