@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  */
 public final class TileVec2 {
 
-  private static final int TILE_DIM = 20;
+  public static final int TILE_DIM = 20;
   private static final List<TileVec2> NEIGHBOR_OFFSETS = Arrays.asList(
   of(0, -1),
   of(-1, 0),
