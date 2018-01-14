@@ -14,7 +14,7 @@ public class GameController implements Controller {
   @Override
   public List<Event> update(Context context) {
     boolean isConfirmEvent = context.getEvents().stream().anyMatch(event -> event instanceof ConfirmEvent);
-    boolean isGameOver = context.getEvents().stream().allMatch(event -> event instanceof)
+    boolean isGameOver = context.getEvents().stream().allMatch(event -> event instanceof GameOverEvent);
     Game currentGame = context.getGame();
     LinkedList<Event> events = new LinkedList<>();
     if (isConfirmEvent) {
