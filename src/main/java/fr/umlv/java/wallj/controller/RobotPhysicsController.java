@@ -4,6 +4,7 @@ import fr.umlv.java.wallj.context.Context;
 import fr.umlv.java.wallj.event.Event;
 import fr.umlv.java.wallj.block.RobotBlock;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,7 +20,7 @@ public class RobotPhysicsController extends PhysicsController {
   @Override
   public List<Event> update(Context context) {
     //TODO
-    return null;
+    return Collections.emptyList();
   }
 
 }

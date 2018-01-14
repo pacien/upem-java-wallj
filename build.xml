@@ -71,6 +71,7 @@
             <zipfileset dir="${dir.lib}" includes="*.jar" prefix="${dir.zipsubdir}/${dir.lib}"/>
             <zipfileset dir="${dir.javasrc}" includes="**/*.java" prefix="${dir.zipsubdir}/${dir.javasrc}"/>
             <zipfileset dir="${dir.docs}" includes="*.pdf" prefix="${dir.zipsubdir}/${dir.docs}"/>
+            <zipfileset dir="${dir.docs}" includes="*.puml" prefix="${dir.zipsubdir}/${dir.docs}"/>
 
             <zipfileset file="${file.ant}" prefix="${dir.zipsubdir}"/>
             <zipfileset file="${file.jar}" prefix="${dir.zipsubdir}"/>

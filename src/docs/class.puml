@@ -36,6 +36,7 @@ package context {
     final ScreenInfo
     paintCircle(Color, Vec2, float)
     paintSquare(Color, Vec2, float, float)
+    paintString(Color, Vec2,String)
   }
 
   class InputHandler {
