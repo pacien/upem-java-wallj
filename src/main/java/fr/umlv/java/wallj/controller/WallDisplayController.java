@@ -23,7 +23,7 @@ public class WallDisplayController extends BlockController {
   @Override
   public List<Event> update(Context context) {
     GraphicsContext graphicsContext = context.getGraphicsContext();
-    graphicsContext.paintRectangle(Color.GRAY,wall.getPos(), TileVec2.TILE_DIM,TileVec2.TILE_DIM);
+    graphicsContext.paintRectangle(Color.BLACK,wall.getPos(), TileVec2.TILE_DIM,TileVec2.TILE_DIM);
     return Collections.emptyList();
   }
 
