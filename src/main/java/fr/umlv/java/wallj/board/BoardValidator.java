@@ -91,7 +91,8 @@ public class BoardValidator {
              .filter(blockEntry -> blockEntry.getValue().mustBeReachable())
              .allMatch(blockEntry -> blockEntry.getKey().neighbors().stream()
                                      .filter(neighbor -> inBoard(dim, neighbor))
-                                     .anyMatch(neighbor -> b.getBlockTypeAt(neighbor).isTraversable()));
+                                     .anyMatch(neighbor -> b.getBlockTypeAt(neighbor).isTraversable() ||
+                                                           b.getBlockTypeAt(neighbor).isMovableByExplosion()));
     }
 
     /**

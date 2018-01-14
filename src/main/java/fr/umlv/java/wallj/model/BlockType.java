@@ -10,7 +10,7 @@ public enum BlockType {
   FREE(false, true, true, false),
   WALL(true, false, false, false),
   TRASH(true, true, false, false),
-  GARBAGE(false, true, true, true),
+  GARBAGE(false, true, false, true),
   ROBOT(false, false, true, false),
   BOMB(false, false, true, false);
 

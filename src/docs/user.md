@@ -69,8 +69,8 @@ Entity type Appearance   Pushable by bomb Traversable by robot
 ----------- ------------ ---------------- --------------------
 Wall        Black square No               No
 Trash can   Red square   No               No
+Bomb        Black disk   No               No
 Free        Empty        No               Yes
-Bomb        Black disk   No               Yes
 Garbage     Brown disk   Yes              Yes
 Robot       Blue disk    /                /
 
@@ -105,8 +105,8 @@ Wall        W         Yes      No
 A world is defined as valid if its blocks fulfill the following criteria:
 
 * The bounding box of the defined world must be made of bounding blocks.
-* The interior space formed by bounding blocks must be unique and simple.
-* Reachable blocks are either adjacent or belong to the interior space.
+* The interior space formed by traversable blocks must be unique and simple.
+* Reachable blocks are either adjacent or belonging to the interior space.
 * The world must contain at least one trash can and one garbage block.
 * The world must have enough free tiles to contain all droppable bombs.
 
@@ -118,11 +118,11 @@ The validity of a world may not guaranty the solvability of the puzzle.
 
 __Example of invalid world definition:__
 ```
-WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-W                              W                               W
-W                              W                               W    T
-                      WWWWWWWWWW                               W
-                      W        W                               W
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW         W
+W                              W                               W   WWW   W
+W                              W                               W   WTW   W
+                      WWWWWWWWWW                               W   WWW   W
+                      W        W                               W         W
                       W        W                               WWWWWWWWWWW
                       WWWWWWWWWW                                         W
 W                              W                                         W
@@ -137,7 +137,7 @@ W                                                              WWWWWWWWWWW
 W                                                              WWWWWWWWWWW
 T                     WWWWWWWWWW                               WWWWWWWWWWW
 T                     WWWWWWWWWW        GGGGGGGGGGGGG          WWWWWWWWWWW
-T                     WWWWWWWWWW        GGGGGGGG    G          WWWWWWWWWWW
+T                     WWWWWWWWWW        GGGGGGGG               WWWWWWWWWWW
 T                     WWWWWWWWWW        GGGGGGGGGGGGG                    W
 W                              W                                         W
 W                              W                                         W
