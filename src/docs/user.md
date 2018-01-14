@@ -1,7 +1,7 @@
 ---
 title: "BSc IN S5 / OOP with Java / Wall-J / User manual"
 author: [Pacien TRAN-GIRARD, Adam NAILI]
-date: 2018-01-03
+date: 2018-01-14
 ...
 
 # Preamble
@@ -108,6 +108,7 @@ A world is defined as valid if its blocks fulfill the following criteria:
 * The interior space formed by bounding blocks must be unique and simple.
 * Reachable blocks are either adjacent or belong to the interior space.
 * The world must contain at least one trash can and one garbage block.
+* The world must have enough free tiles to contain all droppable bombs.
 
 Only valid worlds can be loaded into the game.
 

@@ -59,7 +59,6 @@ public final class BoardParser {
   public static Board parse(Path filePath) throws IOException {
     return buildBoard(Files.lines(filePath)
                       .filter(s -> !s.isEmpty())
-                      .map(String::trim)
                       .map(BoardParser::parseLine)
                       .collect(Collectors.toList()));
   }
