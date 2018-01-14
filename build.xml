@@ -3,7 +3,8 @@
     <property name="dir.out" value="."/>
     <property name="dir.lib" value="lib"/>
     <property name="dir.src" value="src"/>
-    <property name="dir.javasrc" value="${dir.src}/main/java"/>
+    <property name="dir.javasrc" value="${dir.src}/main"/>
+    <property name="dir.testsrc" value="${dir.src}/test"/>
     <property name="dir.docsrc" value="${dir.src}/docs"/>
     <property name="dir.classes" value="classes"/>
     <property name="dir.docs" value="docs"/>
@@ -43,7 +44,7 @@
 
     <target name="javadoc">
         <mkdir dir="${dir.apidoc}"/>
-        <javadoc sourcepath="${dir.javasrc}" destdir="${dir.apidoc}"/>
+        <javadoc sourcepath="${dir.javasrc}/java" destdir="${dir.apidoc}"/>
     </target>
 
     <target name="docs">
@@ -69,7 +70,8 @@
             <zipfileset dir="." excludes="**/*" prefix="${dir.zipsubdir}/${dir.classes}"/>
 
             <zipfileset dir="${dir.lib}" includes="*.jar" prefix="${dir.zipsubdir}/${dir.lib}"/>
-            <zipfileset dir="${dir.javasrc}" includes="**/*.java" prefix="${dir.zipsubdir}/${dir.javasrc}"/>
+            <zipfileset dir="${dir.javasrc}" includes="**/*" prefix="${dir.zipsubdir}/${dir.javasrc}"/>
+            <zipfileset dir="${dir.testsrc}" includes="**/*" prefix="${dir.zipsubdir}/${dir.testsrc}"/>
             <zipfileset dir="${dir.docs}" includes="*.pdf" prefix="${dir.zipsubdir}/${dir.docs}"/>
             <zipfileset dir="${dir.docs}" includes="*.puml" prefix="${dir.zipsubdir}/${dir.docs}"/>
 
