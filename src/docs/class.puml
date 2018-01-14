@@ -102,6 +102,7 @@ package board {
     Board(width, height)
     BlockType getBlockTypeAt(TileVec2)
     BlockType setBlockTypeAt(TileVec2, BlockType)
+    Stream<Map.Entry<TileVec2, BlockType>> stream()
   }
 
   class BoardParser {
@@ -109,7 +110,12 @@ package board {
   }
 
   class BoardValidator {
-    static bool validate(Board)
+    static class Constraint
+    Board
+
+    BoardValidator(Board)
+    BoardValidator validate(Predicate<Board>, String error)
+    Board get()
   }
 
   class BoardConverter {
@@ -124,10 +130,14 @@ package board {
     Vec2
     TileVec2(col, row)
     Vec2 toPixelPos()
+    List<TileVec2> neighbors()
   }
 
   class PathFinder {
-    static List<TileVec2> findPath(Board, TileVec2, TileVec2)
+    Graph
+
+    PathFinder(Board)
+    List<TileVec2> findPath(TileVec2 origin, TileVec2 target)
   }
 }
 
