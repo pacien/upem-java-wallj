@@ -81,6 +81,7 @@ TODO:
 
 - include a simplified diagram here
 - explain event handling and propagation
+- explain why not mailbox/event subscription system
 - explain how it minimizes coupling
 - explain how we can add stuff like a second robot and whatnot
 
