@@ -3,6 +3,7 @@
     <property name="dir.out" value="."/>
     <property name="dir.lib" value="lib"/>
     <property name="dir.src" value="src"/>
+    <property name="dir.mainres" value="${dir.src}/main/resources"/>
     <property name="dir.javasrc" value="${dir.src}/main"/>
     <property name="dir.testsrc" value="${dir.src}/test"/>
     <property name="dir.docsrc" value="${dir.src}/docs"/>
@@ -39,6 +40,7 @@
                 <attribute name="Class-Path" value="${jar.classpath}"/>
             </manifest>
             <zipfileset prefix="${dir.lib}" dir="${dir.lib}" includes="*.jar"/>
+            <zipfileset prefix="" dir="${dir.mainres}" includes="**/*.txt"/>
         </jar>
     </target>
 
