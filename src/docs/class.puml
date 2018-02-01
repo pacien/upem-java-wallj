@@ -13,7 +13,6 @@ package viewer {
     final Game
     Viewer(List<Board>)
     void eventLoop(ApplicationContext)
-    void renderFrame(Graphics2D,ApplicationContext,List<Event>)
   }
 }
 

@@ -49,7 +49,13 @@ public final class Viewer {
       Duration last = lastExecDuration;
       long timeBeforeExec = System.currentTimeMillis();
       applicationContext.renderFrame(graphics2D -> {
-        events.addAll(renderFrame(graphics2D, applicationContext, events, last)); //add the new events returned by updates
+        InputHandler inputHandler = new InputHandler(applicationContext);
+        ScreenManager screenManager = new ScreenManager(applicationContext, graphics2D);
+        events.addAll(inputHandler.getEvents());
+        Context context = new Context(currentGame, events, screenManager.clearScreen(), last);
+        List<Event> newEvents = currentGame.update(context); //return new events created from update();
+        events.clear();
+        events.addAll(newEvents); //add the new events returned by updates
       });
       long timeAfterExec = System.currentTimeMillis();
       lastExecDuration = Duration.ofMillis(timeAfterExec - timeBeforeExec);
@@ -61,20 +67,6 @@ public final class Viewer {
       }
     }
     applicationContext.exit(0);
-  }
-
-  /**
-   * @param graphics2D         the graphic2D from Zen 5
-   * @param applicationContext the application context from Zen 5
-   */
-  public List<Event> renderFrame(Graphics2D graphics2D, ApplicationContext applicationContext, List<Event> events, Duration lastExecDuration) {
-    InputHandler inputHandler = new InputHandler(applicationContext);
-    ScreenManager screenManager = new ScreenManager(applicationContext, graphics2D);
-    events.addAll(inputHandler.getEvents());
-    Context context = new Context(currentGame, events, screenManager.clearScreen(), lastExecDuration);
-    List<Event> newEvents = currentGame.update(context); //return new events created from update();
-    events.clear();
-    return newEvents;
   }
 }
 
