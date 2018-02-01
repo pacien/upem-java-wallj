@@ -38,7 +38,7 @@ The program can be started by running the following command:
 
 A custom world set contained within a directory can be loaded by supplying its path as command line argument as such:
 
-    java -jar wallj.jar /home/sforthright/bnl/op_cleanup/
+    java -Dlevels=/home/sforthright/bnl/op_cleanup/ -jar wallj.jar
 
 World definition files stored within the given directories and named as `level$i.txt`, where `$i` is a padded integer,
 are loaded in alphanumerical order.
