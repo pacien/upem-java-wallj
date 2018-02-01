@@ -1,7 +1,6 @@
 package fr.umlv.java.wallj.board;
 
 import fr.umlv.java.wallj.block.BlockType;
-import fr.umlv.java.wallj.utils.Matrix;
 
 import java.util.AbstractMap;
 import java.util.Arrays;
