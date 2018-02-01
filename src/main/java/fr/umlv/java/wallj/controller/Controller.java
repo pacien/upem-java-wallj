@@ -1,13 +1,11 @@
 package fr.umlv.java.wallj.controller;
 
-import fr.umlv.java.wallj.context.Context;
-import fr.umlv.java.wallj.event.Event;
-
-import java.util.List;
+import fr.umlv.java.wallj.context.Updateable;
 
 /**
- * @author
+ * @author Pacien TRAN-GIRARD
  */
-public interface Controller {
-  List<Event> update(Context context);
+@FunctionalInterface
+public interface Controller extends Updateable {
+
 }

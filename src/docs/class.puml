@@ -23,6 +23,11 @@ package viewer {
 }
 
 package context {
+  interface Updateable {
+    List<Event> update(Context)
+    static List<Event> updateAll(List<Updateable>, Context)
+  }
+
   class Context {
     Context(Game,List<Event>,GraphicsContext)
     Game getGame()
@@ -52,7 +57,7 @@ package context {
     GraphicsContext clearScreen()
   }
 
-  class Game {
+  class Game implements Updateable {
     Stage
     final List<Controller>
     int indexBoard
@@ -90,7 +95,6 @@ package event {
 
   class ConfirmEvent implements InputEvent
   class GameOverEvent implements Event
-
 
   class ExplosionEvent implements GameEvent {
     Block source
@@ -161,7 +165,7 @@ package block {
     Block build(BlockType, TileVec2)
   }
 
-  abstract class Block {
+  abstract class Block implements Updateable {
     BlockType
     List<Controller>
     Vec2
@@ -180,10 +184,11 @@ package block {
   class GarbageBlock extends Block
   class RobotBlock extends Block
 
-  class Stage {
+  class Stage implements Updateable {
     List<Block>
     Board
     Stage(Board)
+    Board getBoard()
     List<Block> getBlocks()
     List<Event> update(Context)
     bool isCleared()
@@ -191,9 +196,7 @@ package block {
 }
 
 package controller {
-  interface Controller {
-    List<Event> update(Context)
-  }
+  interface Controller extends Updateable
 
   abstract class BlockController implements Controller {
     Block

@@ -2,6 +2,7 @@ package fr.umlv.java.wallj.block;
 
 import fr.umlv.java.wallj.board.TileVec2;
 import fr.umlv.java.wallj.context.Context;
+import fr.umlv.java.wallj.context.Updateable;
 import fr.umlv.java.wallj.controller.BlockController;
 import fr.umlv.java.wallj.controller.Controller;
 import fr.umlv.java.wallj.event.Event;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
  *
  * @author Pacien TRAN-GIRARD
  */
-public abstract class Block {
+public abstract class Block implements Updateable {
 
   private final BlockType type;
   private List<Controller> controllers;
@@ -66,6 +67,7 @@ public abstract class Block {
    * @param ctx execution context
    * @return list of generated events
    */
+  @Override
   public List<Event> update(Context ctx) {
     return controllers.stream()
            .flatMap(controller -> controller.update(ctx).stream())

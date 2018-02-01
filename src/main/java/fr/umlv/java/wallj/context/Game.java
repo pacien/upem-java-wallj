@@ -13,7 +13,7 @@ import java.util.*;
  *
  * @author Adam NAILI
  */
-public final class Game {
+public final class Game implements Updateable {
   private Stage currentStage;
   private final List<Controller> controllers;
   private int indexBoard;
@@ -75,13 +75,14 @@ public final class Game {
   }
 
   public void retryStage() {
-    currentStage = new Stage(currentStage.getCurrentBoard());
+    currentStage = new Stage(currentStage.getBoard());
   }
 
   /**
    * @param context the current context
    * @return a list of new events
    */
+  @Override
   public List<Event> update(Context context) {
     LinkedList<Event> events = new LinkedList<>();
     for (Controller controller : controllers) {
