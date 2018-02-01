@@ -1,10 +1,8 @@
 package fr.umlv.java.wallj.controller;
 
-import fr.umlv.java.wallj.block.Stage;
+import fr.umlv.java.wallj.context.Stage;
 import fr.umlv.java.wallj.context.Context;
 import fr.umlv.java.wallj.event.Event;
-import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.World;
 
 import java.util.List;
 import java.util.Objects;

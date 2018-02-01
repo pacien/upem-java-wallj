@@ -1,7 +1,6 @@
 package fr.umlv.java.wallj.block;
 
 import fr.umlv.java.wallj.board.TileVec2;
-import fr.umlv.java.wallj.controller.BlockControllerFactory;
 import org.jbox2d.common.Vec2;
 
 /**
@@ -30,9 +29,7 @@ public final class BlockFactory {
   }
 
   public static Block build(BlockType type, TileVec2 pos) {
-    Block block = forType(type, pos.toVec2());
-    if (block != null) block.setControllers(BlockControllerFactory.build(block));
-    return block;
+    return forType(type, pos.toVec2());
   }
 
   private BlockFactory() {

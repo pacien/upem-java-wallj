@@ -4,7 +4,6 @@ import fr.umlv.java.wallj.board.Board;
 import fr.umlv.java.wallj.controller.Controller;
 import fr.umlv.java.wallj.controller.GameStateController;
 import fr.umlv.java.wallj.event.Event;
-import fr.umlv.java.wallj.block.Stage;
 
 import java.util.*;
 

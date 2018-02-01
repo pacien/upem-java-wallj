@@ -1,16 +1,14 @@
-package fr.umlv.java.wallj.block;
+package fr.umlv.java.wallj.context;
 
+import fr.umlv.java.wallj.block.Block;
 import fr.umlv.java.wallj.board.Board;
 import fr.umlv.java.wallj.board.BoardConverter;
-import fr.umlv.java.wallj.context.Context;
-import fr.umlv.java.wallj.context.Updateable;
 import fr.umlv.java.wallj.controller.Controller;
 import fr.umlv.java.wallj.controller.StagePhysicsController;
 import fr.umlv.java.wallj.event.Event;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -52,8 +50,7 @@ public class Stage implements Updateable {
    */
   @Override
   public List<Event> update(Context context) {
-    //TODO
+    // TODO
     return null;
   }
-
 }
