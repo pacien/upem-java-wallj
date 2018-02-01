@@ -17,12 +17,15 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
 /**
  * Link between application and Zen 5
+ *
+ * @author Adam NAILI
  */
 public final class Viewer {
 
@@ -54,7 +57,7 @@ public final class Viewer {
     InputHandler inputHandler = new InputHandler(applicationContext);
     ScreenManager screenManager = new ScreenManager(applicationContext, graphics2D);
     events.addAll(inputHandler.getEvents());
-    Context context = new Context(currentGame, events, screenManager.clearScreen());
+    Context context = new Context(currentGame, events, screenManager.clearScreen(), Duration.ZERO); // TODO: duration
     List<Event> newEvents = currentGame.update(context); //return new events created from update();
     events.clear();
     return newEvents;
