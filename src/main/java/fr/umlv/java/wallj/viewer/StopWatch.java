@@ -10,6 +10,9 @@ import java.time.Duration;
 public class StopWatch {
   private long startTime = System.currentTimeMillis();
 
+  /**
+   * @return the duration since the creation of the stopwatch
+   */
   public Duration peek() {
     return Duration.ofMillis(System.currentTimeMillis() - startTime);
   }
