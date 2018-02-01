@@ -14,10 +14,10 @@ public enum BlockType {
   ROBOT(false, false, true, false),
   BOMB(false, false, true, false);
 
-  final boolean bounding;
-  final boolean mustBeReachable;
-  final boolean traversable;
-  final boolean movableByExplosion;
+  private final boolean bounding;
+  private final boolean mustBeReachable;
+  private final boolean traversable;
+  private final boolean movableByExplosion;
 
   BlockType(boolean bounding, boolean mustBeReachable, boolean traversable, boolean movableByExplosion) {
     this.bounding = bounding;
