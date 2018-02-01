@@ -8,26 +8,29 @@ import fr.umlv.zen5.Application;
 
 import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
 
-  private static Path getResourcePath(String str) throws URISyntaxException {
-    return Paths.get(Main.class.getResource(str).toURI());
-  }
-
-  private static java.util.List<Path> getResourcePaths(String[] args) throws URISyntaxException {
+  private static final String DEFAULT_MAP_NAME = "/maps/level0.txt";
+  private static java.util.List<Path> getResourcePaths(String[] args) throws URISyntaxException,IOException {
     LinkedList<Path> paths = new LinkedList<>();
-    if (args.length > 0) {
-      for (String string : args) {
-        paths.add(Paths.get(string));
-      }
+    String strFolder = System.getProperty("levels");
+    if (strFolder != null) {
+      Path pathFolder = Paths.get(strFolder);
+      Files.newDirectoryStream(pathFolder).forEach(paths::add);
     } else {
-      paths.add(getResourcePath("/maps/level0.txt"));
+      final URI uri = Main.class.getResource(DEFAULT_MAP_NAME).toURI();
+      Map<String, String> env = new HashMap<>();
+      env.put("create", "true");
+      FileSystem zipfs = FileSystems.newFileSystem(uri, env);
+      paths.add(Paths.get(uri));
     }
     return paths;
   }
