@@ -1,4 +1,4 @@
-package fr.umlv.java.wallj.utils;
+package fr.umlv.java.wallj.board;
 
 import java.util.List;
 
@@ -8,7 +8,6 @@ import java.util.List;
  * @author Pacien TRAN-GIRARD
  */
 public final class Matrix {
-
   /**
    * @param m the matrix (2D array)
    * @return the width of the matrix (0 if null)
@@ -52,5 +51,4 @@ public final class Matrix {
   private Matrix() {
     // static class
   }
-
 }

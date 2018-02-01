@@ -7,13 +7,6 @@ skinparam backgroundColor #FFFFFF
 class Main{
     static void main(String[])
 }
-package utils {
-  class Matrix {
-    static int getWidth(...)
-    static int getHeight(...)
-    static boolean isShapeValid(...)
-  }
-}
 
 package viewer {
   class Viewer {
@@ -144,6 +137,12 @@ package board {
     TileVec2(col, row)
     Vec2 toPixelPos()
     List<TileVec2> neighbors()
+  }
+
+  class Matrix {
+    static int getWidth(...)
+    static int getHeight(...)
+    static boolean isShapeValid(...)
   }
 
   class PathFinder {
