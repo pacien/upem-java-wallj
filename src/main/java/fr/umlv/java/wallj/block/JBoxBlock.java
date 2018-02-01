@@ -23,7 +23,7 @@ public abstract class JBoxBlock extends Block {
   @Override
   public Vec2 getPos() {
     if (body == null) throw new IllegalStateException("Uninitialised block.");
-    return body.getPosition().clone();
+    return new Vec2(body.getPosition());
   }
 
   @Override

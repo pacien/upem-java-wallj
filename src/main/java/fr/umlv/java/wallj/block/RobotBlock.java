@@ -29,7 +29,7 @@ public class RobotBlock extends Block {
 
   @Override
   public Vec2 getPos() {
-    return pos.clone();
+    return new Vec2(pos);
   }
 
   @Override
