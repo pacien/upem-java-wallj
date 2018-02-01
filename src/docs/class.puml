@@ -230,11 +230,6 @@ package controller {
   class BombDisplayController extends DisplayController
 }
 
-RobotPhysicsController --> PathFinder
-RobotPhysicsController --> BoardConverter
-
-Stage --> BoardConverter
-
 PhysicsController --() JBox2D
 Zen5 ()-- Viewer
 Zen5 ()-- Main
