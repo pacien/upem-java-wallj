@@ -24,7 +24,6 @@ import java.util.List;
  */
 public class RobotBlock extends Block {
   // TODO: define robot moving speed
-
   private Vec2 pos;
   private List<TileVec2> path = Collections.emptyList();
   private PathFinder pathFinder;
@@ -68,6 +67,7 @@ public class RobotBlock extends Block {
 
   private void move(Duration timeDelta) {
     // TODO: follow the current path
+
   }
 
   private void paint(GraphicsContext graphicsContext) {

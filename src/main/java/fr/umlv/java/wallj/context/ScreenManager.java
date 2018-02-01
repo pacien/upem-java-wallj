@@ -13,7 +13,6 @@ import java.util.Objects;
  * @author Adam NAILI
  */
 public final class ScreenManager {
-  //TODO Class ScreenManager
   private final ApplicationContext applicationContext;
   private final Graphics2D graphics2D;
 

@@ -12,7 +12,6 @@ import java.util.Objects;
  * @author Adam NAILI
  */
 public final class Context {
-  //TODO Class Context
   private final Game game;
   private final List<Event> events;
   private final GraphicsContext graphicsContext;

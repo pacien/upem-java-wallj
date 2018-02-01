@@ -22,7 +22,6 @@ import java.util.Objects;
  * @author Adam NAILI
  */
 public final class InputHandler {
-  //TODO Class InputHandler
   private final ApplicationContext applicationContext;
 
   /**
