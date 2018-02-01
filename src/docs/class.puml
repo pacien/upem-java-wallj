@@ -87,26 +87,24 @@ package context {
 
 package event {
   interface Event
-
-  interface InputEvent implements Event
   interface GameEvent implements Event
+  interface InputEvent implements Event
 
-  class DropBombEvent implements InputEvent
+  class ConfirmOrder implements InputEvent
+  class BombSetupOrder implements InputEvent
 
-  class AddBombEvent implements InputEvent {
+  class MoveRobotOrder implements InputEvent {
+    MoveRobotEvent(TileVec2)
+    TileVec2 getTarget()
+  }
+
+  class BombSetupEvent implements GameEvent {
     final TileVec2
     AddBombEvent(TileVec2)
     TileVec2 getTile()
   }
 
-  class MoveRobotEvent implements InputEvent {
-    final TileVec2
-    MoveRobotEvent(TileVec2)
-    TileVec2 getTile()
-  }
-
-  class ConfirmEvent implements InputEvent
-  class GameOverEvent implements Event
+  class GameOverEvent implements GameEvent
 
   class ExplosionEvent implements GameEvent {
     Block source

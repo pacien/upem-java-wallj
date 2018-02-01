@@ -2,7 +2,7 @@ package fr.umlv.java.wallj.controller;
 
 import fr.umlv.java.wallj.context.Context;
 import fr.umlv.java.wallj.context.Game;
-import fr.umlv.java.wallj.event.ConfirmEvent;
+import fr.umlv.java.wallj.event.ConfirmOrder;
 import fr.umlv.java.wallj.event.Event;
 import fr.umlv.java.wallj.event.GameOverEvent;
 
@@ -13,7 +13,7 @@ public class GameStateController implements Controller {
 
   @Override
   public List<Event> update(Context context) {
-    boolean isConfirmEvent = context.getEvents().stream().anyMatch(event -> event instanceof ConfirmEvent);
+    boolean isConfirmEvent = context.getEvents().stream().anyMatch(event -> event instanceof ConfirmOrder);
     boolean isGameOver = context.getEvents().stream().allMatch(event -> event instanceof GameOverEvent);
     Game currentGame = context.getGame();
     LinkedList<Event> events = new LinkedList<>();

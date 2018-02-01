@@ -1,13 +1,19 @@
 package fr.umlv.java.wallj.block;
 
+import fr.umlv.java.wallj.board.Board;
+import fr.umlv.java.wallj.board.PathFinder;
 import fr.umlv.java.wallj.board.TileVec2;
 import fr.umlv.java.wallj.context.Context;
 import fr.umlv.java.wallj.context.GraphicsContext;
+import fr.umlv.java.wallj.event.BombSetupEvent;
+import fr.umlv.java.wallj.event.BombSetupOrder;
 import fr.umlv.java.wallj.event.Event;
+import fr.umlv.java.wallj.event.MoveRobotOrder;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
 import java.awt.*;
+import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,6 +27,7 @@ public class RobotBlock extends Block {
 
   private Vec2 pos;
   private List<TileVec2> path = Collections.emptyList();
+  private PathFinder pathFinder;
 
   RobotBlock(Vec2 pos) {
     super(BlockType.ROBOT);
@@ -39,21 +46,27 @@ public class RobotBlock extends Block {
 
   @Override
   public List<Event> update(Context context) {
-    updatePath(context.getEvents());
-    if (!path.isEmpty()) move();
+    Event.findFirst(context.getEvents(), MoveRobotOrder.class)
+    .ifPresent(event -> updatePath(context.getGame().getCurrentStage().getBoard(), event.getTarget()));
+
+    if (!path.isEmpty()) move(context.getTimeDelta());
     paint(context.getGraphicsContext());
     return setupBomb(context.getEvents());
   }
 
   private List<Event> setupBomb(List<Event> events) {
-    return Collections.emptyList(); // TODO: return a SetupBombEvent at current location if an order was received
+    return Event.findFirst(events, BombSetupOrder.class)
+           .map(event -> Collections.<Event>singletonList(new BombSetupEvent(TileVec2.of(pos))))
+           .orElse(Collections.emptyList());
   }
 
-  private void updatePath(List<Event> events) {
-    // TODO: update path if received a new target event (using the pathfinder)
+  private void updatePath(Board board, TileVec2 target) {
+    if (!board.getBlockTypeAt(target).isTraversable()) return;
+    if (pathFinder == null) pathFinder = new PathFinder(board);
+    path = pathFinder.findPath(TileVec2.of(pos), target);
   }
 
-  private void move() {
+  private void move(Duration timeDelta) {
     // TODO: follow the current path
   }
 

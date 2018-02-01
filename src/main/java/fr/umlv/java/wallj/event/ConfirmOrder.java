@@ -5,6 +5,6 @@ package fr.umlv.java.wallj.event;
  *
  * @author Adam NAILI
  */
-public class ConfirmEvent implements InputEvent {
-  //TODO Class ConfirmEvent
+public class ConfirmOrder implements InputEvent {
+  //TODO Class ConfirmOrder
 }

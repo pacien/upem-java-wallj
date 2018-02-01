@@ -5,6 +5,6 @@ package fr.umlv.java.wallj.event;
  *
  * @author Adam NAILI
  */
-public final class DropBombEvent implements InputEvent {
-  //TODO Class DropBombEvent
+public final class BombSetupOrder implements InputEvent {
+
 }

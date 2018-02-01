@@ -1,8 +1,8 @@
 package fr.umlv.java.wallj.context;
 
 import fr.umlv.java.wallj.board.TileVec2;
-import fr.umlv.java.wallj.event.DropBombEvent;
-import fr.umlv.java.wallj.event.MoveRobotEvent;
+import fr.umlv.java.wallj.event.BombSetupOrder;
+import fr.umlv.java.wallj.event.MoveRobotOrder;
 import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
 import fr.umlv.zen5.KeyboardKey;
@@ -43,7 +43,7 @@ public final class InputHandler {
         if (action == Event.Action.POINTER_DOWN) {
           Vec2 mouseLocation = new Vec2(location.x, location.y);
           TileVec2 mouseTileLocation = TileVec2.of(mouseLocation);
-          events.add(new MoveRobotEvent(mouseTileLocation));
+          events.add(new MoveRobotOrder(mouseTileLocation));
         }
       }
       KeyboardKey keyboardKey = event.getKey();
@@ -51,7 +51,7 @@ public final class InputHandler {
         if (action == Event.Action.KEY_PRESSED) {
           switch (keyboardKey) {
             case SPACE:
-              events.add(new DropBombEvent());
+              events.add(new BombSetupOrder());
               break;
           }
         }
