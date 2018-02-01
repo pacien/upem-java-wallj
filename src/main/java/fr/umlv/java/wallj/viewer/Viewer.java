@@ -28,7 +28,7 @@ import java.util.Objects;
  * @author Adam NAILI
  */
 public final class Viewer {
-  private static final Duration FRAME_DURATION = Duration.ofMillis((long) 1000.0 / 60);
+  private static final Duration FRAME_DURATION = Duration.ofMillis(1000 / 60);
 
   private final Game currentGame;
 

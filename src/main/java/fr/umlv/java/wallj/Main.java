@@ -32,6 +32,7 @@ public class Main {
     return paths;
   }
 
+  // TODO: use System.getProperty("levels") to get the path to the level directory
   public static void main(String[] args) {
     List<Board> boards = new LinkedList<>();
     try {
