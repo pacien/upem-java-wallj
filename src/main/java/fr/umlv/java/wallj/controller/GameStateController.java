@@ -9,7 +9,7 @@ import fr.umlv.java.wallj.event.GameOverEvent;
 import java.util.LinkedList;
 import java.util.List;
 
-public class GameController implements Controller {
+public class GameStateController implements Controller {
 
   @Override
   public List<Event> update(Context context) {

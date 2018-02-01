@@ -2,7 +2,7 @@ package fr.umlv.java.wallj.context;
 
 import fr.umlv.java.wallj.board.Board;
 import fr.umlv.java.wallj.controller.Controller;
-import fr.umlv.java.wallj.controller.GameController;
+import fr.umlv.java.wallj.controller.GameStateController;
 import fr.umlv.java.wallj.event.Event;
 import fr.umlv.java.wallj.block.Stage;
 
@@ -25,7 +25,7 @@ public final class Game {
    */
   public Game(List<Board> boards) {
     this.controllers = new LinkedList<>();
-    this.controllers.add(new GameController());
+    this.controllers.add(new GameStateController());
     Objects.requireNonNull(boards);
     if (boards.isEmpty()) {
       throw new IllegalArgumentException("The list of boards is empty, not able to create a correct game from this.");

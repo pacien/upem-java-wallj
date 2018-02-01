@@ -25,12 +25,10 @@ package viewer {
 package context {
   class Context {
     Context(Game,List<Event>,GraphicsContext)
-    final Game
-    final List<Event>
-    final GraphicsContext
     Game getGame()
     List<Event> getEvents()
     GraphicsContext getGraphicsContext()
+    Duration getTimeDelta()
   }
 
   class GraphicsContext {
@@ -205,7 +203,7 @@ package controller {
   class BlockControllerFactory {
     BlockController build(Block)
   }
-  class GameController implements Controller
+  class GameStateController implements Controller
 
   abstract class PhysicsController extends BlockController
   abstract class DisplayController extends BlockController
