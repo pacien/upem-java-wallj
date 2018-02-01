@@ -27,7 +27,7 @@ public class Main {
         paths.add(Paths.get(string));
       }
     } else {
-      paths.add(getResourcePath("/maps/smallvalid.txt"));
+      paths.add(getResourcePath("/maps/level0.txt"));
     }
     return paths;
   }

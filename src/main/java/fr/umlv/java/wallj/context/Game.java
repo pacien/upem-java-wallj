@@ -63,7 +63,8 @@ public final class Game implements Updateable {
   public boolean isOver() {
     return over;
   }
-  public void setOver(){
+
+  public void setOver() {
     over = true;
   }
 
