@@ -28,6 +28,7 @@ import java.util.Objects;
  * @author Adam NAILI
  */
 public final class Viewer {
+  private static final Duration FRAME_DURATION = Duration.ofMillis((long) 1000.0 / 60);
 
   private final Game currentGame;
 
@@ -43,15 +44,18 @@ public final class Viewer {
    */
   public void eventLoop(ApplicationContext applicationContext) {
     List<Event> events = new LinkedList<>();
+    Duration lastExecDuration = Duration.ZERO;
     while (!currentGame.isOver()) {
+      Duration last = lastExecDuration;
       long timeBeforeExec = System.currentTimeMillis();
       applicationContext.renderFrame(graphics2D -> {
-        events.addAll(renderFrame(graphics2D, applicationContext, events)); //add the new events returned by updates
+        events.addAll(renderFrame(graphics2D, applicationContext, events, last)); //add the new events returned by updates
       });
       long timeAfterExec = System.currentTimeMillis();
-      long delay = timeAfterExec - timeBeforeExec;
+      lastExecDuration = Duration.ofMillis(timeAfterExec - timeBeforeExec);
       try {
-        Thread.sleep(delay > 0 ? delay : 0);
+        Duration sleepDuration = FRAME_DURATION.minus(lastExecDuration);
+        if (!sleepDuration.isNegative()) Thread.sleep(sleepDuration.toMillis());
       } catch (Exception e) {
         applicationContext.exit(-1);
       }
@@ -63,11 +67,11 @@ public final class Viewer {
    * @param graphics2D         the graphic2D from Zen 5
    * @param applicationContext the application context from Zen 5
    */
-  public List<Event> renderFrame(Graphics2D graphics2D, ApplicationContext applicationContext, List<Event> events) {
+  public List<Event> renderFrame(Graphics2D graphics2D, ApplicationContext applicationContext, List<Event> events, Duration lastExecDuration) {
     InputHandler inputHandler = new InputHandler(applicationContext);
     ScreenManager screenManager = new ScreenManager(applicationContext, graphics2D);
     events.addAll(inputHandler.getEvents());
-    Context context = new Context(currentGame, events, screenManager.clearScreen(), Duration.ZERO); // TODO: duration
+    Context context = new Context(currentGame, events, screenManager.clearScreen(), lastExecDuration);
     List<Event> newEvents = currentGame.update(context); //return new events created from update();
     events.clear();
     return newEvents;
