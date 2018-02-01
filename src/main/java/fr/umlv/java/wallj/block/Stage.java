@@ -4,6 +4,7 @@ import fr.umlv.java.wallj.board.Board;
 import fr.umlv.java.wallj.context.Context;
 import fr.umlv.java.wallj.event.Event;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,7 +32,7 @@ public class Stage {
    */
   public List<Event> update(Context context) {
     //TODO
-    return null;
+    return Collections.emptyList();
   }
 
   public boolean isCleared() {

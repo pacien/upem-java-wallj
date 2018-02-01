@@ -1,7 +1,9 @@
 package fr.umlv.java.wallj.context;
 
 import fr.umlv.java.wallj.board.TileVec2;
+import fr.umlv.java.wallj.event.ConfirmEvent;
 import fr.umlv.java.wallj.event.DropBombEvent;
+import fr.umlv.java.wallj.event.GameOverEvent;
 import fr.umlv.java.wallj.event.MoveRobotEvent;
 import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
@@ -52,6 +54,12 @@ public final class InputHandler {
           switch (keyboardKey) {
             case SPACE:
               events.add(new DropBombEvent());
+              break;
+            case R:
+              events.add(new ConfirmEvent());
+              break;
+            case Q:
+              events.add(new GameOverEvent());
               break;
           }
         }

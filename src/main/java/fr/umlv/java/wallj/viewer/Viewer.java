@@ -27,6 +27,7 @@ import java.util.Objects;
 public final class Viewer {
 
   private final Game currentGame;
+
   /**
    * @param boards the valid list of boards charged in the application
    */
@@ -40,10 +41,19 @@ public final class Viewer {
   public void eventLoop(ApplicationContext applicationContext) {
     List<Event> events = new LinkedList<>();
     while (!currentGame.isOver()) {
+      long timeBeforeExec = System.currentTimeMillis();
       applicationContext.renderFrame(graphics2D -> {
         events.addAll(renderFrame(graphics2D, applicationContext, events)); //add the new events returned by updates
       });
+      long timeAfterExec = System.currentTimeMillis();
+      long delay = timeAfterExec - timeBeforeExec;
+      try {
+        Thread.sleep(delay > 0 ? delay : 0);
+      } catch (Exception e) {
+        applicationContext.exit(-1);
+      }
     }
+    applicationContext.exit(0);
   }
 
   /**
