@@ -17,17 +17,15 @@ public class StagePhysicsController implements Controller {
   private static final int POSITION_TICK_PER_MS = 2;
 
   private final Stage stage;
-  private final World world;
 
   public StagePhysicsController(Stage stage) {
     this.stage = Objects.requireNonNull(stage);
-    this.world = new World(new Vec2());
   }
 
   @Override
   public List<Event> update(Context context) {
     int dt = (int) context.getTimeDelta().toMillis();
-    world.step(dt, dt * VELOCITY_TICK_PER_MS, dt * POSITION_TICK_PER_MS);
+    stage.getWorld().step(dt, dt * VELOCITY_TICK_PER_MS, dt * POSITION_TICK_PER_MS);
     return null;
   }
 
