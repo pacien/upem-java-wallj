@@ -1,6 +1,8 @@
 @startuml
 
 skinparam linetype ortho
+skinparam monochrome reverse
+skinparam backgroundColor #FFFFFF
 
 class Main{
     static void main(String[])
@@ -23,43 +25,48 @@ package viewer {
 }
 
 package context {
+  interface Updateable {
+    List<Event> update(Context)
+    static List<Event> updateAll(List<Updateable>, Context)
+  }
+
   class Context {
-    Context(Game,List<Event>,GraphicsContext)
-    final Game
-    final List<Event>
-    final GraphicsContext
+    Context(Game, List<Event>, GraphicsContext)
     Game getGame()
     List<Event> getEvents()
     GraphicsContext getGraphicsContext()
+    Duration getTimeDelta()
   }
 
   class GraphicsContext {
-    final Graphics2D
-    final ScreenInfo
+    Graphics2D, ScreenInfo
+
     paintCircle(Color, Vec2, float)
     paintSquare(Color, Vec2, float, float)
     paintString(Color, Vec2,String)
   }
 
   class InputHandler {
-    private final ApplicationContext
+    ApplicationContext
+
     InputHandler(ApplicationContext)
     List<Event> getEvents()
   }
 
   class ScreenManager {
-    private final ApplicationContext
-    private final Graphics2D
+    ApplicationContext, Graphics2D
+
     ScreenManager(ApplicationContext,Graphics2D)
     GraphicsContext clearScreen()
   }
 
-  class Game {
+  class Game implements Updateable {
     Stage
     final List<Controller>
     int indexBoard
     final List<Board>
     bool over
+
     Game(List<Board>)
     Stage getStage()
     bool isOver()
@@ -68,31 +75,36 @@ package context {
     void retryStage()
     List<Event> update(Context context)
   }
+
+  class Stage implements Updateable {
+    Stage(Board)
+    Board getBoard()
+    List<Block> getBlocks()
+    List<Event> update(Context)
+    bool isCleared()
+  }
 }
 
 package event {
   interface Event
-
-  interface InputEvent implements Event
   interface GameEvent implements Event
+  interface InputEvent implements Event
 
-  class DropBombEvent implements InputEvent
+  class ConfirmOrder implements InputEvent
+  class BombSetupOrder implements InputEvent
 
-  class AddBombEvent implements InputEvent {
+  class MoveRobotOrder implements InputEvent {
+    MoveRobotEvent(TileVec2)
+    TileVec2 getTarget()
+  }
+
+  class BombSetupEvent implements GameEvent {
     final TileVec2
     AddBombEvent(TileVec2)
     TileVec2 getTile()
   }
 
-  class MoveRobotEvent implements InputEvent {
-    final TileVec2
-    MoveRobotEvent(TileVec2)
-    TileVec2 getTile()
-  }
-
-  class ConfirmEvent implements InputEvent
-  class GameOverEvent implements Event
-
+  class GameOverEvent implements GameEvent
 
   class ExplosionEvent implements GameEvent {
     Block source
@@ -114,7 +126,6 @@ package board {
 
   class BoardValidator {
     static class Constraint
-    Board
 
     BoardValidator(Board)
     BoardValidator validate(Predicate<Board>, String error)
@@ -130,15 +141,12 @@ package board {
     static final int TILE_DIM
     static TileVec2 fromVec2(Vec2)
 
-    Vec2
     TileVec2(col, row)
     Vec2 toPixelPos()
     List<TileVec2> neighbors()
   }
 
   class PathFinder {
-    Graph
-
     PathFinder(Board)
     List<TileVec2> findPath(TileVec2 origin, TileVec2 target)
   }
@@ -146,12 +154,8 @@ package board {
 
 package block {
   enum BlockType {
-    FREE
-    WALL
-    TRASH
-    GARBAGE
-    ROBOT
-    BOMB
+    FREE, WALL, TRASH,
+    GARBAGE, ROBOT, BOMB
 
     boolean isBounding()
     boolean mustBeReachable()
@@ -163,78 +167,49 @@ package block {
     Block build(BlockType, TileVec2)
   }
 
-  abstract class Block {
-    BlockType
-    List<Controller>
-    Vec2
-
-    Block(BlockType, List<Controller>, Vec2)
-    void setPos(Vec2)
-    BlockType getBlockType()
-    Vec2 getPos()
+  abstract class Block implements Updateable {
+    Block(BlockType)
+    BlockType getType()
     TileVec2 getTile()
-    List<Event> update(Context)
+    abstract Vec2 getPos()
+    abstract void link(World)
+  }
+  
+  abstract class JBoxBlock extends Block {
+    JBoxBlock(BlockType, BodyType, Shape, Vec2)
+    Vec2 getPos()
+    void link(World)
+  }
+  
+  class RobotBlock extends Block {
+    Vec2 getPos()
+    void link(World world)
+    List<Event> update(Context context)
   }
 
-  class WallBlock extends Block
-  class TrashBlock extends Block
-  class BombBlock extends Block
-  class GarbageBlock extends Block
-  class RobotBlock extends Block
+  class WallBlock extends JBoxBlock {
+    List<Event> update(Context context)
+  }
 
-  class Stage {
-    List<Block>
-    Board
-    Stage(Board)
-    List<Block> getBlocks()
-    List<Event> update(Context)
-    bool isCleared()
+  class TrashBlock extends JBoxBlock {
+    List<Event> update(Context context)
+  }
+
+  class BombBlock extends JBoxBlock {
+    List<Event> update(Context context)
+  }
+
+  class GarbageBlock extends JBoxBlock {
+    List<Event> update(Context context)
   }
 }
 
 package controller {
-  interface Controller {
-    List<Event> update(Context)
-  }
+  interface Controller extends Updateable
 
-  abstract class BlockController implements Controller {
-    Block
-    Controller(Block)
-  }
-
-  class BlockControllerFactory {
-    BlockController build(Block)
-  }
-  class GameController implements Controller
-
-  abstract class PhysicsController extends BlockController
-  abstract class DisplayController extends BlockController
-
-  class WallPhysicsController extends PhysicsController
-  class WallDisplayController extends DisplayController
-
-  class TrashPhysicsController extends PhysicsController
-  class TrashDisplayController extends DisplayController
-
-  class GarbagePhysicsController extends PhysicsController
-  class GarbageDisplayController extends DisplayController
-
-  class RobotPhysicsController extends PhysicsController {
-    List<TileVec2> path
-  }
-
-  class RobotDisplayController extends DisplayController
-
-  class BombPhysicsController extends PhysicsController
-  class BombDisplayController extends DisplayController
+  class GameStateController implements Controller
 }
 
-RobotPhysicsController --> PathFinder
-RobotPhysicsController --> BoardConverter
-
-Stage --> BoardConverter
-
-PhysicsController --() JBox2D
 Zen5 ()-- Viewer
 Zen5 ()-- Main
 Main --> viewer

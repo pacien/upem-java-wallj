@@ -2,9 +2,8 @@ package fr.umlv.java.wallj.context;
 
 import fr.umlv.java.wallj.board.Board;
 import fr.umlv.java.wallj.controller.Controller;
-import fr.umlv.java.wallj.controller.GameController;
+import fr.umlv.java.wallj.controller.GameStateController;
 import fr.umlv.java.wallj.event.Event;
-import fr.umlv.java.wallj.block.Stage;
 
 import java.util.*;
 
@@ -13,7 +12,7 @@ import java.util.*;
  *
  * @author Adam NAILI
  */
-public final class Game {
+public final class Game implements Updateable {
   private Stage currentStage;
   private final List<Controller> controllers;
   private int indexBoard;
@@ -25,7 +24,7 @@ public final class Game {
    */
   public Game(List<Board> boards) {
     this.controllers = new LinkedList<>();
-    this.controllers.add(new GameController());
+    this.controllers.add(new GameStateController());
     Objects.requireNonNull(boards);
     if (boards.isEmpty()) {
       throw new IllegalArgumentException("The list of boards is empty, not able to create a correct game from this.");
@@ -76,13 +75,14 @@ public final class Game {
   }
 
   public void retryStage() {
-    currentStage = new Stage(currentStage.getCurrentBoard());
+    currentStage = new Stage(currentStage.getBoard());
   }
 
   /**
    * @param context the current context
    * @return a list of new events
    */
+  @Override
   public List<Event> update(Context context) {
     LinkedList<Event> events = new LinkedList<>();
     for (Controller controller : controllers) {

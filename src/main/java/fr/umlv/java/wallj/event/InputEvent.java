@@ -1,7 +1,7 @@
 package fr.umlv.java.wallj.event;
 
 /**
- * An event coming from inputs
+ * An event or order coming from inputs
  *
  * @author Adam NAILI
  */
