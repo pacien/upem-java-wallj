@@ -1,7 +1,6 @@
 package fr.umlv.java.wallj.context;
 
 import fr.umlv.java.wallj.board.Board;
-import fr.umlv.java.wallj.controller.Controller;
 import fr.umlv.java.wallj.event.ConfirmOrder;
 import fr.umlv.java.wallj.event.Event;
 import fr.umlv.java.wallj.event.Events;
@@ -91,7 +90,7 @@ public final class Game implements Updateable {
       currentGame.setOver();
     } else {
       if (isConfirmOrder) {
-        if (currentGame.getCurrentStage().isCleared()) { // FIXME: use StageClearedEvent
+        if (false /*currentGame.getCurrentStage().isCleared()*/) { // FIXME: use StageClearedEvent
           if (currentGame.hasNextBoard()) { //continue
             currentGame.nextStage();
           } else { //no more board so game over => exiting
