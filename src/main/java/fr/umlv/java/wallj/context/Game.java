@@ -2,8 +2,10 @@ package fr.umlv.java.wallj.context;
 
 import fr.umlv.java.wallj.board.Board;
 import fr.umlv.java.wallj.controller.Controller;
-import fr.umlv.java.wallj.controller.GameStateController;
+import fr.umlv.java.wallj.event.ConfirmOrder;
 import fr.umlv.java.wallj.event.Event;
+import fr.umlv.java.wallj.event.Events;
+import fr.umlv.java.wallj.event.GameOverEvent;
 
 import java.util.*;
 
@@ -14,7 +16,6 @@ import java.util.*;
  */
 public final class Game implements Updateable {
   private Stage currentStage;
-  private final List<Controller> controllers;
   private int indexBoard;
   private final List<Board> boards;
   private boolean over;
@@ -23,8 +24,6 @@ public final class Game implements Updateable {
    * @param boards the list of boards charged for the game
    */
   public Game(List<Board> boards) {
-    this.controllers = new LinkedList<>();
-    this.controllers.add(new GameStateController());
     Objects.requireNonNull(boards);
     if (boards.isEmpty()) {
       throw new IllegalArgumentException("The list of boards is empty, not able to create a correct game from this.");
@@ -84,11 +83,27 @@ public final class Game implements Updateable {
    */
   @Override
   public List<Event> update(Context context) {
+    boolean isConfirmOrder = Events.findFirst(context.getEvents(),ConfirmOrder.class).isPresent();
+    boolean isGameOverEvent = Events.findFirst(context.getEvents(),GameOverEvent.class).isPresent();
+    Game currentGame = context.getGame();
     LinkedList<Event> events = new LinkedList<>();
-    for (Controller controller : controllers) {
-      events.addAll(controller.update(context));
+    if (isGameOverEvent) {
+      currentGame.setOver();
+    } else {
+      if (isConfirmOrder) {
+        if (currentGame.getCurrentStage().isCleared()) { // FIXME: use StageClearedEvent
+          if (currentGame.hasNextBoard()) { //continue
+            currentGame.nextStage();
+          } else { //no more board so game over => exiting
+            currentGame.setOver();
+          }
+        } else {//retry
+          currentGame.retryStage();
+        }
+      }
     }
-    events.addAll(currentStage.update(context));
+
+    // FIXME: update underlying stage and merge generated events
     return events;
   }
 
