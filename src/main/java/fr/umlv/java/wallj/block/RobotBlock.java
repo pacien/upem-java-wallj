@@ -13,6 +13,8 @@ import org.jbox2d.dynamics.World;
 import java.awt.*;
 import java.time.Duration;
 import java.util.Collections;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -21,10 +23,11 @@ import java.util.List;
  * @author Pacien TRAN-GIRARD
  */
 public class RobotBlock extends Block {
-  // TODO: define robot moving speed
+  private static final float SPEED = 0.2f; // px/ms
+
   private Vec2 pos;
-  private List<TileVec2> path = Collections.emptyList();
   private PathFinder pathFinder;
+  private Deque<TileVec2> path = new LinkedList<>();
 
   RobotBlock(Vec2 pos) {
     super(BlockType.ROBOT);
@@ -46,7 +49,7 @@ public class RobotBlock extends Block {
     Events.findFirst(context.getEvents(), MoveRobotOrder.class)
     .ifPresent(event -> updatePath(context.getGame().getCurrentStage().getBoard(), event.getTarget()));
 
-    if (!path.isEmpty()) move(context.getTimeDelta());
+    move(context.getTimeDelta());
     paint(context.getGraphicsContext());
     return setupBomb(context.getEvents());
   }
@@ -60,12 +63,16 @@ public class RobotBlock extends Block {
   private void updatePath(Board board, TileVec2 target) {
     if (!board.getBlockTypeAt(target).isTraversable()) return;
     if (pathFinder == null) pathFinder = new PathFinder(board);
-    path = pathFinder.findPath(TileVec2.of(pos), target);
+    path = new LinkedList<>(pathFinder.findPath(TileVec2.of(pos), target));
   }
 
   private void move(Duration timeDelta) {
-    // TODO: follow the current path
-
+    if (path.isEmpty()) return;
+    Vec2 dest = path.getFirst().toVec2();
+    Vec2 dir = dest.sub(pos);
+    float dist = dir.normalize();
+    Vec2 dp = dir.mul(timeDelta.toMillis() * SPEED);
+    pos = dp.length() < dist ? pos.add(dp) : path.removeFirst().toVec2();
   }
 
   private void paint(GraphicsContext graphicsContext) {

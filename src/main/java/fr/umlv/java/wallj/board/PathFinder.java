@@ -121,7 +121,7 @@ public class PathFinder {
    *
    * @param origin the origin coordinates
    * @param target the target coordinates
-   * @return a path
+   * @return a path from the origin to the target position
    * @implNote uses A* with euclidean distance heuristic
    */
   public List<TileVec2> findPath(TileVec2 origin, TileVec2 target) {
