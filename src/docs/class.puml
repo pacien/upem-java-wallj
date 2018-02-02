@@ -91,18 +91,16 @@ package event {
   }
 
   class BombSetupEvent implements GameEvent {
-    final TileVec2
-    AddBombEvent(TileVec2)
-    TileVec2 getTile()
+    BombSetupEvent(TileVec2)
+    TileVec2 getSource()
+  }
+
+  class BombExplosionEvent implements GameEvent {
+    BombExplosionEvent(TileVec2)
+    TileVec2 getSource()
   }
 
   class GameOverEvent implements GameEvent
-
-  class ExplosionEvent implements GameEvent {
-    Block source
-    Body source
-  }
-
   class StageClearedEvent implements GameEvent
   class BlockCreateEvent implements GameEvent
   class BlockDestroyEvent implements GameEvent

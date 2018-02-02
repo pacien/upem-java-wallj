@@ -9,7 +9,7 @@ import java.util.Objects;
  *
  * @author Pacien TRAN-GIRARD
  */
-public final class BombExplosionEvent {
+public final class BombExplosionEvent implements GameEvent {
   private final TileVec2 source;
 
   public BombExplosionEvent(TileVec2 source) {

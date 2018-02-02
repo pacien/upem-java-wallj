@@ -5,7 +5,7 @@ import fr.umlv.java.wallj.board.TileVec2;
 import java.util.Objects;
 
 /**
- * Bomb setup event.
+ * Bomb setup event signalling the creation or the update of a bomb at a given position.
  *
  * @author Pacien TRAN-GIRARD
  */

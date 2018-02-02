@@ -1,9 +1,9 @@
 package fr.umlv.java.wallj.event;
 
 /**
- * Event to signal that a bomb will be placed at the next tick
+ * Asks a robot to drop a bomb.
  *
- * @author Adam NAILI
+ * @author Pacien TRAN-GIRARD
  */
 public final class BombSetupOrder implements InputEvent {
   // void

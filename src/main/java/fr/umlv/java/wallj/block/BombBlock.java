@@ -3,6 +3,7 @@ package fr.umlv.java.wallj.block;
 import fr.umlv.java.wallj.board.TileVec2;
 import fr.umlv.java.wallj.context.Context;
 import fr.umlv.java.wallj.context.GraphicsContext;
+import fr.umlv.java.wallj.event.*;
 import fr.umlv.java.wallj.event.Event;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyType;
@@ -47,14 +48,14 @@ public class BombBlock extends JBoxBlock {
   }
 
   private boolean containsUpdateEvent(List<Event> events) {
-    return false; // TODO: contains PutBombEvent with same current tile location?
+    return Events.findFirst(events, BombSetupEvent.class).isPresent();
   }
 
   private List<Event> consume(Duration timeDelta) {
     decrementTimer(timeDelta);
 
     if (timer.isNegative())
-      return Collections.unmodifiableList(Arrays.asList()); // TODO: BombExplosionEvent and BlockRemoveEvent
+      return Arrays.asList(new BombExplosionEvent(TileVec2.of(getPos())), new BlockDestroyEvent(this));
     else
       return Collections.emptyList();
   }
