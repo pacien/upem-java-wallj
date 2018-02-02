@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
  * @author Pacien TRAN-GIRARD
  */
 public class PathFinder {
-
   private static final int LEAP_COST = 1;
 
   private static class Node<T> {
@@ -129,5 +128,4 @@ public class PathFinder {
     if (startNode == null) throw new IllegalArgumentException("Invalid starting point.");
     return findPath(startNode, target, PathFinder::euclideanDistance);
   }
-
 }

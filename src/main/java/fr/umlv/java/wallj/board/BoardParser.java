@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
  * @author Pacien TRAN-GIRARD
  */
 public final class BoardParser {
-
   private static Board buildBoard(List<List<BlockType>> map) {
     if (!Matrix.isShapeValid(map)) throw new IllegalArgumentException("Board must be rectangular.");
 
@@ -65,5 +64,4 @@ public final class BoardParser {
   private BoardParser() {
     // static class
   }
-
 }

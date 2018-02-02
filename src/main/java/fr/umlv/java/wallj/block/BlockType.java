@@ -6,7 +6,6 @@ package fr.umlv.java.wallj.block;
  * @author Pacien TRAN-GIRARD
  */
 public enum BlockType {
-
   FREE(false, true, true, false),
   WALL(true, false, false, false),
   TRASH(true, true, false, false),
@@ -53,5 +52,4 @@ public enum BlockType {
   public boolean isMovableByExplosion() {
     return movableByExplosion;
   }
-
 }

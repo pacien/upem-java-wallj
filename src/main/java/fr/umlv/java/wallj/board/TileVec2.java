@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
  * @author Pacien TRAN-GIRARD
  */
 public final class TileVec2 {
-
   public static final int TILE_DIM = 20;
   private static final List<TileVec2> NEIGHBOR_OFFSETS = Arrays.asList(
   of(0, -1),
@@ -98,5 +97,4 @@ public final class TileVec2 {
            ", row=" + row +
            '}';
   }
-
 }

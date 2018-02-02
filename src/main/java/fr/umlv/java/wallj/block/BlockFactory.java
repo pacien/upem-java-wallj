@@ -9,7 +9,6 @@ import org.jbox2d.common.Vec2;
  * @author Pacien TRAN-GIRARD
  */
 public final class BlockFactory {
-
   private static Block forType(BlockType t, Vec2 pos) {
     switch (t) {
       case WALL:
@@ -28,6 +27,11 @@ public final class BlockFactory {
     }
   }
 
+  /**
+   * @param type the type of the block to build
+   * @param pos  the initial position of the block
+   * @return the built block
+   */
   public static Block build(BlockType type, TileVec2 pos) {
     return forType(type, pos.toVec2());
   }
@@ -35,5 +39,4 @@ public final class BlockFactory {
   private BlockFactory() {
     // static class
   }
-
 }
