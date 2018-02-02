@@ -5,6 +5,6 @@ package fr.umlv.java.wallj.event;
  *
  * @author Adam NAILI
  */
-public interface GameEvent extends Event{
-
+public interface GameEvent extends Event {
+  // void
 }
