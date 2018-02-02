@@ -6,5 +6,5 @@ package fr.umlv.java.wallj.event;
  * @author Adam NAILI
  */
 public interface InputEvent extends Event {
-
+  // void
 }

@@ -6,5 +6,5 @@ package fr.umlv.java.wallj.event;
  * @author Adam NAILI
  */
 public final class BombSetupOrder implements InputEvent {
-
+  // void
 }

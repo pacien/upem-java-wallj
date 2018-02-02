@@ -5,10 +5,8 @@ import fr.umlv.java.wallj.board.PathFinder;
 import fr.umlv.java.wallj.board.TileVec2;
 import fr.umlv.java.wallj.context.Context;
 import fr.umlv.java.wallj.context.GraphicsContext;
-import fr.umlv.java.wallj.event.BombSetupEvent;
-import fr.umlv.java.wallj.event.BombSetupOrder;
+import fr.umlv.java.wallj.event.*;
 import fr.umlv.java.wallj.event.Event;
-import fr.umlv.java.wallj.event.MoveRobotOrder;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
@@ -45,7 +43,7 @@ public class RobotBlock extends Block {
 
   @Override
   public List<Event> update(Context context) {
-    Event.findFirst(context.getEvents(), MoveRobotOrder.class)
+    Events.findFirst(context.getEvents(), MoveRobotOrder.class)
     .ifPresent(event -> updatePath(context.getGame().getCurrentStage().getBoard(), event.getTarget()));
 
     if (!path.isEmpty()) move(context.getTimeDelta());
@@ -54,7 +52,7 @@ public class RobotBlock extends Block {
   }
 
   private List<Event> setupBomb(List<Event> events) {
-    return Event.findFirst(events, BombSetupOrder.class)
+    return Events.findFirst(events, BombSetupOrder.class)
            .map(event -> Collections.<Event>singletonList(new BombSetupEvent(TileVec2.of(pos))))
            .orElse(Collections.emptyList());
   }

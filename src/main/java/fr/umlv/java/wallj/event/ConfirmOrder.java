@@ -6,4 +6,5 @@ package fr.umlv.java.wallj.event;
  * @author Adam NAILI
  */
 public class ConfirmOrder implements InputEvent {
+  // void
 }
