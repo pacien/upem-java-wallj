@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,8 +20,10 @@ final class PathFinderTest {
   }
 
   private boolean isPathConnected(List<TileVec2> path) {
-    for (int i = 1; i < path.size(); ++i) {
-      TileVec2 predecessor = path.get(i - 1), current = path.get(i);
+    List<TileVec2> runPath = new ArrayList<>(path);
+
+    for (int i = 1; i < runPath.size(); ++i) {
+      TileVec2 predecessor = runPath.get(i - 1), current = runPath.get(i);
 
       if (Math.abs(predecessor.getCol() - current.getCol()) > 1 ||
           Math.abs(predecessor.getRow() - current.getRow()) > 1) return false;
