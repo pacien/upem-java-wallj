@@ -3,7 +3,7 @@ package fr.umlv.java.wallj.viewer;
 import fr.umlv.java.wallj.board.TileVec2;
 import fr.umlv.java.wallj.event.BombSetupOrder;
 import fr.umlv.java.wallj.event.ConfirmOrder;
-import fr.umlv.java.wallj.event.GameOverEvent;
+import fr.umlv.java.wallj.event.QuitGameOrder;
 import fr.umlv.java.wallj.event.MoveRobotOrder;
 import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
@@ -58,7 +58,7 @@ public final class InputHandler {
               events.add(new ConfirmOrder());
               break;
             case Q:
-              events.add(new GameOverEvent());
+              events.add(new QuitGameOrder());
               break;
           }
         }

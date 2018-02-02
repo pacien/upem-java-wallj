@@ -1,10 +1,7 @@
 package fr.umlv.java.wallj.context;
 
 import fr.umlv.java.wallj.board.Board;
-import fr.umlv.java.wallj.event.ConfirmOrder;
-import fr.umlv.java.wallj.event.Event;
-import fr.umlv.java.wallj.event.Events;
-import fr.umlv.java.wallj.event.GameOverEvent;
+import fr.umlv.java.wallj.event.*;
 
 import java.util.*;
 
@@ -76,21 +73,32 @@ public final class Game implements Updateable {
     currentStage = new Stage(currentStage.getBoard());
   }
 
+
+  private void handleEvents(Context context){
+    if (Events.findFirst(context.getEvents(), QuitGameOrder.class).isPresent()){
+      context.getGame().setOver();
+      return;
+    }
+    if (Events.findFirst(context.getEvents(), ConfirmOrder.class).isPresent()){
+      
+    }
+  }
   /**
    * @param context the current context
    * @return a list of new events
    */
   @Override
   public List<Event> update(Context context) {
-    boolean isConfirmOrder = Events.findFirst(context.getEvents(),ConfirmOrder.class).isPresent();
-    boolean isGameOverEvent = Events.findFirst(context.getEvents(),GameOverEvent.class).isPresent();
+    boolean isConfirmOrder = Events.findFirst(context.getEvents(), ConfirmOrder.class).isPresent();
+    boolean isQuitGameOrder = Events.findFirst(context.getEvents(), QuitGameOrder.class).isPresent();
+    boolean isStageCleared = Events.findFirst(context.getEvents(), StageClearedEvent.class).isPresent();
+
     Game currentGame = context.getGame();
-    LinkedList<Event> events = new LinkedList<>();
-    if (isGameOverEvent) {
+    if (isQuitGameOrder) {
       currentGame.setOver();
     } else {
       if (isConfirmOrder) {
-        if (false /*currentGame.getCurrentStage().isCleared()*/) { // FIXME: use StageClearedEvent
+        if (isStageCleared) {
           if (currentGame.hasNextBoard()) { //continue
             currentGame.nextStage();
           } else { //no more board so game over => exiting
@@ -101,9 +109,7 @@ public final class Game implements Updateable {
         }
       }
     }
-
-    // FIXME: update underlying stage and merge generated events
-    return events;
+    return currentStage.update(context);
   }
 
 
