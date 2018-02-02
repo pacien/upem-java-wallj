@@ -45,4 +45,9 @@ public abstract class Block implements Updateable {
    * @param world a JBox2D world
    */
   public abstract void link(World world);
+
+  /**
+   * @param world a JBox2D world
+   */
+  public abstract void unlink(World world);
 }

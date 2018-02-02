@@ -33,4 +33,10 @@ public abstract class JBoxBlock extends Block {
     body.createFixture(fixtureDef);
     body.setUserData(this);
   }
+
+  @Override
+  public void unlink(World world) {
+    if (body == null) throw new IllegalStateException("Block has not yet been linked.");
+    world.destroyBody(body);
+  }
 }

@@ -45,6 +45,11 @@ public class RobotBlock extends Block {
   }
 
   @Override
+  public void unlink(World world) {
+    // no-op
+  }
+
+  @Override
   public List<Event> update(Context context) {
     Events.findFirst(context.getEvents(), MoveRobotOrder.class)
     .ifPresent(event -> updatePath(context.getGame().getCurrentStage().getBoard(), event.getTarget()));
