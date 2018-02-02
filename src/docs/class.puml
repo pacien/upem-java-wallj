@@ -4,15 +4,29 @@ skinparam linetype ortho
 skinparam monochrome reverse
 skinparam backgroundColor #FFFFFF
 
-class Main{
-    static void main(String[])
-}
-
 package viewer {
   class Viewer {
     final Game
     Viewer(List<Board>)
     void eventLoop(ApplicationContext)
+  }
+
+  class InputHandler {
+    ApplicationContext
+
+    InputHandler(ApplicationContext)
+    List<Event> getEvents()
+  }
+
+  class ScreenManager {
+    ApplicationContext, Graphics2D
+
+    ScreenManager(ApplicationContext,Graphics2D)
+    GraphicsContext clearScreen()
+  }
+
+  class Main{
+    static void main(String[])
   }
 }
 
@@ -38,20 +52,6 @@ package context {
     paintString(Color, Vec2,String)
   }
 
-  class InputHandler {
-    ApplicationContext
-
-    InputHandler(ApplicationContext)
-    List<Event> getEvents()
-  }
-
-  class ScreenManager {
-    ApplicationContext, Graphics2D
-
-    ScreenManager(ApplicationContext,Graphics2D)
-    GraphicsContext clearScreen()
-  }
-
   class Game implements Updateable {
     Stage
     final List<Controller>
@@ -65,7 +65,7 @@ package context {
     void setOver()
     void nextStage()
     void retryStage()
-    List<Event> update(Context context)
+    List<Event> update(Context)
   }
 
   class Stage implements Updateable {
@@ -102,6 +102,10 @@ package event {
     Block source
     Body source
   }
+
+  class StageClearedEvent implements GameEvent
+  class BlockCreateEvent implements GameEvent
+  class BlockDestroyEvent implements GameEvent
 }
 
 package board {
@@ -182,43 +186,24 @@ package block {
   class RobotBlock extends Block {
     Vec2 getPos()
     void link(World world)
-    List<Event> update(Context context)
+    List<Event> update(Context)
   }
 
   class WallBlock extends JBoxBlock {
-    List<Event> update(Context context)
+    List<Event> update(Context)
   }
 
   class TrashBlock extends JBoxBlock {
-    List<Event> update(Context context)
+    List<Event> update(Context)
   }
 
   class BombBlock extends JBoxBlock {
-    List<Event> update(Context context)
+    List<Event> update(Context)
   }
 
   class GarbageBlock extends JBoxBlock {
-    List<Event> update(Context context)
+    List<Event> update(Context)
   }
 }
-
-package controller {
-  interface Controller extends Updateable
-
-  class GameStateController implements Controller
-}
-
-Zen5 ()-- Viewer
-Zen5 ()-- Main
-Main --> viewer
-
-viewer --> context
-viewer --> block
-
-context --> event
-
-block --> controller
-
-board --> block
 
 @enduml
