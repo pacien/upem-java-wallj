@@ -1,22 +1,11 @@
 package fr.umlv.java.wallj.viewer;
 
 import fr.umlv.java.wallj.board.Board;
-import fr.umlv.java.wallj.board.BoardParser;
-import fr.umlv.java.wallj.board.BoardValidator;
 import fr.umlv.java.wallj.context.Context;
 import fr.umlv.java.wallj.context.Game;
-import fr.umlv.java.wallj.context.InputHandler;
-import fr.umlv.java.wallj.context.ScreenManager;
 import fr.umlv.java.wallj.event.Event;
-import fr.umlv.zen5.Application;
 import fr.umlv.zen5.ApplicationContext;
-import sun.awt.image.ImageWatched;
 
-import java.awt.*;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;

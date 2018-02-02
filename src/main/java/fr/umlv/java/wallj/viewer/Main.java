@@ -1,9 +1,8 @@
-package fr.umlv.java.wallj;
+package fr.umlv.java.wallj.viewer;
 
 import fr.umlv.java.wallj.board.Board;
 import fr.umlv.java.wallj.board.BoardParser;
 import fr.umlv.java.wallj.board.BoardValidator;
-import fr.umlv.java.wallj.viewer.Viewer;
 import fr.umlv.zen5.Application;
 
 import java.awt.*;

@@ -1,4 +1,4 @@
-package fr.umlv.java.wallj.context;
+package fr.umlv.java.wallj.viewer;
 
 import fr.umlv.java.wallj.board.TileVec2;
 import fr.umlv.java.wallj.event.BombSetupOrder;

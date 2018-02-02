@@ -17,7 +17,7 @@
     <property name="file.ant" value="build.xml"/>
     <property name="file.readme" value="readme.md"/>
 
-    <property name="class.entry" value="fr.umlv.java.wallj.Main"/>
+    <property name="class.entry" value="fr.umlv.java.wallj.viewer.Main"/>
 
     <target name="compile">
         <mkdir dir="${dir.classes}"/>

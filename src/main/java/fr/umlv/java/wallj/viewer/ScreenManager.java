@@ -1,5 +1,6 @@
-package fr.umlv.java.wallj.context;
+package fr.umlv.java.wallj.viewer;
 
+import fr.umlv.java.wallj.context.GraphicsContext;
 import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.ScreenInfo;
 import org.jbox2d.common.Vec2;
