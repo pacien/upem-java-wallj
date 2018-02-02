@@ -74,41 +74,32 @@ public final class Game implements Updateable {
   }
 
 
-  private void handleEvents(Context context){
-    if (Events.findFirst(context.getEvents(), QuitGameOrder.class).isPresent()){
+  private void handleEvents(Context context) {
+    if (Events.findFirst(context.getEvents(), QuitGameOrder.class).isPresent()) {
       context.getGame().setOver();
       return;
     }
-    if (Events.findFirst(context.getEvents(), ConfirmOrder.class).isPresent()){
-      
+    if (Events.findFirst(context.getEvents(), ConfirmOrder.class).isPresent()) {
+      if (currentStage.isCleared()) {
+        if (context.getGame().hasNextBoard()) { //continue
+          context.getGame().nextStage();
+        } else { //no more board so game over => exiting
+          setOver();
+        }
+        return;
+      }
+      retryStage();
     }
   }
+
+
   /**
    * @param context the current context
    * @return a list of new events
    */
   @Override
   public List<Event> update(Context context) {
-    boolean isConfirmOrder = Events.findFirst(context.getEvents(), ConfirmOrder.class).isPresent();
-    boolean isQuitGameOrder = Events.findFirst(context.getEvents(), QuitGameOrder.class).isPresent();
-    boolean isStageCleared = Events.findFirst(context.getEvents(), StageClearedEvent.class).isPresent();
-
-    Game currentGame = context.getGame();
-    if (isQuitGameOrder) {
-      currentGame.setOver();
-    } else {
-      if (isConfirmOrder) {
-        if (isStageCleared) {
-          if (currentGame.hasNextBoard()) { //continue
-            currentGame.nextStage();
-          } else { //no more board so game over => exiting
-            currentGame.setOver();
-          }
-        } else {//retry
-          currentGame.retryStage();
-        }
-      }
-    }
+    handleEvents(context);
     return currentStage.update(context);
   }
 
