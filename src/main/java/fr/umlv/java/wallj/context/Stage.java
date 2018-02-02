@@ -1,6 +1,8 @@
 package fr.umlv.java.wallj.context;
 
 import fr.umlv.java.wallj.block.Block;
+import fr.umlv.java.wallj.block.BlockFactory;
+import fr.umlv.java.wallj.block.BlockType;
 import fr.umlv.java.wallj.board.Board;
 import fr.umlv.java.wallj.board.BoardConverter;
 import fr.umlv.java.wallj.event.*;
@@ -8,7 +10,6 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
 import java.time.Duration;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,38 +24,47 @@ public class Stage implements Updateable {
   private final Board board;
   private final List<Block> blocks;
 
+  /**
+   * @param board the base board
+   */
   public Stage(Board board) {
     this.board = Objects.requireNonNull(board);
-    this.blocks = BoardConverter.boardToWorld(board);
-    // TODO: link blocks to world
+    blocks = BoardConverter.boardToWorld(board);
+    blocks.forEach(block -> block.link(world));
   }
 
+  /**
+   * @return the JBox2D world
+   */
   public World getWorld() {
     return world;
   }
 
   /**
-   * @return the current board of the game
+   * @return the base board
    */
   public Board getBoard() {
     return board;
   }
 
-  private boolean isCleared() {
-    // TODO
-    return false;
+  /**
+   * @return T(this stage is cleared, i.e. does not contain any garbage block)
+   * @implNote TODO: profile this and consider a garbage block counter
+   */
+  public boolean isCleared() {
+    return blocks.stream().noneMatch(block -> block.getType() == BlockType.GARBAGE);
   }
 
   /**
    * @param context the current context
-   * @return a list of new events to perform
+   * @return the list of newly generated events
    */
   @Override
   public List<Event> update(Context context) {
     updatePhysicalWorld(context.getTimeDelta());
     handleBlockDestruction(context.getEvents());
     handleBlockCreation(context.getEvents());
-    return generateEvents();
+    return Updateable.updateAll(blocks, context);
   }
 
   private void updatePhysicalWorld(Duration timeDelta) {
@@ -64,18 +74,15 @@ public class Stage implements Updateable {
 
   private void handleBlockDestruction(List<Event> events) {
     Events.filter(events, BlockDestroyEvent.class).forEach(event -> {
-    }); // TODO
+      if (blocks.remove(event.getBlock())) event.getBlock().unlink(world);
+    });
   }
 
   private void handleBlockCreation(List<Event> events) {
     Events.filter(events, BlockCreateEvent.class).forEach(event -> {
-    }); // TODO
-  }
-
-  private List<Event> generateEvents() {
-    if (isCleared())
-      return Collections.singletonList(new StageClearedEvent());
-    else
-      return Collections.emptyList();
+      Block block = BlockFactory.build(event.getBlockType(), event.getPos());
+      blocks.add(block);
+      block.link(world);
+    });
   }
 }

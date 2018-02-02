@@ -101,7 +101,6 @@ package event {
   }
 
   class GameOverEvent implements GameEvent
-  class StageClearedEvent implements GameEvent
   class BlockCreateEvent implements GameEvent
   class BlockDestroyEvent implements GameEvent
 }
