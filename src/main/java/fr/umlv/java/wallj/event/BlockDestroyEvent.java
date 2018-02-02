@@ -9,7 +9,7 @@ import java.util.Objects;
  *
  * @author Pacien TRAN-GIRARD
  */
-public class BlockDestroyEvent implements GameEvent {
+public final class BlockDestroyEvent implements GameEvent {
   private final Block block;
 
   /**

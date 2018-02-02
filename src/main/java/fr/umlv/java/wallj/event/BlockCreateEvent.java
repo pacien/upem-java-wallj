@@ -10,7 +10,7 @@ import java.util.Objects;
  *
  * @author Pacien TRAN-GIRARD
  */
-public class BlockCreateEvent implements GameEvent {
+public final class BlockCreateEvent implements GameEvent {
   private final BlockType blockType;
   private final TileVec2 pos;
 

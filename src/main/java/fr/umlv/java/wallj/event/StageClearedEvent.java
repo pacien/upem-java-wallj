@@ -5,6 +5,6 @@ package fr.umlv.java.wallj.event;
  *
  * @author Pacien TRAN-GIRARD
  */
-public class StageClearedEvent implements GameEvent {
+public final class StageClearedEvent implements GameEvent {
   // void
 }

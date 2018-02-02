@@ -9,7 +9,7 @@ import java.util.Objects;
  *
  * @author Pacien TRAN-GIRARD
  */
-public class MoveRobotOrder implements InputEvent {
+public final class MoveRobotOrder implements InputEvent {
   private final TileVec2 target;
 
   /**
