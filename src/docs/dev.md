@@ -114,3 +114,5 @@ TODO:
 - jbox2d, zen5, jdk, ant, junit docs
 - A* on wikipedia
 - common sense
+- https://stackoverflow.com/a/8929199
+- http://thisiswhatiknowabout.blogspot.com/2011/11/hello-world-jbox2d-with-javafx-20.html
