@@ -23,10 +23,12 @@ import java.util.List;
  */
 public class RobotBlock extends Block {
   private static final float SPEED = 10f; // px/ms
+  private static final int MAX_BOMB_PLACEMENTS = 3;
 
   private Vec2 pos;
   private PathFinder pathFinder;
   private Deque<TileVec2> path = new LinkedList<>();
+  private int droppedBombCount = 0;
 
   RobotBlock(Vec2 pos) {
     super(BlockType.ROBOT);
@@ -62,8 +64,15 @@ public class RobotBlock extends Block {
     return Events.findFirst(events, BombSetupOrder.class)
            .map(event -> isOnBomb(stage) ?
                          Collections.<Event>singletonList(new BombTimerIncrEvent(getTile())) :
-                         Collections.<Event>singletonList(new BlockCreateEvent(BlockType.BOMB, getTile())))
+                         dropBomb(event))
            .orElse(Collections.emptyList());
+  }
+
+  private List<Event> dropBomb(BombSetupOrder order) {
+    if (droppedBombCount >= MAX_BOMB_PLACEMENTS) return Collections.emptyList();
+
+    droppedBombCount++;
+    return Collections.singletonList(new BlockCreateEvent(BlockType.BOMB, getTile()));
   }
 
   private void updatePath(Board board, TileVec2 target) {
