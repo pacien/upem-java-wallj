@@ -1,7 +1,7 @@
 package fr.umlv.java.wallj.event;
 
 /**
- * Signals the beginning of the physics simulation.
+ * Signals the user's order to launch the simulation.
  *
  * @author Pacien TRAN-GIRARD
  */
