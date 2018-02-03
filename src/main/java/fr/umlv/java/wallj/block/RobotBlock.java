@@ -93,6 +93,9 @@ public class RobotBlock extends Block {
     graphicsContext.paintCircle(Color.BLUE, getPos(), TileVec2.TILE_DIM / 2);
   }
 
+  /**
+   * @implNote TODO: profile this and consider a mapping (pos: block) for faster lookup in Stage
+   */
   private boolean isOnBomb(Stage stage) {
     return stage.getBlocks().stream()
            .anyMatch(block -> Objects.equals(block.getType(), BlockType.BOMB) &&
