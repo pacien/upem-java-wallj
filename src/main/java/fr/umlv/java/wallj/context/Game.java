@@ -74,6 +74,14 @@ public final class Game implements Updateable {
   }
 
 
+
+  private void goToNext(){
+    if (hasNextBoard()) { //continue
+      nextStage();
+      return;
+    }
+    setOver();
+  }
   private void handleEvents(Context context) {
     if (Events.findFirst(context.getEvents(), QuitGameOrder.class).isPresent()) {
       context.getGame().setOver();
@@ -81,11 +89,7 @@ public final class Game implements Updateable {
     }
     if (Events.findFirst(context.getEvents(), ConfirmOrder.class).isPresent()) {
       if (currentStage.isCleared()) {
-        if (context.getGame().hasNextBoard()) { //continue
-          context.getGame().nextStage();
-        } else { //no more board so game over => exiting
-          setOver();
-        }
+        goToNext();
         return;
       }
       retryStage();
