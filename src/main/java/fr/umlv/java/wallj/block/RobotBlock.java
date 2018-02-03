@@ -27,6 +27,7 @@ public class RobotBlock extends Block {
   private Vec2 pos;
   private PathFinder pathFinder;
   private Deque<TileVec2> path = new LinkedList<>();
+  private int droppedBombCount = 0;
 
   RobotBlock(Vec2 pos) {
     super(BlockType.ROBOT);
@@ -62,8 +63,15 @@ public class RobotBlock extends Block {
     return Events.findFirst(events, BombSetupOrder.class)
            .map(event -> isOnBomb(stage) ?
                          Collections.<Event>singletonList(new BombTimerIncrEvent(getTile())) :
-                         Collections.<Event>singletonList(new BlockCreateEvent(BlockType.BOMB, getTile())))
+                         dropBomb(event))
            .orElse(Collections.emptyList());
+  }
+
+  private List<Event> dropBomb(BombSetupOrder order) {
+    if (droppedBombCount >= Stage.BOMB_PLACEMENTS) return Collections.emptyList();
+
+    droppedBombCount++;
+    return Collections.singletonList(new BlockCreateEvent(BlockType.BOMB, getTile()));
   }
 
   private void updatePath(Board board, TileVec2 target) {
@@ -85,6 +93,9 @@ public class RobotBlock extends Block {
     graphicsContext.paintCircle(Color.BLUE, getPos(), TileVec2.TILE_DIM / 2);
   }
 
+  /**
+   * @implNote TODO: profile this and consider a mapping (pos: block) for faster lookup in Stage
+   */
   private boolean isOnBomb(Stage stage) {
     return stage.getBlocks().stream()
            .anyMatch(block -> Objects.equals(block.getType(), BlockType.BOMB) &&
