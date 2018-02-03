@@ -50,7 +50,7 @@ public final class SolidDef {
    */
   public static CircleShape circleShape() {
     CircleShape shape = new CircleShape();
-    shape.m_radius = TileVec2.TILE_DIM / 4;
+    shape.m_radius = TileVec2.TILE_DIM / 2;
     return shape;
   }
 
