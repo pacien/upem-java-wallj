@@ -6,29 +6,38 @@ import fr.umlv.java.wallj.board.BoardValidator;
 import fr.umlv.zen5.Application;
 
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.*;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 public class Main {
 
   private static final String DEFAULT_MAP_NAME = "/maps/level0.txt";
-  private static java.util.List<Path> getResourcePaths(String[] args) throws URISyntaxException,IOException {
+
+
+  private static FileSystem fileSystemForContext(URI uri) throws URISyntaxException, IOException {
+    boolean isInJar = Objects.equals(Main.class.getProtectionDomain().getCodeSource().getLocation().getProtocol(), "jar");
+    if (isInJar) {//JAR from command line handling
+      Map<String, String> env = new HashMap<>();
+      env.put("create", "true");
+      return FileSystems.newFileSystem(uri, env);
+    }
+    return FileSystems.getDefault();//IDE Handling
+  }
+
+  private static List<Path> getResourcePaths() throws URISyntaxException, IOException {
+    final URI uri = Main.class.getResource(DEFAULT_MAP_NAME).toURI();
     LinkedList<Path> paths = new LinkedList<>();
     String strFolder = System.getProperty("levels");
     if (strFolder != null) {
       Path pathFolder = Paths.get(strFolder);
       Files.newDirectoryStream(pathFolder).forEach(paths::add);
     } else {
-      final URI uri = Main.class.getResource(DEFAULT_MAP_NAME).toURI();
-      Map<String, String> env = new HashMap<>();
-      env.put("create", "true");
-      FileSystem zipfs = FileSystems.newFileSystem(uri, env);
+      FileSystem fileSystem = fileSystemForContext(uri);
       paths.add(Paths.get(uri));
     }
     return paths;
@@ -37,7 +46,7 @@ public class Main {
   public static void main(String[] args) {
     List<Board> boards = new LinkedList<>();
     try {
-      List<Path> boardPaths = Main.getResourcePaths(args);
+      List<Path> boardPaths = Main.getResourcePaths();
       for (Path path : boardPaths) {
         BoardValidator boardValidator = new BoardValidator(BoardParser.parse(path));
         boards.add(
