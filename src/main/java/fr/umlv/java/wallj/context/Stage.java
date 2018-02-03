@@ -5,12 +5,15 @@ import fr.umlv.java.wallj.block.BlockFactory;
 import fr.umlv.java.wallj.block.BlockType;
 import fr.umlv.java.wallj.board.Board;
 import fr.umlv.java.wallj.board.BoardConverter;
+import fr.umlv.java.wallj.board.TileVec2;
 import fr.umlv.java.wallj.event.*;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
 import java.time.Duration;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -21,15 +24,16 @@ public class Stage implements Updateable {
   private static final int POSITION_TICK_PER_MS = 2;
 
   private final World world = new World(new Vec2());
+  private final List<Block> blocks = new LinkedList<>();
   private final Board board;
-  private final List<Block> blocks;
 
   /**
    * @param board the base board
    */
   public Stage(Board board) {
     this.board = Objects.requireNonNull(board);
-    blocks = BoardConverter.boardToWorld(board);
+    blocks.addAll(BoardConverter.boardToWorld(board));
+    blocks.add(BlockFactory.build(BlockType.ROBOT, findAnyFreeTile(board)));
     blocks.forEach(block -> block.link(world));
   }
 
@@ -84,5 +88,13 @@ public class Stage implements Updateable {
       blocks.add(block);
       block.link(world);
     });
+  }
+
+  private static TileVec2 findAnyFreeTile(Board board) {
+    return board.stream()
+           .filter(entry -> entry.getValue() == BlockType.FREE)
+           .findAny()
+           .map(Map.Entry::getKey)
+           .orElseThrow(IllegalArgumentException::new);
   }
 }

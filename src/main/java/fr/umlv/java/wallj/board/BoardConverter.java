@@ -33,9 +33,9 @@ public final class BoardConverter {
    * @return the list of blocks converted
    */
   public static List<Block> boardToWorld(Board board) {
-    ArrayList<Block> blocks = new ArrayList<>();
     int nbRow = board.getDim().getRow();
     int nbCol = board.getDim().getCol();
+    ArrayList<Block> blocks = new ArrayList<>(nbCol * nbRow);
     for (int i = 0; i < nbRow; i++) {
       for (int j = 0; j < nbCol; j++) {
         Block block;
