@@ -71,6 +71,16 @@ public final class Board {
   }
 
   /**
+   * @param v a tile vector
+   * @return T(v is a valid position of an element within the board)
+   */
+  public boolean inside(TileVec2 v) {
+    TileVec2 dim = getDim();
+    return v.getRow() >= 0 && v.getCol() >= 0 &&
+           v.getRow() < dim.getRow() && v.getCol() < dim.getCol();
+  }
+
+  /**
    * @return a stream of block types and their associated tile position vectors
    */
   public Stream<Map.Entry<TileVec2, BlockType>> stream() {

@@ -67,7 +67,7 @@ public class RobotBlock extends Block {
   }
 
   private void updatePath(Board board, TileVec2 target) {
-    if (!board.getBlockTypeAt(target).isTraversable()) return;
+    if (!board.inside(target) || !board.getBlockTypeAt(target).isTraversable()) return;
     if (pathFinder == null) pathFinder = new PathFinder(board);
     path = new LinkedList<>(pathFinder.findPath(TileVec2.of(pos), target));
   }
