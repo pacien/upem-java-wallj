@@ -73,8 +73,6 @@ public final class Game implements Updateable {
     currentStage = new Stage(currentStage.getBoard());
   }
 
-
-
   private void goToNext(){
     if (hasNextBoard()) { //continue
       nextStage();
