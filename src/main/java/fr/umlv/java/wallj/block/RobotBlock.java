@@ -23,7 +23,6 @@ import java.util.List;
  */
 public class RobotBlock extends Block {
   private static final float SPEED = 10f; // px/ms
-  private static final int MAX_BOMB_PLACEMENTS = 3;
 
   private Vec2 pos;
   private PathFinder pathFinder;
@@ -69,7 +68,7 @@ public class RobotBlock extends Block {
   }
 
   private List<Event> dropBomb(BombSetupOrder order) {
-    if (droppedBombCount >= MAX_BOMB_PLACEMENTS) return Collections.emptyList();
+    if (droppedBombCount >= Stage.BOMB_PLACEMENTS) return Collections.emptyList();
 
     droppedBombCount++;
     return Collections.singletonList(new BlockCreateEvent(BlockType.BOMB, getTile()));

@@ -17,6 +17,7 @@ import java.util.*;
  * @author Pacien TRAN-GIRARD
  */
 public class Stage implements Updateable {
+  public static final int BOMB_PLACEMENTS = 3;
   private static final int VELOCITY_TICK_PER_MS = 6;
   private static final int POSITION_TICK_PER_MS = 2;
 
@@ -60,7 +61,17 @@ public class Stage implements Updateable {
    * @implNote TODO: profile this and consider a garbage block counter
    */
   public boolean isCleared() {
-    return blocks.stream().noneMatch(block -> block.getType() == BlockType.GARBAGE);
+    return blocks.stream()
+           .noneMatch(block -> block.getType() == BlockType.GARBAGE);
+  }
+
+  /**
+   * @return T(the physics simulation can start, i.e. the player has placed all their bombs)
+   */
+  public boolean isReady() {
+    return blocks.stream()
+           .filter(block -> block.getType() == BlockType.BOMB)
+           .count() == BOMB_PLACEMENTS;
   }
 
   /**
