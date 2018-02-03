@@ -15,7 +15,7 @@ import org.jbox2d.dynamics.FixtureDef;
 public final class SolidDef {
   /**
    * @param bodyType type of body
-   * @param pos initial position of the body
+   * @param pos      initial position of the body
    * @return a corresponding body definition
    */
   public static BodyDef bodyDefOf(BodyType bodyType, Vec2 pos) {
@@ -41,7 +41,7 @@ public final class SolidDef {
    */
   public static PolygonShape squareShape() {
     PolygonShape shape = new PolygonShape();
-    shape.setAsBox(TileVec2.TILE_DIM, TileVec2.TILE_DIM);
+    shape.setAsBox(TileVec2.TILE_DIM / 2, TileVec2.TILE_DIM / 2);
     return shape;
   }
 
@@ -50,7 +50,7 @@ public final class SolidDef {
    */
   public static CircleShape circleShape() {
     CircleShape shape = new CircleShape();
-    shape.m_radius = TileVec2.TILE_DIM / 2;
+    shape.m_radius = TileVec2.TILE_DIM / 4;
     return shape;
   }
 
