@@ -20,6 +20,13 @@ public abstract class JBoxBlock extends Block {
     fixtureDef = SolidDef.fixtureDefOf(Objects.requireNonNull(bodyShape));
   }
 
+  /**
+   * @return the JBox2D body
+   */
+  public Body getBody() {
+    return body;
+  }
+
   @Override
   public Vec2 getPos() {
     if (body == null) throw new IllegalStateException("Uninitialised block.");
@@ -30,8 +37,9 @@ public abstract class JBoxBlock extends Block {
   public void link(World world) {
     if (body != null) throw new IllegalStateException("Block is already linked.");
     body = world.createBody(bodyDef);
-    body.createFixture(fixtureDef);
     body.setUserData(this);
+    Fixture fixture = body.createFixture(fixtureDef);
+    fixture.setUserData(body);
   }
 
   @Override
