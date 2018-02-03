@@ -1,10 +1,7 @@
 package fr.umlv.java.wallj.viewer;
 
 import fr.umlv.java.wallj.board.TileVec2;
-import fr.umlv.java.wallj.event.BombSetupOrder;
-import fr.umlv.java.wallj.event.ConfirmOrder;
-import fr.umlv.java.wallj.event.QuitGameOrder;
-import fr.umlv.java.wallj.event.MoveRobotOrder;
+import fr.umlv.java.wallj.event.*;
 import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
 import fr.umlv.zen5.KeyboardKey;
@@ -59,6 +56,9 @@ public final class InputHandler {
               break;
             case Q:
               events.add(new QuitGameOrder());
+              break;
+            case S:
+              events.add(new SimulationStartOrder());
               break;
           }
         }
