@@ -13,6 +13,7 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A bomb block.
@@ -42,13 +43,15 @@ public class BombBlock extends JBoxBlock {
 
   @Override
   public List<Event> update(Context context) {
-    if (containsUpdateEvent(context.getEvents())) incrementTimer();
+    handleBombConfiguration(context.getEvents());
     paint(context.getGraphicsContext());
     return consume(context.getTimeDelta());
   }
 
-  private boolean containsUpdateEvent(List<Event> events) {
-    return Events.findFirst(events, BombSetupEvent.class).isPresent();
+  private void handleBombConfiguration(List<Event> events) {
+    Events.findFirst(events, BombTimerIncrEvent.class)
+    .filter(event -> Objects.equals(event.getPos(), TileVec2.of(getPos())))
+    .ifPresent(event -> incrementTimer());
   }
 
   private List<Event> consume(Duration timeDelta) {

@@ -11,10 +11,7 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
 import java.time.Duration;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author Pacien TRAN-GIRARD
@@ -49,6 +46,13 @@ public class Stage implements Updateable {
    */
   public Board getBoard() {
     return board;
+  }
+
+  /**
+   * @return the list of blocks
+   */
+  public List<Block> getBlocks() {
+    return Collections.unmodifiableList(blocks);
   }
 
   /**

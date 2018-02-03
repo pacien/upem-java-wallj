@@ -5,6 +5,7 @@ import fr.umlv.java.wallj.board.PathFinder;
 import fr.umlv.java.wallj.board.TileVec2;
 import fr.umlv.java.wallj.context.Context;
 import fr.umlv.java.wallj.context.GraphicsContext;
+import fr.umlv.java.wallj.context.Stage;
 import fr.umlv.java.wallj.event.*;
 import fr.umlv.java.wallj.event.Event;
 import org.jbox2d.common.Vec2;
@@ -12,9 +13,7 @@ import org.jbox2d.dynamics.World;
 
 import java.awt.*;
 import java.time.Duration;
-import java.util.Collections;
-import java.util.Deque;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.List;
 
 /**
@@ -23,7 +22,7 @@ import java.util.List;
  * @author Pacien TRAN-GIRARD
  */
 public class RobotBlock extends Block {
-  private static final float SPEED = 0.2f; // px/ms
+  private static final float SPEED = 4f; // px/ms
 
   private Vec2 pos;
   private PathFinder pathFinder;
@@ -56,12 +55,14 @@ public class RobotBlock extends Block {
 
     move(context.getTimeDelta());
     paint(context.getGraphicsContext());
-    return setupBomb(context.getEvents());
+    return setupBomb(context.getEvents(), context.getGame().getCurrentStage());
   }
 
-  private List<Event> setupBomb(List<Event> events) {
+  private List<Event> setupBomb(List<Event> events, Stage stage) {
     return Events.findFirst(events, BombSetupOrder.class)
-           .map(event -> Collections.<Event>singletonList(new BombSetupEvent(TileVec2.of(pos))))
+           .map(event -> isOnBomb(stage) ?
+                         Collections.<Event>singletonList(new BombTimerIncrEvent(getTile())) :
+                         Collections.<Event>singletonList(new BlockCreateEvent(BlockType.BOMB, getTile())))
            .orElse(Collections.emptyList());
   }
 
@@ -82,5 +83,11 @@ public class RobotBlock extends Block {
 
   private void paint(GraphicsContext graphicsContext) {
     graphicsContext.paintCircle(Color.BLUE, getPos(), TileVec2.TILE_DIM / 2);
+  }
+
+  private boolean isOnBomb(Stage stage) {
+    return stage.getBlocks().stream()
+           .anyMatch(block -> Objects.equals(block.getType(), BlockType.BOMB) &&
+                              Objects.equals(block.getPos(), getTile().toVec2()));
   }
 }
