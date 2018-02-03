@@ -57,7 +57,7 @@ public class PathFinder {
 
   private static <T> List<T> findPath(Node<T> start, T target, BiFunction<T, T, Double> heuristic) {
     Map<Node<T>, NodeSearchData<T>> searchData = new HashMap<>();
-    TreeSet<Node<T>> discovered = new TreeSet<>(Comparator.comparingDouble(n -> searchData.get(n).estimatedCost));
+    Queue<Node<T>> discovered = new PriorityQueue<>(Comparator.comparingDouble(n -> searchData.get(n).estimatedCost));
     Set<Node<T>> visited = new HashSet<>();
 
     searchData.put(start, new NodeSearchData<>(null, 0, heuristic.apply(start.val, target)));
@@ -65,7 +65,7 @@ public class PathFinder {
 
     Node<T> current;
     while (!discovered.isEmpty()) {
-      current = discovered.pollFirst();
+      current = discovered.poll();
       if (target.equals(current.val)) return buildPath(searchData, current);
 
       for (Map.Entry<Node<T>, Integer> neighborEntry : current.neighbors.entrySet()) {
