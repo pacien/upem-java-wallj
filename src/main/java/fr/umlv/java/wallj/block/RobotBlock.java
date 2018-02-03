@@ -22,7 +22,7 @@ import java.util.List;
  * @author Pacien TRAN-GIRARD
  */
 public class RobotBlock extends Block {
-  private static final float SPEED = 4f; // px/ms
+  private static final float SPEED = 10f; // px/ms
 
   private Vec2 pos;
   private PathFinder pathFinder;
