@@ -18,7 +18,7 @@ public final class Events {
    */
   public static <T extends Event> Stream<T> filter(List<Event> eventList, Class<T> eventClass) {
     return eventList.stream()
-           .filter(e -> e.getClass().isInstance(eventClass))
+           .filter(e -> e.getClass().isAssignableFrom(eventClass))
            .map(eventClass::cast);
   }
 
