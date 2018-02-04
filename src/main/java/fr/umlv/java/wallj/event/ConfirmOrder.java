@@ -1,7 +1,7 @@
 package fr.umlv.java.wallj.event;
 
 /**
- * Event coming from a confirmation action from the user
+ * Signals that the user is confirming thanks to inputs
  *
  * @author Adam NAILI
  */

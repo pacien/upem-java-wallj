@@ -5,12 +5,10 @@ import fr.umlv.zen5.ScreenInfo;
 import org.jbox2d.common.Vec2;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 import java.util.Objects;
 
 /**
- * A context of the current graphic status of the application.
+ * The context of the application containing graphics information and services at one tick
  *
  * @author Adam NAILI
  */
@@ -20,7 +18,7 @@ public final class GraphicsContext {
 
   /**
    * @param graphics2D the current drawable canvas
-   * @param screenInfo the informations about the screen
+   * @param screenInfo the information about the screen
    */
   public GraphicsContext(Graphics2D graphics2D, ScreenInfo screenInfo) {
     this.graphics2D = Objects.requireNonNull(graphics2D);

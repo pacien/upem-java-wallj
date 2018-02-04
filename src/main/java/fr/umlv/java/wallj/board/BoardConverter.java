@@ -14,6 +14,7 @@ public final class BoardConverter {
   }
 
   /**
+   * Converts a list of Blocks to a Board
    * @param blocks the list of blocks to convert in a board
    * @return the converted board
    */
@@ -29,6 +30,7 @@ public final class BoardConverter {
   }
 
   /**
+   * Converts a Board to a list of Blocks
    * @param board the board to convert into a list of blocks
    * @return the list of blocks converted
    */

@@ -9,7 +9,7 @@ import java.awt.Graphics2D;
 import java.util.Objects;
 
 /**
- * Cleans the GraphicsContext
+ * Generates a clean GraphicsContext
  *
  * @author Adam NAILI
  */
