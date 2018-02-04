@@ -33,7 +33,7 @@ public class BombBlock extends JBoxBlock {
   }
 
   private void incrementTimer() {
-    timer = timer.compareTo(MAX_TIME) <= 0 ? timer.plus(TIME_INCREMENT) : MIN_TIME;
+    timer = timer.compareTo(MAX_TIME) < 0 ? timer.plus(TIME_INCREMENT) : MIN_TIME;
   }
 
   private void decrementTimer(Duration d) {
