@@ -5,7 +5,6 @@ import fr.umlv.java.wallj.board.BoardParser;
 import fr.umlv.java.wallj.board.BoardValidator;
 import fr.umlv.zen5.Application;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -85,7 +84,7 @@ public final class Main {
                          .collect(Collectors.toList());
 
     Viewer viewer = new Viewer(levels);
-    Application.run(Color.WHITE, viewer::eventLoop);
+    Application.run(Viewer.BACKGROUND_COLOR, viewer::eventLoop);
   }
 
   private Main() {

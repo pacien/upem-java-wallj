@@ -6,6 +6,7 @@ import fr.umlv.java.wallj.context.Game;
 import fr.umlv.java.wallj.event.Event;
 import fr.umlv.zen5.ApplicationContext;
 
+import java.awt.*;
 import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
  * @author Adam NAILI
  */
 public final class Viewer {
+  public static final Color BACKGROUND_COLOR = Color.WHITE;
   private static final Duration FRAME_DURATION = Duration.ofMillis(1000 / 60);
 
   private final Game currentGame;
