@@ -82,6 +82,11 @@ package context {
 }
 
 package event {
+  class Events {
+    static <T extends Event> Stream<T> filter(List<Event>, Class<T>)
+    static <T extends Event> Optional<T> findFirst(List<Event>, Class<T>)
+  }
+
   interface Event
   interface GameEvent implements Event
   interface InputEvent implements Event
