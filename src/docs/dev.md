@@ -1,7 +1,7 @@
 ---
 title: "BSc IN S5 / OOP with Java / Wall-J / Wall-J / Devel. notes"
 author: [Pacien TRAN-GIRARD, Adam NAILI]
-date: 2018-01-14
+date: 2018-02-04
 ...
 
 # Preamble
@@ -60,9 +60,9 @@ Their respective properties such as their traversability by the player have been
 Additional constraints on board validity have been added to ensure their correctness during their manipulation in the
 program. Those conditions have been described in the user manual as well.
 
+
 ## Unit testing
 
-_"Sir, the testing?"_, Caroline reminds.
 Most utility, logic functions and algorithms have been covered by automatic unit tests to reduce the risk of
 small-but-yet-critical mistakes and regressions during the development.
 Those automatic tests are ran with the help of the JUnit 5 test framework.
@@ -70,50 +70,65 @@ Those automatic tests are ran with the help of the JUnit 5 test framework.
 Components and modules related to the graphical user interface could not have been easily tested automatically.
 Quality control of such parts of the program have been handled manually.
 
+
 ## Architecture
 
-The architecture of the program is loosely based on the _Model-View-Controller_ pattern, combined with an event-driven
-approach, separating state objects from actions and events handlers.
+The architecture of the program is loosely based on the _Model-View-Controller_ pattern,
+combined with an event-driven approach.
 
-A more complete package and class diagram is attached to this report.
+Input and game generated events are propagated recursively through each sub-module,
+which can return new events to be broadcast on the next tick.
 
-TODO:
+Those events are fed to controller methods which alter their parent state holding object.
 
-- include a simplified diagram here
-- explain event handling and propagation
-- explain why not mailbox/event subscription system
-- explain how it minimizes coupling
-- explain how we can add stuff like a second robot and whatnot
+This architecture ensures a low class coupling while allowing the program to be extended.
+
+\newpage
 
 ## Implementation details
 
-TODO:
+### Physics
 
-- per-module remarks:
-    - tell who did what in parallel
-    - using a ray tracer for explosions
+This game makes use of the JBox2D physics engine to simulate a physical world.
+Each block is linked to a corresponding JBox2D body which is used to determine its position and detect collisions.
+
+Bomb explosion management uses the physics engine's ray cast feature to determine which garbage blocks are affected by a blast.
+This solution is more realistic than a blast radius-based approach, while being less resource demanding than a particle propagation system.
+
+### Event propagation
+
+Events are broadcast to each and every game entity.
+This simple method has been profiled and validated for the low number of events propagated in this game.
+A more complex mailbox-driven approach has been considered but was not implemented due to its unnecessary complexity and
+the unavailability of a dependency injection framework.
+
 
 ## Additional features
 
-None yet.
+None of the suggested additional feature was implemented.
+
+Those could have been easily added as follows:
+
+- Bouncy walls can be added by defining a new block type with a greater restitution coefficient or a custom collision handler.
+- Imploding bombs can be added by defining a new block and a new implosion event types, which would be handled similarly
+to the explosion events with a reversed impulse vector.
+- A timer can be added in the viewer.
+
 
 ## Notes
 
-TODO:
-
-- complain about Ant, beg for Gradle and dependency management
-- check that zen5 is actually using a double buffer
-- include git commit log?
+- Body in the physics engine should have been scaled down.
+- Zen5 could not handle _RETURN_ key events.
+- Zen5 ScreenInfo are not updated after a window resize.
+- Ant is hell. Gradle is better. 
 
 ---
 
 # References
 
-TODO:
-
-- jbox2d, zen5, jdk, ant, junit docs
-- A* on wikipedia
-- common sense
-- https://stackoverflow.com/a/8929199
-- http://thisiswhatiknowabout.blogspot.com/2011/11/hello-world-jbox2d-with-javafx-20.html
-- http://www.iforce2d.net/b2dtut/explosions
+- Javadocs of JBox2D, Zen5, JUnit
+- Documentations of the JDK and the Ant build tool
+- [A* search algorithm article on Wikipedia](https://en.wikipedia.org/wiki/A*_search_algorithm)
+- [JBox2D tutorial request on StackOverflow](https://stackoverflow.com/a/8929199)
+- [Hello World JBox2D with JavaFX 2.0](http://thisiswhatiknowabout.blogspot.com/2011/11/hello-world-jbox2d-with-javafx-20.html)
+- [Box2D C++ tutorials - Explosions](http://www.iforce2d.net/b2dtut/explosions)

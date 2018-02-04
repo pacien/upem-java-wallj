@@ -1,7 +1,7 @@
 ---
 title: "BSc IN S5 / OOP with Java / Wall-J / User manual"
 author: [Pacien TRAN-GIRARD, Adam NAILI]
-date: 2018-01-14
+date: 2018-02-04
 ...
 
 # Preamble
@@ -54,7 +54,7 @@ The player controls a robot, dropping bombs whose explosion can push garbage int
 Garbage bounce when colliding other elements such as walls, unexploded bombs or other garbage blocks,
 and disappear of the screen when reaching a garbage can.
 
-The explosion of each of the dropped bombs can be delayed using independent timers.
+The explosion of each of the dropped bombs can be delayed using independent timers, up to 9 seconds.
 The robot must drop exactly 3 bombs on each level.
 
 A stage is considered done once the world has been cleared of all its garbage.
@@ -78,18 +78,16 @@ Robot       Blue disk    /                /
 
 ## Controls
 
-Controls are defined as follows:
-
 Trigger                                 Action
 -------------------------------         -------------------------------------------------------
 Click on a traversable tile             Moves the robot to the pointed location
 `SPACE` on a free tile                  Drops a bomb at the current location
 `SPACE` on a tile with a bomb           Increases the timer of the bomb at the current location
 `S` while controlling the robot         Puts Wall-j into a safe place before activating the bombs
-`R` at any moment                       Restarts the current level if the stage is not cleared or continues to the next one if possible
+`R` at any moment                       Restarts the current level or continues to the next one if solved
 `Q` at any moment                       Exits the game
-*__Note__: The specifications precise that the _RETURN_ button must be used for the bomb management. This key is not defined in the Zen5 library. 
-The *SPACE* key is used in substitution*
+
+
 ## Custom levels
 
 Custom world can be defined by the user in plain text files, each of which containing a single world.
@@ -113,7 +111,6 @@ A world is defined as valid if its blocks fulfill the following criteria:
 * The world must have enough free tiles to contain all droppable bombs.
 
 Only valid worlds can be loaded into the game.
-
 The validity of a world may not guaranty the solvability of the puzzle.
 
 \newpage
