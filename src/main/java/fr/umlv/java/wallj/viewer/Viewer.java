@@ -43,6 +43,9 @@ public final class Viewer {
     this.game = new Game(boards);
   }
 
+  /**
+   * Launches the application
+   */
   public void run() {
     List<Event> forwardEvents = new LinkedList<>();
     Duration lastExec = Duration.ZERO;
