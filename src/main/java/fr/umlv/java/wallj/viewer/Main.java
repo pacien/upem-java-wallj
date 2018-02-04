@@ -6,7 +6,6 @@ import fr.umlv.java.wallj.board.BoardValidator;
 import fr.umlv.zen5.Application;
 
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -42,7 +41,7 @@ public class Main {
     return paths;
   }
 
-  //TODO Split Parse and validation + add useless return to satisfy this crazy compiler 
+  //TODO Split Parse and validation + add useless return to satisfy this crazy compiler
   private static Board validateBoardFromPath(Path path) {
     try {
       BoardValidator boardValidator = new BoardValidator(BoardParser.parse(path));
@@ -54,12 +53,14 @@ public class Main {
     } catch (IOException e) {
       System.err.println(e.getMessage());
       System.exit(2);
+      return null;
     } catch (BoardValidator.ValidationException e) {
       System.err.println(path.toString() + ':');
       for (Throwable throwable : e.getSuppressed()) {
         System.err.println(throwable.getMessage());
       }
       System.exit(3);
+      return null;
     }
   }
 
