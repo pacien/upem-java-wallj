@@ -19,6 +19,12 @@ public final class TileVec2 {
   of(-1, 0),
   of(0, 1),
   of(1, 0));
+  private final int col, row;
+
+  private TileVec2(int col, int row) {
+    this.col = col;
+    this.row = row;
+  }
 
   /**
    * @param col the column
@@ -35,13 +41,6 @@ public final class TileVec2 {
    */
   public static TileVec2 of(Vec2 v) {
     return new TileVec2((int) (v.x / TILE_DIM), (int) (v.y / TILE_DIM));
-  }
-
-  private final int col, row;
-
-  private TileVec2(int col, int row) {
-    this.col = col;
-    this.row = row;
   }
 
   /**

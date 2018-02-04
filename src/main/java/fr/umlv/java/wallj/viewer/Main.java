@@ -30,6 +30,10 @@ public final class Main {
   private static final String MAP_FILE_PATTERN = "level*.txt";
   private static final String JAR_SCHEME = "jar";
 
+  private Main() {
+    // static class
+  }
+
   private static Path getMapDirPath() {
     try {
       if (System.getProperty(MAP_DIR_KEY) != null) {
@@ -88,9 +92,5 @@ public final class Main {
                          .collect(Collectors.toList());
 
     Application.run(Viewer.BACKGROUND_COLOR, appContext -> (new Viewer(appContext, levels)).run());
-  }
-
-  private Main() {
-    // static class
   }
 }

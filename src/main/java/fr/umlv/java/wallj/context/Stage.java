@@ -36,6 +36,14 @@ public class Stage implements Updateable {
     blocks.forEach(block -> block.link(world));
   }
 
+  private static TileVec2 findAnyFreeTile(Board board) {
+    return board.stream()
+           .filter(entry -> entry.getValue() == BlockType.FREE)
+           .findAny()
+           .map(Map.Entry::getKey)
+           .orElseThrow(IllegalArgumentException::new);
+  }
+
   /**
    * @return the JBox2D world
    */
@@ -125,13 +133,5 @@ public class Stage implements Updateable {
     return blocks.stream()
            .filter(block -> block.getType() == BlockType.BOMB)
            .count() == BOMB_PLACEMENTS;
-  }
-
-  private static TileVec2 findAnyFreeTile(Board board) {
-    return board.stream()
-           .filter(entry -> entry.getValue() == BlockType.FREE)
-           .findAny()
-           .map(Map.Entry::getKey)
-           .orElseThrow(IllegalArgumentException::new);
   }
 }

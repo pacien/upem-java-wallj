@@ -12,6 +12,10 @@ import java.util.stream.Stream;
  * @author Pacien TRAN-GIRARD
  */
 public final class Updateables {
+  private Updateables() {
+    // static class
+  }
+
   /**
    * @param <T>         the updateable type
    * @param context     an update context
@@ -32,9 +36,5 @@ public final class Updateables {
   @SafeVarargs
   public static <T extends Updateable> Stream<Event> updateAll(Context context, T... updateables) {
     return updateAll(context, Arrays.asList(updateables));
-  }
-
-  private Updateables() {
-    // static class
   }
 }

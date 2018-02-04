@@ -10,6 +10,10 @@ import java.util.stream.Stream;
  * @author Pacien TRAN-GIRARD
  */
 public final class Events {
+  private Events() {
+    // static class
+  }
+
   /**
    * @param eventList  list of events to filter
    * @param eventClass event class to keep
@@ -30,9 +34,5 @@ public final class Events {
    */
   public static <T extends Event> Optional<T> findFirst(List<Event> eventList, Class<T> eventClass) {
     return filter(eventList, eventClass).findFirst();
-  }
-
-  private Events() {
-    // static class
   }
 }

@@ -15,38 +15,6 @@ import java.util.stream.Stream;
  */
 public final class Board {
 
-  /**
-   * Board Builder
-   */
-  public static final class Builder {
-    private final BlockType[][] map;
-
-    /**
-     * @param width  width in tiles
-     * @param height height in tiles
-     */
-    public Builder(int width, int height) {
-      map = new BlockType[height][width];
-    }
-
-    /**
-     * @param pos  the tile position vector
-     * @param type the BlockType to set
-     * @return the Builder
-     */
-    public Builder setBlockTypeAt(TileVec2 pos, BlockType type) {
-      map[pos.getRow()][pos.getCol()] = type;
-      return this;
-    }
-
-    /**
-     * @return the immutable Board
-     */
-    public Board build() {
-      return new Board(map);
-    }
-  }
-
   private final BlockType[][] map;
 
   private Board(BlockType[][] map) {
@@ -101,6 +69,38 @@ public final class Board {
   @Override
   public int hashCode() {
     return Arrays.hashCode(map);
+  }
+
+  /**
+   * Board Builder
+   */
+  public static final class Builder {
+    private final BlockType[][] map;
+
+    /**
+     * @param width  width in tiles
+     * @param height height in tiles
+     */
+    public Builder(int width, int height) {
+      map = new BlockType[height][width];
+    }
+
+    /**
+     * @param pos  the tile position vector
+     * @param type the BlockType to set
+     * @return the Builder
+     */
+    public Builder setBlockTypeAt(TileVec2 pos, BlockType type) {
+      map[pos.getRow()][pos.getCol()] = type;
+      return this;
+    }
+
+    /**
+     * @return the immutable Board
+     */
+    public Board build() {
+      return new Board(map);
+    }
   }
 
 }

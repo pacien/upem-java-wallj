@@ -13,6 +13,39 @@ import java.util.stream.IntStream;
  */
 public class BoardValidator {
 
+  private final Board board;
+  private final ValidationException errors = new ValidationException();
+
+  /**
+   * @param board the board to validate
+   */
+  public BoardValidator(Board board) {
+    this.board = board;
+  }
+
+  /**
+   * Tests the board against a given validator, using the supplied error message if the validation fails.
+   *
+   * @param validator a validity test
+   * @param msg       a failure message
+   * @return the board validator
+   */
+  public BoardValidator validate(Predicate<Board> validator, String msg) {
+    if (!validator.test(board)) errors.addSuppressed(new ValidationException(msg));
+    return this;
+  }
+
+  /**
+   * @return the validated board
+   * @throws ValidationException in case of failure
+   */
+  public Board get() throws ValidationException {
+    if (errors.getSuppressed().length > 0)
+      throw errors;
+    else
+      return board;
+  }
+
   /**
    * A validation exception, witness of validation error(s).
    */
@@ -32,6 +65,10 @@ public class BoardValidator {
   public static final class Constraint {
 
     public static final int NB_DROPPABLE_BOMBS = 3;
+
+    private Constraint() {
+      // static class
+    }
 
     private static boolean inBoard(TileVec2 dim, TileVec2 v) {
       return v.getRow() >= 0 && v.getRow() < dim.getRow() &&
@@ -104,43 +141,6 @@ public class BoardValidator {
              b.stream().filter(block -> block.getValue() == BlockType.FREE).count() >= NB_DROPPABLE_BOMBS;
     }
 
-    private Constraint() {
-      // static class
-    }
-
-  }
-
-  private final Board board;
-  private final ValidationException errors = new ValidationException();
-
-  /**
-   * @param board the board to validate
-   */
-  public BoardValidator(Board board) {
-    this.board = board;
-  }
-
-  /**
-   * Tests the board against a given validator, using the supplied error message if the validation fails.
-   *
-   * @param validator a validity test
-   * @param msg       a failure message
-   * @return the board validator
-   */
-  public BoardValidator validate(Predicate<Board> validator, String msg) {
-    if (!validator.test(board)) errors.addSuppressed(new ValidationException(msg));
-    return this;
-  }
-
-  /**
-   * @return the validated board
-   * @throws ValidationException in case of failure
-   */
-  public Board get() throws ValidationException {
-    if (errors.getSuppressed().length > 0)
-      throw errors;
-    else
-      return board;
   }
 
 }

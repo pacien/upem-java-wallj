@@ -8,6 +8,10 @@ import java.util.List;
  * @author Pacien TRAN-GIRARD
  */
 public final class Matrix {
+  private Matrix() {
+    // static class
+  }
+
   /**
    * @param m the matrix (2D array)
    * @return the width of the matrix (0 if null)
@@ -46,9 +50,5 @@ public final class Matrix {
    */
   public static boolean isShapeValid(List<? extends List<?>> l) {
     return l != null && l.stream().mapToInt(List::size).allMatch(s -> s == l.get(0).size());
-  }
-
-  private Matrix() {
-    // static class
   }
 }

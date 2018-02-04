@@ -13,6 +13,10 @@ import org.jbox2d.dynamics.FixtureDef;
  * @author Pacien TRAN-GIRARD
  */
 public final class SolidDef {
+  private SolidDef() {
+    // static class
+  }
+
   /**
    * @param bodyType type of body
    * @param pos      initial position of the body
@@ -52,9 +56,5 @@ public final class SolidDef {
     CircleShape shape = new CircleShape();
     shape.m_radius = TileVec2.TILE_DIM / 2;
     return shape;
-  }
-
-  private SolidDef() {
-    // static class
   }
 }

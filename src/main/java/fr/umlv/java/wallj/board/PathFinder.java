@@ -11,26 +11,16 @@ import java.util.stream.Collectors;
  */
 public class PathFinder {
   private static final int LEAP_COST = 1;
+  private final Map<TileVec2, Node<TileVec2>> graph;
 
-  private static class Node<T> {
-    final T val;
-    final Map<Node<T>, Integer> neighbors;
-
-    Node(T val) {
-      this.val = val;
-      this.neighbors = new HashMap<>();
-    }
-  }
-
-  private static class NodeSearchData<T> {
-    final Node<T> predecessor;
-    final double actualCost, estimatedCost;
-
-    NodeSearchData(Node<T> predecessor, double actualCost, double estimatedCost) {
-      this.predecessor = predecessor;
-      this.actualCost = actualCost;
-      this.estimatedCost = estimatedCost;
-    }
+  /**
+   * Builds a new path finder for the supplied board.
+   * A well-build (validated) board should be fully connected.
+   *
+   * @param board the board
+   */
+  public PathFinder(Board board) {
+    graph = buildGraph(Objects.requireNonNull(board));
   }
 
   private static double euclideanDistance(TileVec2 a, TileVec2 b) {
@@ -101,18 +91,6 @@ public class PathFinder {
     return map;
   }
 
-  private final Map<TileVec2, Node<TileVec2>> graph;
-
-  /**
-   * Builds a new path finder for the supplied board.
-   * A well-build (validated) board should be fully connected.
-   *
-   * @param board the board
-   */
-  public PathFinder(Board board) {
-    graph = buildGraph(Objects.requireNonNull(board));
-  }
-
   /**
    * Returns a path from a starting point to a target if it exists,
    * or throw an IllegalArgumentException if any of the given coordinates are invalid.
@@ -127,5 +105,26 @@ public class PathFinder {
     Node<TileVec2> startNode = graph.get(origin);
     if (startNode == null) throw new IllegalArgumentException("Invalid starting point.");
     return findPath(startNode, target, PathFinder::euclideanDistance);
+  }
+
+  private static class Node<T> {
+    final T val;
+    final Map<Node<T>, Integer> neighbors;
+
+    Node(T val) {
+      this.val = val;
+      this.neighbors = new HashMap<>();
+    }
+  }
+
+  private static class NodeSearchData<T> {
+    final Node<T> predecessor;
+    final double actualCost, estimatedCost;
+
+    NodeSearchData(Node<T> predecessor, double actualCost, double estimatedCost) {
+      this.predecessor = predecessor;
+      this.actualCost = actualCost;
+      this.estimatedCost = estimatedCost;
+    }
   }
 }

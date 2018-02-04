@@ -17,9 +17,9 @@ import java.util.stream.Stream;
  * @author Adam NAILI
  */
 public final class Game implements Updateable {
+  private final List<Board> boards;
   private Stage currentStage;
   private int indexBoard;
-  private final List<Board> boards;
   private boolean over;
 
   /**
