@@ -37,7 +37,7 @@ public final class Viewer {
     Duration lastExecDuration = Duration.ZERO;
     while (!currentGame.isOver()) {
       Duration last = lastExecDuration;
-      long timeBeforeExec = System.currentTimeMillis();
+      StopWatch stopWatch = new StopWatch();
       applicationContext.renderFrame(graphics2D -> {
         InputHandler inputHandler = new InputHandler(applicationContext);
         ScreenManager screenManager = new ScreenManager(applicationContext, graphics2D);
@@ -47,11 +47,9 @@ public final class Viewer {
         events.clear();
         events.addAll(newEvents); //add the new events returned by updates
       });
-      long timeAfterExec = System.currentTimeMillis();
-      lastExecDuration = Duration.ofMillis(timeAfterExec - timeBeforeExec);
+      lastExecDuration = FRAME_DURATION.minus(stopWatch.peek());
       try {
-        Duration sleepDuration = FRAME_DURATION.minus(lastExecDuration);
-        if (!sleepDuration.isNegative()) Thread.sleep(sleepDuration.toMillis());
+        if (!lastExecDuration.isNegative()) Thread.sleep(lastExecDuration.toMillis());
       } catch (Exception e) {
         applicationContext.exit(-1);
       }
