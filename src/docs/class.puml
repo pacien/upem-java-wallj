@@ -25,8 +25,12 @@ package viewer {
     GraphicsContext clearScreen()
   }
 
-  class Main{
+  class Main {
     static void main(String[])
+  }
+
+  class StopWatich {
+    Duration peek()
   }
 }
 
