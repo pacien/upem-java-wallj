@@ -32,8 +32,12 @@ package viewer {
 
 package context {
   interface Updateable {
-    List<Event> update(Context)
-    static List<Event> updateAll(List<Updateable>, Context)
+    Stream<Event> update(Context)
+  }
+
+  class Updateables {
+    static Stream<Event> updateAll(Context, List<Updateable>)
+    static Stream<Event> updateAll(Context, Updateable...)
   }
 
   class Context {
@@ -65,19 +69,24 @@ package context {
     void setOver()
     void nextStage()
     void retryStage()
-    List<Event> update(Context)
+    Stream<Event> update(Context)
   }
 
   class Stage implements Updateable {
     Stage(Board)
     Board getBoard()
     List<Block> getBlocks()
-    List<Event> update(Context)
+    Stream<Event> update(Context)
     bool isCleared()
   }
 }
 
 package event {
+  class Events {
+    static <T extends Event> Stream<T> filter(List<Event>, Class<T>)
+    static <T extends Event> Optional<T> findFirst(List<Event>, Class<T>)
+  }
+
   interface Event
   interface GameEvent implements Event
   interface InputEvent implements Event
@@ -183,23 +192,23 @@ package block {
   class RobotBlock extends Block {
     Vec2 getPos()
     void link(World world)
-    List<Event> update(Context)
+    Stream<Event> update(Context)
   }
 
   class WallBlock extends JBoxBlock {
-    List<Event> update(Context)
+    Stream<Event> update(Context)
   }
 
   class TrashBlock extends JBoxBlock {
-    List<Event> update(Context)
+    Stream<Event> update(Context)
   }
 
   class BombBlock extends JBoxBlock {
-    List<Event> update(Context)
+    Stream<Event> update(Context)
   }
 
   class GarbageBlock extends JBoxBlock {
-    List<Event> update(Context)
+    Stream<Event> update(Context)
   }
 }
 
