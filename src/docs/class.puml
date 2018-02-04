@@ -191,6 +191,8 @@ package block {
     JBoxBlock(BlockType, BodyType, Shape, Vec2)
     Vec2 getPos()
     void link(World)
+    void unlink(World)
+    Stream<ContactEdge> streamContactEdges()
   }
   
   class RobotBlock extends Block {
