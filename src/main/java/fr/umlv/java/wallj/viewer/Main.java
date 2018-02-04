@@ -18,7 +18,7 @@ public class Main {
   private static final String DEFAULT_MAP_NAME = "/maps/level0.txt";
 
   private static FileSystem fileSystemForContext(URI uri) throws URISyntaxException, IOException {
-    boolean isInJar = Objects.equals(Main.class.getProtectionDomain().getCodeSource().getLocation().getProtocol(), "jar");
+    boolean isInJar = Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().toString().endsWith(".jar");
     if (isInJar) {//JAR from command line handling
       Map<String, String> env = new HashMap<>();
       env.put("create", "true");
