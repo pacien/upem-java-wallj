@@ -11,20 +11,6 @@ package viewer {
     void eventLoop(ApplicationContext)
   }
 
-  class InputHandler {
-    ApplicationContext
-
-    InputHandler(ApplicationContext)
-    List<Event> getEvents()
-  }
-
-  class ScreenManager {
-    ApplicationContext, Graphics2D
-
-    ScreenManager(ApplicationContext,Graphics2D)
-    GraphicsContext clearScreen()
-  }
-
   class Main {
     static void main(String[])
   }
