@@ -83,11 +83,13 @@ Controls are defined as follows:
 Trigger                                 Action
 -------------------------------         -------------------------------------------------------
 Click on a traversable tile             Moves the robot to the pointed location
-`RETURN` on a free tile                 Drops a bomb at the current location
-`RETURN` on a tile with a bomb          Increases the timer of the bomb at the current location
-`SPACE` while controlling the robot     Puts Wall-j into a safe place before activating the bombs
-`SPACE` in a chaos scene                Restarts the current level or continues to the next one if possible
-
+`SPACE` on a free tile                  Drops a bomb at the current location
+`SPACE` on a tile with a bomb           Increases the timer of the bomb at the current location
+`S` while controlling the robot         Puts Wall-j into a safe place before activating the bombs
+`R` at any moment                       Restarts the current level if the stage is not cleared or continues to the next one if possible
+`Q` at any moment                       Exits the game
+*__Note__: The specifications precise that the _RETURN_ button must be used for the bomb management. This key is not defined in the Zen5 library. 
+The *SPACE* key is used in substitution*
 ## Custom levels
 
 Custom world can be defined by the user in plain text files, each of which containing a single world.
