@@ -61,10 +61,9 @@ public final class GraphicsContext {
   }
 
   /**
-   *
-   * @param color the color of the text
+   * @param color    the color of the text
    * @param position the position that is given by the baseline's left point of the text
-   * @param string the text to write down on the screen
+   * @param string   the text to write down on the screen
    */
   public void paintString(Color color, Vec2 position, String string) {
     graphics2D.setColor(color);
