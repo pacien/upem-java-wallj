@@ -47,12 +47,13 @@ public final class Viewer {
         events.clear();
         events.addAll(newEvents); //add the new events returned by updates
       });
-      lastExecDuration = FRAME_DURATION.minus(stopWatch.peek());
       try {
-        if (!lastExecDuration.isNegative()) Thread.sleep(lastExecDuration.toMillis());
+        Duration sleepDuration = FRAME_DURATION.minus(stopWatch.peek());
+        if (!sleepDuration.isNegative()) Thread.sleep(sleepDuration.toMillis());
       } catch (Exception e) {
         applicationContext.exit(-1);
       }
+      lastExecDuration = stopWatch.peek();
     }
     applicationContext.exit(0);
   }
