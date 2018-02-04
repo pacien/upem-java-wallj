@@ -56,9 +56,6 @@ package context {
     Game(List<Board>)
     Stage getStage()
     bool isOver()
-    void setOver()
-    void nextStage()
-    void retryStage()
     Stream<Event> update(Context)
   }
 
