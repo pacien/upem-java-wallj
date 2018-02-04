@@ -26,6 +26,7 @@ public class BombBlock extends JBoxBlock {
   private static final Duration MAX_TIME = Duration.ofSeconds(9);
 
   private Duration timer = MIN_TIME;
+  private boolean ignited = false;
 
   BombBlock(Vec2 pos) {
     super(BlockType.BOMB, BodyType.STATIC, SolidDef.squareShape(), pos);
@@ -44,6 +45,7 @@ public class BombBlock extends JBoxBlock {
   public Stream<Event> update(Context context) {
     return Updateables.updateAll(context,
     this::handleBombConfiguration,
+    this::handleSimulationStart,
     this::consume,
     this::paint);
   }
@@ -55,8 +57,14 @@ public class BombBlock extends JBoxBlock {
     return Stream.empty();
   }
 
+  private Stream<Event> handleSimulationStart(Context context) {
+    Events.findFirst(context.getEvents(), SimulationStartEvent.class)
+    .ifPresent(startEvent -> ignited = true);
+    return Stream.empty();
+  }
+
   private Stream<Event> consume(Context context) {
-    decrementTimer(context.getTimeDelta());
+    if (ignited) decrementTimer(context.getTimeDelta());
     return timer.isNegative() ?
            Stream.of(new BombExplosionEvent(TileVec2.of(getPos())), new BlockDestroyEvent(this)) :
            Stream.empty();

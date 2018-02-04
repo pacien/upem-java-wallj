@@ -6,10 +6,7 @@ import fr.umlv.java.wallj.block.BlockType;
 import fr.umlv.java.wallj.board.Board;
 import fr.umlv.java.wallj.board.BoardConverter;
 import fr.umlv.java.wallj.board.TileVec2;
-import fr.umlv.java.wallj.event.BlockCreateEvent;
-import fr.umlv.java.wallj.event.BlockDestroyEvent;
-import fr.umlv.java.wallj.event.Event;
-import fr.umlv.java.wallj.event.Events;
+import fr.umlv.java.wallj.event.*;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
@@ -27,6 +24,7 @@ public class Stage implements Updateable {
   private final World world = new World(new Vec2());
   private final List<Block> blocks = new LinkedList<>();
   private final Board board;
+  private boolean running = false;
 
   /**
    * @param board the base board
@@ -69,30 +67,38 @@ public class Stage implements Updateable {
   }
 
   /**
-   * @return T(the physics simulation can start, i.e. the player has placed all their bombs)
-   */
-  public boolean isReady() {
-    return blocks.stream()
-           .filter(block -> block.getType() == BlockType.BOMB)
-           .count() == BOMB_PLACEMENTS;
-  }
-
-  /**
    * @param context the current context
    * @return the stream of newly generated events
    */
   @Override
   public Stream<Event> update(Context context) {
     return Updateables.updateAll(context,
+    this::handleSimulationStartOrder,
+    this::handleSimulationStartEvent,
     this::updatePhysicalWorld,
     this::handleBlockDestruction,
     this::handleBlockCreation,
     ctx -> Updateables.updateAll(ctx, blocks));
   }
 
+  private Stream<Event> handleSimulationStartOrder(Context context) {
+    return Events.findFirst(context.getEvents(), SimulationStartOrder.class)
+           .flatMap(order -> isReady() ? Optional.<Event>of(new SimulationStartEvent()) : Optional.empty())
+           .map(Stream::of) // Optional.stream() only available in Java 9
+           .orElseGet(Stream::empty);
+  }
+
+  private Stream<Event> handleSimulationStartEvent(Context context) {
+    Events.findFirst(context.getEvents(), SimulationStartEvent.class)
+    .ifPresent(startEvent -> running = true);
+    return Stream.empty();
+  }
+
   private Stream<Event> updatePhysicalWorld(Context context) {
-    int dt = (int) context.getTimeDelta().toMillis();
-    world.step(dt, dt * VELOCITY_TICK_PER_MS, dt * POSITION_TICK_PER_MS);
+    if (running) {
+      int dt = (int) context.getTimeDelta().toMillis();
+      world.step(dt, dt * VELOCITY_TICK_PER_MS, dt * POSITION_TICK_PER_MS);
+    }
     return Stream.empty();
   }
 
@@ -110,6 +116,15 @@ public class Stage implements Updateable {
       block.link(world);
     });
     return Stream.empty();
+  }
+
+  /**
+   * @implNote TODO: profile this and consider a bomb block counter
+   */
+  private boolean isReady() {
+    return blocks.stream()
+           .filter(block -> block.getType() == BlockType.BOMB)
+           .count() == BOMB_PLACEMENTS;
   }
 
   private static TileVec2 findAnyFreeTile(Board board) {

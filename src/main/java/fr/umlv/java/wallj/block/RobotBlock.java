@@ -23,13 +23,16 @@ import java.util.stream.Stream;
 public class RobotBlock extends Block {
   private static final float SPEED = 10f; // px/ms
 
+  private final TileVec2 initialPos;
   private Vec2 pos;
   private PathFinder pathFinder;
   private Deque<TileVec2> path = new LinkedList<>();
   private int droppedBombCount = 0;
+  private boolean isHiding = false;
 
   RobotBlock(Vec2 pos) {
     super(BlockType.ROBOT);
+    this.initialPos = TileVec2.of(pos);
     this.pos = pos;
   }
 
@@ -51,10 +54,27 @@ public class RobotBlock extends Block {
   @Override
   public Stream<Event> update(Context context) {
     return Updateables.updateAll(context,
+    this::handleSimulationStart,
     this::updatePath,
     this::move,
+    this::disappear,
     this::paint,
     this::setupBomb);
+  }
+
+  private Stream<Event> handleSimulationStart(Context context) {
+    return Events.findFirst(context.getEvents(), SimulationStartEvent.class)
+           .map(startEvent -> {
+             isHiding = true;
+             return Stream.<Event>of(new MoveRobotOrder(initialPos));
+           })
+           .orElse(Stream.empty());
+  }
+
+  private Stream<Event> disappear(Context context) {
+    return isHiding && Objects.equals(TileVec2.of(pos), initialPos) ?
+           Stream.of(new BlockDestroyEvent(this)) :
+           Stream.empty();
   }
 
   private Stream<Event> setupBomb(Context context) {
@@ -78,6 +98,7 @@ public class RobotBlock extends Block {
       Board board = context.getGame().getCurrentStage().getBoard();
       TileVec2 target = event.getTarget();
       if (!board.inside(target) || !board.getBlockTypeAt(target).isTraversable()) return;
+      if (isHiding && !Objects.equals(target, initialPos)) return;
       if (pathFinder == null) pathFinder = new PathFinder(board);
       path = new LinkedList<>(pathFinder.findPath(TileVec2.of(pos), target));
     });
