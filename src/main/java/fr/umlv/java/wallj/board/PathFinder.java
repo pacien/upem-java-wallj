@@ -73,11 +73,11 @@ public class PathFinder {
 
         double challengeCost = cost(searchData, current) + neighborEntry.getValue();
         double currentCost = cost(searchData, neighborEntry.getKey());
-        if (challengeCost < currentCost)
+        if (challengeCost < currentCost) {
           searchData.put(neighborEntry.getKey(), new NodeSearchData<>(current, challengeCost,
           challengeCost + heuristic.apply(neighborEntry.getKey().val, target)));
-
-        discovered.add(neighborEntry.getKey());
+          discovered.add(neighborEntry.getKey());
+        }
       }
 
       visited.add(current);
