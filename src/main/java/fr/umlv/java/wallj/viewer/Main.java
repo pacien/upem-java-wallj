@@ -18,7 +18,6 @@ public class Main {
 
   private static final String DEFAULT_MAP_NAME = "/maps/level0.txt";
 
-
   private static FileSystem fileSystemForContext(URI uri) throws URISyntaxException, IOException {
     boolean isInJar = Objects.equals(Main.class.getProtectionDomain().getCodeSource().getLocation().getProtocol(), "jar");
     if (isInJar) {//JAR from command line handling
@@ -43,20 +42,38 @@ public class Main {
     return paths;
   }
 
-  public static void main(String[] args) {
-    List<Board> boards = new LinkedList<>();
+  //TODO Split Parse and validation + add useless return to satisfy this crazy compiler 
+  private static Board validateBoardFromPath(Path path) {
     try {
-      List<Path> boardPaths = Main.getResourcePaths();
-      for (Path path : boardPaths) {
-        BoardValidator boardValidator = new BoardValidator(BoardParser.parse(path));
-        boards.add(
-         boardValidator.validate(BoardValidator.Constraint::hasActualReachableBlocks, "Some supposed reachable blocks are not reachable.")
-          .validate(BoardValidator.Constraint::hasMandatoryBlocks, "Some mandatory blocks are missing.")
-          .validate(BoardValidator.Constraint::isBounded, "The board is not correctly bounded.")
-          .validate(BoardValidator.Constraint::isHollow, "The board must have a unique and simple interior.")
-          .get());
+      BoardValidator boardValidator = new BoardValidator(BoardParser.parse(path));
+      return boardValidator.validate(BoardValidator.Constraint::hasActualReachableBlocks, "Some supposed reachable blocks are not reachable.")
+       .validate(BoardValidator.Constraint::hasMandatoryBlocks, "Some mandatory blocks are missing.")
+       .validate(BoardValidator.Constraint::isBounded, "The board is not correctly bounded.")
+       .validate(BoardValidator.Constraint::isHollow, "The board must have a unique and simple interior.")
+       .get();
+    } catch (IOException e) {
+      System.err.println(e.getMessage());
+      System.exit(2);
+    } catch (BoardValidator.ValidationException e) {
+      System.err.println(path.toString() + ':');
+      for (Throwable throwable : e.getSuppressed()) {
+        System.err.println(throwable.getMessage());
       }
-      Viewer viewer = new Viewer(boards);
+      System.exit(3);
+    }
+  }
+
+  private static List<Board> validateBoardsFromPaths(List<Path> boardPaths) {
+    List<Board> boards = new LinkedList<>();
+    for (Path path : boardPaths) {
+      boards.add(validateBoardFromPath(path));
+    }
+    return boards;
+  }
+
+  public static void main(String[] args) {
+    try {
+      Viewer viewer = new Viewer(validateBoardsFromPaths(Main.getResourcePaths()));
       Application.run(Color.WHITE, viewer::eventLoop);
     } catch (URISyntaxException e) {
       System.err.println(e.getMessage());
@@ -64,11 +81,6 @@ public class Main {
     } catch (IOException e) {
       System.err.println(e.getMessage());
       System.exit(2);
-    } catch (BoardValidator.ValidationException e) {
-      for (Throwable throwable : e.getSuppressed()) {
-        System.err.println(throwable.getMessage());
-      }
-      System.exit(3);
     }
   }
 }
