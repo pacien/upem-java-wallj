@@ -39,7 +39,7 @@ public final class Game implements Updateable {
   /**
    * @return a boolean on the condition of having a next Board in our game.
    */
-  public boolean hasNextBoard() {
+  private boolean hasNextBoard() {
     return indexBoard + 1 < boards.size();
   }
 
@@ -61,21 +61,20 @@ public final class Game implements Updateable {
     return currentStage;
   }
 
+  /**
+   * @return the status of the game
+   */
   public boolean isOver() {
     return over;
   }
 
-  public void setOver() {
-    over = true;
-  }
-
-  public void nextStage() {
+  private void nextStage() {
     if (hasNextBoard()) {
       currentStage = new Stage(nextBoard());
     }
   }
 
-  public void retryStage() {
+  private void retryStage() {
     currentStage = new Stage(currentStage.getBoard());
   }
 
@@ -84,12 +83,12 @@ public final class Game implements Updateable {
       nextStage();
       return;
     }
-    setOver();
+    over = true;
   }
 
   private void handleEvents(Context context) {
     if (Events.findFirst(context.getEvents(), QuitGameOrder.class).isPresent()) {
-      context.getGame().setOver();
+      over = true;
       return;
     }
     if (Events.findFirst(context.getEvents(), ConfirmOrder.class).isPresent()) {
