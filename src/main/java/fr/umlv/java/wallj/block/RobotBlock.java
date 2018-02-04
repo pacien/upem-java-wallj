@@ -22,6 +22,7 @@ import java.util.stream.Stream;
  */
 public class RobotBlock extends Block {
   private static final float SPEED = 10f; // px/ms
+  private static final float ROBOT_SIZE = TileVec2.TILE_DIM * 1.25f;
 
   private final TileVec2 initialPos;
   private Vec2 pos;
@@ -117,7 +118,7 @@ public class RobotBlock extends Block {
   }
 
   private Stream<Event> paint(Context context) {
-    context.getGraphicsContext().paintCircle(Color.BLUE, getPos(), TileVec2.TILE_DIM / 2);
+    context.getGraphicsContext().paintCircle(Color.BLUE, getPos(), ROBOT_SIZE);
     return Stream.empty();
   }
 
