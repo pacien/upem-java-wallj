@@ -39,7 +39,7 @@ public class GarbageBlock extends JBoxBlock {
     Events.filter(context.getEvents(), BombExplosionEvent.class).forEach(explosion -> {
       Vec2 source = explosion.getSource().toVec2();
       context.getGame().getCurrentStage().getWorld().raycast((fixture, point, normal, fraction) -> {
-        if (isSelf(fixture)) getBody().applyForceToCenter(computeBlastForce(source));
+        if (isSelf(fixture)) getBody().applyLinearImpulse(computeBlastForce(source), getBody().getWorldCenter());
         return STOP_RAYCAST;
       }, source, getPos());
     });
