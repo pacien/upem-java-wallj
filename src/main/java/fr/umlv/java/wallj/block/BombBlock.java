@@ -3,6 +3,7 @@ package fr.umlv.java.wallj.block;
 import fr.umlv.java.wallj.board.TileVec2;
 import fr.umlv.java.wallj.context.Context;
 import fr.umlv.java.wallj.context.GraphicsContext;
+import fr.umlv.java.wallj.context.Updateables;
 import fr.umlv.java.wallj.event.*;
 import fr.umlv.java.wallj.event.Event;
 import org.jbox2d.common.Vec2;
@@ -10,10 +11,8 @@ import org.jbox2d.dynamics.BodyType;
 
 import java.awt.*;
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * A bomb block.
@@ -42,32 +41,35 @@ public class BombBlock extends JBoxBlock {
   }
 
   @Override
-  public List<Event> update(Context context) {
-    handleBombConfiguration(context.getEvents());
-    paint(context.getGraphicsContext());
-    return consume(context.getTimeDelta());
+  public Stream<Event> update(Context context) {
+    return Updateables.updateAll(context,
+    this::handleBombConfiguration,
+    this::consume,
+    this::paint);
   }
 
-  private void handleBombConfiguration(List<Event> events) {
-    Events.findFirst(events, BombTimerIncrEvent.class)
+  private Stream<Event> handleBombConfiguration(Context context) {
+    Events.findFirst(context.getEvents(), BombTimerIncrEvent.class)
     .filter(event -> Objects.equals(event.getPos(), TileVec2.of(getPos())))
     .ifPresent(event -> incrementTimer());
+    return Stream.empty();
   }
 
-  private List<Event> consume(Duration timeDelta) {
-    decrementTimer(timeDelta);
-
-    if (timer.isNegative())
-      return Arrays.asList(new BombExplosionEvent(TileVec2.of(getPos())), new BlockDestroyEvent(this));
-    else
-      return Collections.emptyList();
+  private Stream<Event> consume(Context context) {
+    decrementTimer(context.getTimeDelta());
+    return timer.isNegative() ?
+           Stream.of(new BombExplosionEvent(TileVec2.of(getPos())), new BlockDestroyEvent(this)) :
+           Stream.empty();
   }
 
-  private void paint(GraphicsContext graphicsContext) {
+  private Stream<Event> paint(Context context) {
+    GraphicsContext graphicsContext = context.getGraphicsContext();
     graphicsContext.paintCircle(Color.BLACK, getPos(), TileVec2.TILE_DIM);
     Vec2 textPosition = getPos();
     textPosition.x += TileVec2.TILE_DIM / 4.0f;
     textPosition.y += 3 * TileVec2.TILE_DIM / 4.0f;
     graphicsContext.paintString(Color.RED, textPosition, Long.toString(timer.getSeconds()));
+
+    return Stream.empty();
   }
 }

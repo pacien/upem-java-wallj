@@ -10,6 +10,7 @@ import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Link between application and Zen 5
@@ -42,7 +43,7 @@ public final class Viewer {
         ScreenManager screenManager = new ScreenManager(applicationContext, graphics2D);
         events.addAll(inputHandler.getEvents());
         Context context = new Context(currentGame, events, screenManager.clearScreen(), last);
-        List<Event> newEvents = currentGame.update(context); //return new events created from update();
+        List<Event> newEvents = currentGame.update(context).collect(Collectors.toList()); //return new events created from update();
         events.clear();
         events.addAll(newEvents); //add the new events returned by updates
       });

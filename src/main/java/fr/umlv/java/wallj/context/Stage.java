@@ -6,12 +6,15 @@ import fr.umlv.java.wallj.block.BlockType;
 import fr.umlv.java.wallj.board.Board;
 import fr.umlv.java.wallj.board.BoardConverter;
 import fr.umlv.java.wallj.board.TileVec2;
-import fr.umlv.java.wallj.event.*;
+import fr.umlv.java.wallj.event.BlockCreateEvent;
+import fr.umlv.java.wallj.event.BlockDestroyEvent;
+import fr.umlv.java.wallj.event.Event;
+import fr.umlv.java.wallj.event.Events;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
-import java.time.Duration;
 import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * @author Pacien TRAN-GIRARD
@@ -76,33 +79,37 @@ public class Stage implements Updateable {
 
   /**
    * @param context the current context
-   * @return the list of newly generated events
+   * @return the stream of newly generated events
    */
   @Override
-  public List<Event> update(Context context) {
-    updatePhysicalWorld(context.getTimeDelta());
-    handleBlockDestruction(context.getEvents());
-    handleBlockCreation(context.getEvents());
-    return Updateable.updateAll(blocks, context);
+  public Stream<Event> update(Context context) {
+    return Updateables.updateAll(context,
+    this::updatePhysicalWorld,
+    this::handleBlockDestruction,
+    this::handleBlockCreation,
+    ctx -> Updateables.updateAll(ctx, blocks));
   }
 
-  private void updatePhysicalWorld(Duration timeDelta) {
-    int dt = (int) timeDelta.toMillis();
+  private Stream<Event> updatePhysicalWorld(Context context) {
+    int dt = (int) context.getTimeDelta().toMillis();
     world.step(dt, dt * VELOCITY_TICK_PER_MS, dt * POSITION_TICK_PER_MS);
+    return Stream.empty();
   }
 
-  private void handleBlockDestruction(List<Event> events) {
-    Events.filter(events, BlockDestroyEvent.class).forEach(event -> {
+  private Stream<Event> handleBlockDestruction(Context context) {
+    Events.filter(context.getEvents(), BlockDestroyEvent.class).forEach(event -> {
       if (blocks.remove(event.getBlock())) event.getBlock().unlink(world);
     });
+    return Stream.empty();
   }
 
-  private void handleBlockCreation(List<Event> events) {
-    Events.filter(events, BlockCreateEvent.class).forEach(event -> {
+  private Stream<Event> handleBlockCreation(Context context) {
+    Events.filter(context.getEvents(), BlockCreateEvent.class).forEach(event -> {
       Block block = BlockFactory.build(event.getBlockType(), event.getPos());
       blocks.add(block);
       block.link(world);
     });
+    return Stream.empty();
   }
 
   private static TileVec2 findAnyFreeTile(Board board) {
