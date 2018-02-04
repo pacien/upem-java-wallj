@@ -14,7 +14,6 @@ import java.util.*;
 import java.util.List;
 
 public class Main {
-
   private static final String DEFAULT_MAP_NAME = "/maps/level0.txt";
 
   private static FileSystem fileSystemForContext(URI uri) throws URISyntaxException, IOException {

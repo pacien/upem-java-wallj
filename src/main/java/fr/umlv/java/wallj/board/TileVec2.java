@@ -89,12 +89,4 @@ public final class TileVec2 {
   public int hashCode() {
     return Objects.hash(col, row);
   }
-
-  @Override
-  public String toString() {
-    return "TileVec2{" +
-           "col=" + col +
-           ", row=" + row +
-           '}';
-  }
 }

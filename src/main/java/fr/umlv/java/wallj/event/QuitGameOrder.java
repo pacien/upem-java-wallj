@@ -6,4 +6,5 @@ package fr.umlv.java.wallj.event;
  * @author Pacien TRAN-GIRARD
  */
 public final class QuitGameOrder implements InputEvent {
+  // void
 }

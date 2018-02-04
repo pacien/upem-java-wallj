@@ -79,13 +79,14 @@ public final class Game implements Updateable {
     currentStage = new Stage(currentStage.getBoard());
   }
 
-  private void goToNext(){
+  private void goToNext() {
     if (hasNextBoard()) { //continue
       nextStage();
       return;
     }
     setOver();
   }
+
   private void handleEvents(Context context) {
     if (Events.findFirst(context.getEvents(), QuitGameOrder.class).isPresent()) {
       context.getGame().setOver();
@@ -100,7 +101,6 @@ public final class Game implements Updateable {
     }
   }
 
-
   /**
    * @param context the current context
    * @return a list of new events
@@ -110,6 +110,4 @@ public final class Game implements Updateable {
     handleEvents(context);
     return currentStage.update(context);
   }
-
-
 }
