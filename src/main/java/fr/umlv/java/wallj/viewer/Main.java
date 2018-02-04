@@ -83,8 +83,7 @@ public final class Main {
                          .map(Main::validateBoard)
                          .collect(Collectors.toList());
 
-    Viewer viewer = new Viewer(levels);
-    Application.run(Viewer.BACKGROUND_COLOR, viewer::eventLoop);
+    Application.run(Viewer.BACKGROUND_COLOR, appContext -> (new Viewer(appContext, levels)).run());
   }
 
   private Main() {
