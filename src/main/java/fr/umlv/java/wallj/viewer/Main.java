@@ -77,6 +77,10 @@ public final class Main {
     }
   }
 
+  /**
+   * Entry point of the programme
+   * @param args the arguments passed to the application
+   */
   public static void main(String[] args) {
     List<Board> levels = listMaps(getMapDirPath())
                          .map(Main::loadBoard)
