@@ -33,7 +33,7 @@ public final class GraphicsContext {
   }
 
   /**
-   * @return the screen informations
+   * @return the screen information
    */
   public ScreenInfo getScreenInfo() {
     return screenInfo;
@@ -60,8 +60,14 @@ public final class GraphicsContext {
     graphics2D.fillRect(Math.round(position.x), Math.round(position.y), Math.round(width), Math.round(height));
   }
 
-  public void paintString(Color color, Vec2 position, String string){
+  /**
+   *
+   * @param color the color of the text
+   * @param position the position that is given by the baseline's left point of the text
+   * @param string the text to write down on the screen
+   */
+  public void paintString(Color color, Vec2 position, String string) {
     graphics2D.setColor(color);
-    graphics2D.drawString(string,position.x, position.y);
+    graphics2D.drawString(string, position.x, position.y);
   }
 }
