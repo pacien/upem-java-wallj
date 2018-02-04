@@ -2,19 +2,17 @@ package fr.umlv.java.wallj.block;
 
 import fr.umlv.java.wallj.board.TileVec2;
 import fr.umlv.java.wallj.context.Context;
-import fr.umlv.java.wallj.context.GraphicsContext;
+import fr.umlv.java.wallj.context.Updateables;
 import fr.umlv.java.wallj.event.BombExplosionEvent;
 import fr.umlv.java.wallj.event.Event;
 import fr.umlv.java.wallj.event.Events;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.Fixture;
-import org.jbox2d.dynamics.World;
 
 import java.awt.*;
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * A garbage block.
@@ -31,24 +29,26 @@ public class GarbageBlock extends JBoxBlock {
   }
 
   @Override
-  public List<Event> update(Context context) {
-    handleExplosionBlasts(context.getEvents(), context.getGame().getCurrentStage().getWorld());
-    paint(context.getGraphicsContext());
-    return Collections.emptyList();
+  public Stream<Event> update(Context context) {
+    return Updateables.updateAll(context,
+    this::handleExplosionBlasts,
+    this::paint);
   }
 
-  private void handleExplosionBlasts(List<Event> events, World world) {
-    Events.filter(events, BombExplosionEvent.class).forEach(explosion -> {
+  private Stream<Event> handleExplosionBlasts(Context context) {
+    Events.filter(context.getEvents(), BombExplosionEvent.class).forEach(explosion -> {
       Vec2 source = explosion.getSource().toVec2();
-      world.raycast((fixture, point, normal, fraction) -> {
+      context.getGame().getCurrentStage().getWorld().raycast((fixture, point, normal, fraction) -> {
         if (isSelf(fixture)) getBody().applyForceToCenter(computeBlastForce(source));
         return STOP_RAYCAST;
       }, source, getPos());
     });
+    return Stream.empty();
   }
 
-  private void paint(GraphicsContext graphicsContext) {
-    graphicsContext.paintCircle(COLOR, getPos(), TileVec2.TILE_DIM);
+  private Stream<Event> paint(Context context) {
+    context.getGraphicsContext().paintCircle(COLOR, getPos(), TileVec2.TILE_DIM);
+    return Stream.empty();
   }
 
   private boolean isSelf(Fixture fixture) {

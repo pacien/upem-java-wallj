@@ -1,9 +1,15 @@
 package fr.umlv.java.wallj.context;
 
 import fr.umlv.java.wallj.board.Board;
-import fr.umlv.java.wallj.event.*;
+import fr.umlv.java.wallj.event.ConfirmOrder;
+import fr.umlv.java.wallj.event.Event;
+import fr.umlv.java.wallj.event.Events;
+import fr.umlv.java.wallj.event.QuitGameOrder;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * A game.
@@ -100,7 +106,7 @@ public final class Game implements Updateable {
    * @return a list of new events
    */
   @Override
-  public List<Event> update(Context context) {
+  public Stream<Event> update(Context context) {
     handleEvents(context);
     return currentStage.update(context);
   }
